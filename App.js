@@ -1,20 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import MainStack from './stacks/MainStack'
+import { DataProvider } from "./context/DataContext";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Delivery - Pdv Admin</Text>
-      <StatusBar style="auto" />
-    </View>
+    <DataProvider>
+        <NavigationContainer>
+            <MainStack />
+        </NavigationContainer>
+    </DataProvider>
+    
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

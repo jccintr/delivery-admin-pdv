@@ -2,21 +2,20 @@ import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Dimensio
 import React, {useState,useContext,useEffect} from 'react';
 import Header from '../components/Header';
 import { cores } from '../style/globalStyle';
-import ProductCard from '../components/ProductCard';
 import AccordionItem from '../components/AccordionItem';
 import Api from '../Api';
 import DataContext from '../context/DataContext';
 
 const Cardapio = () => {
   const [categorias,setCategorias] = useState([]);
-  const {loggedUser} = useContext(DataContext);
+  const {apiToken} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
  
  
   useEffect(()=>{
     const getCategorias = async () => {
       setIsLoading(true);
-      let response = await Api.getCategorias(loggedUser.token);
+      let response = await Api.getCategorias(apiToken);
       if(response.status===200) {
         let json = await response.json();
         setCategorias(json);
@@ -32,7 +31,7 @@ const Cardapio = () => {
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-      <Header title="Cardápio"/>
+       <Header title="Cardápio"/>
       {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
       {!isLoading&&<FlatList 
         showsVerticalScrollIndicator={false}
@@ -51,7 +50,6 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    
     backgroundColor: cores.whiteSmoke,
     alignItems: 'center',
     justifyContent: 'flex-start',

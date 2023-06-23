@@ -13,7 +13,7 @@ const Login = () => {
   const [password,setPassword] = useState('');
   const [isLoading,setIsLoading] = useState(false);
   const navigation = useNavigation();
-  const {setLoggedUser,loggedUser} = useContext(DataContext);
+  const {setLoggedUser,loggedUser,apiToken,setApiToken} = useContext(DataContext);
 
 
   const login = async () => {
@@ -25,6 +25,7 @@ const Login = () => {
         if(response.status===200){
           const jsonUser = await response.json();
           if (jsonUser.token) await AsyncStorage.setItem('token', jsonUser.token);
+          setApiToken(jsonUser.token);
           setLoggedUser(jsonUser);
           navigation.reset({routes:[{name:'MainTab'}]});
         } else {
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
+    marginTop: 10,
 
   },
   logoArea:{

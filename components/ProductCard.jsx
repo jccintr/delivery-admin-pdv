@@ -10,7 +10,11 @@ const ProductCard = ({produto}) => {
       <View style={styles.descricaoContainer}>
          <Text style={styles.nome}>{produto.nome}</Text>
          <Text style={styles.descricao}>{produto.descricao}</Text>
-         <Text style={styles.preco}>R$ {produto.preco}</Text>
+         <View style={styles.precoContainer}>
+            <Text style={styles.preco}>R$ {produto.preco}</Text>
+            {!produto.ativo&&<Text style={styles.foraCardapio}>Fora do Cardápio</Text>}
+         </View>
+         
       </View>
       
     </View>
@@ -56,9 +60,18 @@ const styles = StyleSheet.create({
         fontSize: 12,
         
       },
+      precoContainer:{
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      },
       preco: {
         fontWeight: 'bold',
         color: cores.primary,
+      },
+      foraCardapio: {
+        color: '#f00',
       }
 
 

@@ -7,7 +7,7 @@ const Pedidos = () => {
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-      <Header title="Meus Pedidos"/>
+      <Header title="Pedidos"/>
     </SafeAreaView>
   )
 }

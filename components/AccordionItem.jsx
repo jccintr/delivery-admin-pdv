@@ -49,7 +49,6 @@ title: {
 body:{
  paddingHorizontal: '2%',
  paddingVertical: '3%',
- 
-},
+ },
 
 })

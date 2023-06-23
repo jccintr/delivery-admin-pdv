@@ -10,7 +10,7 @@ import DataContext from '../context/DataContext';
 const Preload = () => {
     const navigation = useNavigation();
     const [isLoading,setIsLoading] = useState(false);
-    const {setLoggedUser,loggedUser} = useContext(DataContext);
+    const {setLoggedUser,loggedUser,setApiToken} = useContext(DataContext);
 
     useEffect(()=>{
         const checkToken = async () => {
@@ -21,7 +21,7 @@ const Preload = () => {
                     let response = await Api.getUser(token);
                     if (response.status===200){
                        let jsonUser = await response.json(); 
-                       jsonUser.token = token;
+                       setApiToken(token);
                        setLoggedUser(jsonUser);
                        navigation.reset({routes:[{name:'MainTab'}]});
                      

@@ -22,7 +22,6 @@ const OpcaoCard = ({opcao,index,onDelete}) => {
         <TouchableOpacity onPress={()=>onDelete(index)} >
             <FontAwesome name="trash-o" size={20} color="red" />
         </TouchableOpacity>
-        
      </View>
    )
 }
@@ -36,10 +35,10 @@ const ModalObrigatorio = ({modalVisible,setModalVisible,editando,onSalvar,obriga
 
        if (newOption.trim().length > 0) {
                 
-        arrOption = obrigatorio.opcoes;
-        arrOption.push(newOption);
-        setObrigatorio({...obrigatorio,opcoes: arrOption});
-        setNewOption('');
+          arrOption = obrigatorio.opcoes;
+          arrOption.push(newOption);
+          setObrigatorio({...obrigatorio,opcoes: arrOption});
+          setNewOption('');
 
        }
        
@@ -100,18 +99,6 @@ const ModalObrigatorio = ({modalVisible,setModalVisible,editando,onSalvar,obriga
                             ListEmptyComponent={<Empty/>}
                         />
                     </View>
-                    
-
-
-
-                    {/*obrigatorio.opcoes.length>0&&<View style={styles.optionsContainer}>
-                        <Text style={styles.label}>Opções:</Text>
-                        {obrigatorio.opcoes.map((item,index)=><OpcaoCard key={index} index={index} opcao={item} onDelete={onRemoveOption}/>)}
-                    </View>*/}
-                    
-                    
-                    
-                   
                     <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar()} >
                         <Text style={styles.addButtonText}>SALVAR</Text>
                     </TouchableOpacity>

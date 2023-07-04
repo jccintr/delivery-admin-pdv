@@ -89,18 +89,18 @@ const onEdit = (item) => {
 
   return (
     <SafeAreaView style={styles.container}>
-    <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-    <Header2 title="Itens Selecionáveis" onAdd={onAdd}/>
-    {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
-    {!isLoading&&<FlatList 
-        showsVerticalScrollIndicator={false}
-        style={styles.flatList}
-        data={obrigatorios}
-        keyExtractor={(item)=> item.id.toString()}
-        renderItem={({item})=><ObrigatorioItem item={item} onPress={onEdit}/>}
-        />}
+        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
+        <Header2 title="Itens Selecionáveis" onAdd={onAdd}/>
+        {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
+        {!isLoading&&<FlatList 
+            showsVerticalScrollIndicator={false}
+            style={styles.flatList}
+            data={obrigatorios}
+            keyExtractor={(item)=> item.id.toString()}
+            renderItem={({item})=><ObrigatorioItem item={item} onPress={onEdit}/>}
+            />}
         <ModalObrigatorio modalVisible={modalVisible} setModalVisible={setModalVisible} onSalvar={onSalvar} obrigatorio={obrigatorio} setObrigatorio={setObrigatorio} editando={editando}/>
-  </SafeAreaView>
+    </SafeAreaView>
   )
 }
 

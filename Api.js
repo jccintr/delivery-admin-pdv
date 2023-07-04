@@ -266,6 +266,17 @@ export default {
         });
         return response;
     },
+    getPedidos: async (token) => {
+        const response = await fetch(`${BASE_API}/pedidos`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+        });
+        return response;
+    },
         
 
 };

@@ -1,13 +1,44 @@
-import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
-import React from 'react';
+import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Text } from 'react-native';
+import React, {useState,useEffect,useContext} from 'react';
 import Header from '../components/Header';
 import { cores } from '../style/globalStyle';
+import DataContext from '../context/DataContext';
+import Api from '../Api';
+import PedidoCard from '../components/cards/PedidoCard';
+
 
 const Pedidos = () => {
+  const {apiToken} = useContext(DataContext);
+  const [pedidos,setPedidos] = useState([]);
+  const [isLoading,setIsLoading] = useState(false);
+
+  useEffect(()=>{
+    const getPedidos = async () => {
+      setIsLoading(true);
+      let response = await Api.getPedidos(apiToken);
+      if(response.status===200) {
+        let json = await response.json();
+        setPedidos(json);
+      }
+      setIsLoading(false);
+    }
+    getPedidos();
+
+ },[]);
+
+
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-      <Header title="Pedidos"/>
+       <Header title="Pedidos"/>
+       {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
+       {!isLoading&&<FlatList 
+        showsVerticalScrollIndicator={false}
+        style={styles.flatList}
+        data={pedidos}
+        keyExtractor={(item)=> item.id.toString()}
+        renderItem={({item})=><PedidoCard pedido={item}/>}
+        />}
     </SafeAreaView>
   )
 }
@@ -21,6 +52,11 @@ const styles = StyleSheet.create({
     backgroundColor: cores.whiteSmoke,
     alignItems: 'center',
     justifyContent: 'flex-start',
+   },
+   flatList: {
+    width: '100%',
+    paddingTop: 10,
+    paddingHorizontal: 5,
    },
 
 })

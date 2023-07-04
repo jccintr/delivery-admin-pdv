@@ -9,6 +9,7 @@ import Taxas from "../screens/cadastros/Taxas";
 import Horarios from "../screens/cadastros/Horarios";
 import Obrigatorios from "../screens/cadastros/Obrigatorios";
 import Adicionais from "../screens/cadastros/Adicionais";
+import Pedido from "../screens/Pedido";
 
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const MainStack = () => {
         <Stack.Screen name="Horarios" component={Horarios} />
         <Stack.Screen name="Obrigatorios" component={Obrigatorios} />
         <Stack.Screen name="Adicionais" component={Adicionais} />
+        <Stack.Screen name="Pedido" component={Pedido} />
     </Stack.Navigator>
   )
 }

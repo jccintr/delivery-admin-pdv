@@ -1,47 +1,69 @@
-import React from 'react';
-import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput} from 'react-native';
+import React,{ useState,useEffect } from 'react';
+import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput,Switch} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 
-const ModalTaxa = ({modalVisible,setModalVisible,editando,onSalvar,taxa,setTaxa}) => {
-     
+const ModalProduto = ({modalVisible,setModalVisible,onSalvar,produto}) => {
+    const [preco,setPreco] = useState(produto.preco);
+    const [nome,setNome] = useState(produto.nome);
+    const [ativo,setAtivo] = useState(produto.ativo);
+
  
+    useEffect(()=>{
+       setNome(produto.nome);
+       setPreco(produto.preco);
+       setAtivo(produto.ativo);
+   },[produto]);
+
+   const toggleSwitch = () => setAtivo(ativo => !ativo);
+
     return (
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
           <View style={styles.modalArea}>
             <View style={styles.modalBody}>
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
                     <Entypo name="chevron-down" size={34} color={cores.azul} />
-                    <Text style={styles.modalTitleText}>{!editando?'Nova':'Editando'} Taxa de Entrega</Text>
+                    <Text style={styles.modalTitleText}>Editando Produto</Text>
                 </TouchableOpacity>
                 <View style={styles.content}>
+                
                     <View>
-                        <Text style={styles.label}>Bairro:</Text>
-                        <View style={styles.inputArea}>
-                            <TextInput style={styles.input}
-                                    placeholder="Nome..."
-                                    value={taxa.bairro}
-                                    onChangeText={t=>setTaxa({...taxa,bairro: t})}
-                                    placeholderTextColor="#c1c1c1" 
-                                />
-                        </View>
+                      <Text style={styles.label}>Nome:</Text>
+                      <View style={styles.inputArea}>
+                          <TextInput style={styles.input}
+                                  placeholder="Nome do produto..."
+                                  value={nome}
+                                  onChangeText={t=>setNome(t)}
+                                  placeholderTextColor="#c1c1c1" 
+                              />
+                      </View>
                     </View>
-                    
                     <View>
-                        <Text style={styles.label}>Valor:</Text>
+                        <Text style={styles.label}>Preço:</Text>
                         <View style={styles.inputArea}>
                               <TextInput style={styles.input}
-                                    placeholder="Valor da taxa..."
-                                    value={taxa.valor.toString()}
+                                    placeholder="Preço de venda..."
+                                    value={preco}
                                     keyboardType='decimal-pad'
-                                    
-                                    onChangeText={t=>setTaxa({...taxa,valor: t})}
+                                    onChangeText={t=>setPreco(t)}
                                     placeholderTextColor="#c1c1c1" 
                                 />
                         </View>
                     </View>
+                    <View style={{flexDirection: 'row',alignItems:'center'}}>
+                        <Text style={styles.label}>Exibir no cardápio:</Text>  
+                        <Switch
+                            style={{marginLeft: 10}}
+                            trackColor={{false: '#767577', true: '#767577'}}
+                            thumbColor={ativo ? cores.primary : '#f4f3f4'}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={ativo}
+                        />
+                    </View>
                     
-                    <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar()} >
+                    
+                    <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar(produto.id,nome,preco,ativo)} >
                         <Text style={styles.addButtonText}>SALVAR</Text>
                     </TouchableOpacity>
                 </View>
@@ -53,7 +75,7 @@ const ModalTaxa = ({modalVisible,setModalVisible,editando,onSalvar,taxa,setTaxa}
 
 }
 
-export default ModalTaxa
+export default ModalProduto
 
 const styles = StyleSheet.create({
 
@@ -65,7 +87,7 @@ const styles = StyleSheet.create({
         },
     modalBody:{
         width: '100%',
-        height: 280,
+        height: 310,
         backgroundColor: '#fff',
         borderTopLeftRadius:10,
         borderTopRightRadius: 10,
@@ -80,7 +102,7 @@ const styles = StyleSheet.create({
       flex: 1,
       width: '100%',
       flexDirection: 'column',
-      alignItems: 'center',  
+      alignItems: 'flex-start',  
       justifyContent: 'space-between',
      
     },
@@ -95,6 +117,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         color: cores.azul,
+    },
+    nome:{
+      fontWeight: 'bold',
+      fontSize: 16,
     },
     label: {
       fontWeight: 'bold',

@@ -5,11 +5,15 @@ import { cores } from '../style/globalStyle';
 import AccordionItem from '../components/AccordionItem';
 import Api from '../Api';
 import DataContext from '../context/DataContext';
+import ModalProduto from '../components/modal/ModalProduto';
 
 const Cardapio = () => {
   const [categorias,setCategorias] = useState([]);
   const {apiToken} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
+  const [modalVisible,setModalVisible] = useState(false);
+  const [produto,setProduto] = useState(null);
+
  
  
   useEffect(()=>{
@@ -26,7 +30,29 @@ const Cardapio = () => {
 
  },[]);
 
+const onEdit = (produto) => {
+      setProduto(produto);
+      setModalVisible(true);
+}
 
+const onSalvar = async (id,nome,preco,ativo) => {
+
+  if(isNaN(preco)){
+     alert("Preço inválido."); 
+  } else {
+
+    let response = await Api.updateProduto(apiToken,id,nome,preco,ativo);
+    if (response.status===200){
+      let response2 = await Api.getCategorias(apiToken);
+      let json = await response2.json();
+      setCategorias(json);
+     }
+    setModalVisible(false);
+
+  }
+  
+
+}
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,8 +64,9 @@ const Cardapio = () => {
         style={styles.flatList}
         data={categorias}
         keyExtractor={(item)=> item.id.toString()}
-        renderItem={({item})=><AccordionItem title={item.nome} data={item.produtos} />}
+        renderItem={({item})=><AccordionItem title={item.nome} data={item.produtos} onPress={onEdit} />}
         />}
+        {produto!=null&&<ModalProduto setModalVisible={setModalVisible} modalVisible={modalVisible} onSalvar={onSalvar} produto={produto}/>}
     </SafeAreaView>
   )
 }

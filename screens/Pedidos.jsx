@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Text } from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator} from 'react-native';
 import React, {useState,useEffect,useContext} from 'react';
 import Header from '../components/Header';
 import { cores } from '../style/globalStyle';
@@ -6,10 +6,12 @@ import DataContext from '../context/DataContext';
 import Api from '../Api';
 import PedidoCard from '../components/cards/PedidoCard';
 
+//import { useFocusEffect } from '@react-navigation/native';
+
 
 const Pedidos = () => {
-  const {apiToken} = useContext(DataContext);
-  const [pedidos,setPedidos] = useState([]);
+  const {apiToken,pedidos,setPedidos} = useContext(DataContext);
+  
   const [isLoading,setIsLoading] = useState(false);
 
   useEffect(()=>{
@@ -26,7 +28,12 @@ const Pedidos = () => {
 
  },[]);
 
-
+ /*
+ useFocusEffect(()=>{
+    
+ },[]
+ );
+*/
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
@@ -52,11 +59,17 @@ const styles = StyleSheet.create({
     backgroundColor: cores.whiteSmoke,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    
    },
    flatList: {
     width: '100%',
     paddingTop: 10,
     paddingHorizontal: 5,
+    
    },
+   loading:{
+    position: 'absolute',
+    top: '50%',
+   }
 
 })

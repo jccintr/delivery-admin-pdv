@@ -4,7 +4,7 @@ import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import ProductCard from './ProductCard';
 
-const AccordionItem = ({title,data}) => {
+const AccordionItem = ({title,data,onPress}) => {
   const [showContent,setShowContent] = useState(false);
   
 
@@ -18,7 +18,7 @@ const AccordionItem = ({title,data}) => {
         </View>
       </TouchableOpacity>
       {showContent&&<View style={styles.body}>
-        {data.map((item)=><ProductCard key={item.id} produto={item}/>)}
+        {data.map((item,index,arr)=><ProductCard key={item.id} produto={item} onPress={onPress} last={index===(arr.length-1)}/>)}
       </View>}
     </View>
   )

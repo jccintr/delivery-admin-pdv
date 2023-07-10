@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View,Image,Dimensions } from 'react-native';
+import { StyleSheet, Text, View,Image,Dimensions,TouchableOpacity } from 'react-native';
 import React from 'react';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 
-const ProductCard = ({produto}) => {
+const ProductCard = ({produto,onPress,last}) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={[styles.container,!last?styles.borda:'']} onPress={()=>onPress(produto)}>
       <Image style={styles.imagem} source={{uri:`${Api.base_storage}/${produto.imagem}`,}}/>
       <View style={styles.descricaoContainer}>
          <Text style={styles.nome}>{produto.nome}</Text>
@@ -14,10 +14,8 @@ const ProductCard = ({produto}) => {
             <Text style={styles.preco}>R$ {produto.preco}</Text>
             {!produto.ativo&&<Text style={styles.foraCardapio}>Fora do Cardápio</Text>}
          </View>
-         
       </View>
-      
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -32,11 +30,12 @@ const styles = StyleSheet.create({
         height: 80,
         width: '100%',
         flexDirection:'row',
-        borderBottomWidth: 1,
-        borderBottomColor: cores.whiteSmoke,
-        marginBottom: 10,
+        marginBottom: 5,
         
-       
+      },
+      borda:{
+        borderBottomColor: '#f1f1f1',
+        borderBottomWidth: 0.5,
       },
       imagem:{
         width: 60,

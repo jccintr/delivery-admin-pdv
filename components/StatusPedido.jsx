@@ -5,7 +5,7 @@ import { cores } from '../style/globalStyle';
 const StatusPedido = ({status}) => {
     
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor: status.cor,}]}>
       <Text style={styles.statusText}>{status.descricao_curta.toUpperCase()}</Text>
     </View>
   )
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     container: {
        
         borderRadius:5,
-        backgroundColor: 'green',
+        
         paddingHorizontal: 10,
         paddingVertical: 2,
         

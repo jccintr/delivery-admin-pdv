@@ -277,7 +277,52 @@ export default {
         });
         return response;
     },
-        
+    getPedido: async (token,id) => {
+        const response = await fetch(`${BASE_API}/pedidos/${id}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+        });
+        return response;
+    },
+    getStatus: async (token) => {
+        const response = await fetch(`${BASE_API}/status`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+        });
+        return response;
+    },  
+    addStatusLog: async (token,pedido_id,status_pedido_id) => {
+        const response = await fetch(`${BASE_API}/statuslog`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({pedido_id,status_pedido_id})
+        });
+        return response;
+    },
+    updateProduto: async (token,id,nome,preco,ativo) => {
+        const response = await fetch(`${BASE_API}/produtos/${id}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({nome,preco,ativo})
+        });
+        return response;
+    },
 
 };
 

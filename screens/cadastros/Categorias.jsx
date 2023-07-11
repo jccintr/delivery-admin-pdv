@@ -87,6 +87,9 @@ const Categorias = () => {
      setModalVisible(true);
  }
 
+ const EmptyList = () => {
+    return <Text style={{color: cores.primary}}>Você ainda não adicionou categorias.</Text>
+ }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -99,6 +102,8 @@ const Categorias = () => {
         data={categorias}
         keyExtractor={(item)=> item.id.toString()}
         renderItem={({item})=><CategoryItem item={item} onPress={onEdit}/>}
+        ListEmptyComponent={<EmptyList/>}
+        contentContainerStyle={categorias.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
         />}
         <ModalCategoria modalVisible={modalVisible} setModalVisible={setModalVisible} onSalvar={onSalvar} categoria={categoria} setCategoria={setCategoria} editando={editando}/>
  </SafeAreaView>

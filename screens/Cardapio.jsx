@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Dimensions } from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Text } from 'react-native';
 import React, {useState,useContext,useEffect} from 'react';
 import Header from '../components/Header';
 import { cores } from '../style/globalStyle';
@@ -54,6 +54,10 @@ const onSalvar = async (id,nome,preco,ativo) => {
 
 }
 
+const EmptyList = () => {
+  return <Text style={{color: cores.primary}}>O seu cardápio está vazio.</Text>
+}
+
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
@@ -65,6 +69,8 @@ const onSalvar = async (id,nome,preco,ativo) => {
         data={categorias}
         keyExtractor={(item)=> item.id.toString()}
         renderItem={({item})=><AccordionItem title={item.nome} data={item.produtos} onPress={onEdit} />}
+        ListEmptyComponent={<EmptyList/>}
+        contentContainerStyle={categorias.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
         />}
         {produto!=null&&<ModalProduto setModalVisible={setModalVisible} modalVisible={modalVisible} onSalvar={onSalvar} produto={produto}/>}
     </SafeAreaView>

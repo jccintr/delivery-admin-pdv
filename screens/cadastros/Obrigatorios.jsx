@@ -85,7 +85,9 @@ const onEdit = (item) => {
     setModalVisible(true);
 }
   
-
+const EmptyList = () => {
+  return <Text style={{color: cores.primary}}>Você ainda não adicionou itens.</Text>
+}
 
   return (
     <SafeAreaView style={styles.container}>
@@ -98,6 +100,8 @@ const onEdit = (item) => {
             data={obrigatorios}
             keyExtractor={(item)=> item.id.toString()}
             renderItem={({item})=><ObrigatorioItem item={item} onPress={onEdit}/>}
+            ListEmptyComponent={<EmptyList/>}
+            contentContainerStyle={obrigatorios.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
             />}
         <ModalObrigatorio modalVisible={modalVisible} setModalVisible={setModalVisible} onSalvar={onSalvar} obrigatorio={obrigatorio} setObrigatorio={setObrigatorio} editando={editando}/>
     </SafeAreaView>

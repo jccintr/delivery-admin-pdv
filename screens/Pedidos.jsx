@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator} from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Text} from 'react-native';
 import React, {useState,useEffect,useContext} from 'react';
 import Header from '../components/Header';
 import { cores } from '../style/globalStyle';
@@ -28,6 +28,10 @@ const Pedidos = () => {
 
  },[]);
 
+ const EmptyList = () => {
+  return <Text style={{color: cores.primary}}>Nenhum pedido encontrado.</Text>
+}
+
  /*
  useFocusEffect(()=>{
     
@@ -45,6 +49,8 @@ const Pedidos = () => {
         data={pedidos}
         keyExtractor={(item)=> item.id.toString()}
         renderItem={({item})=><PedidoCard pedido={item}/>}
+        ListEmptyComponent={<EmptyList/>}
+        contentContainerStyle={pedidos.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
         />}
     </SafeAreaView>
   )

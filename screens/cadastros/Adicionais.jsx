@@ -90,6 +90,9 @@ const Adicionais = () => {
      setModalVisible(true);
  }
 
+ const EmptyList = () => {
+  return <Text style={{color: cores.primary}}>Você ainda não adicionou itens.</Text>
+}
 
  return (
   <SafeAreaView style={styles.container}>
@@ -102,6 +105,8 @@ const Adicionais = () => {
       data={adicionais}
       keyExtractor={(item)=> item.id.toString()}
       renderItem={({item})=><AdicionalItem item={item} onPress={onEdit}/>}
+      ListEmptyComponent={<EmptyList/>}
+      contentContainerStyle={adicionais.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
       />}
       <ModalAdicional modalVisible={modalVisible} setModalVisible={setModalVisible} onSalvar={onSalvar} adicional={adicional} setAdicional={setAdicional} editando={editando}/>
 </SafeAreaView>

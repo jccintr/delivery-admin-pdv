@@ -88,6 +88,11 @@ const Pagamentos = () => {
      setModalVisible(true);
  }
 
+ const EmptyList = () => {
+  return <Text style={{color: cores.primary}}>Você ainda não adicionou formas de pagamento.</Text>
+}
+
+
 
  return (
   <SafeAreaView style={styles.container}>
@@ -100,6 +105,8 @@ const Pagamentos = () => {
       data={pagamentos}
       keyExtractor={(item)=> item.id.toString()}
       renderItem={({item})=><PagamentoItem item={item} onPress={onEdit}/>}
+      ListEmptyComponent={<EmptyList/>}
+      contentContainerStyle={pagamentos.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
       />}
       <ModalPagamentos modalVisible={modalVisible} setModalVisible={setModalVisible} onSalvar={onSalvar} pagamento={pagamento} setPagamento={setPagamento} editando={editando}/>
 </SafeAreaView>

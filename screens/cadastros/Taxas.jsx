@@ -90,6 +90,11 @@ const Taxas = () => {
      setModalVisible(true);
  }
 
+ const EmptyList = () => {
+  return <Text style={{color: cores.primary}}>Você ainda não adicionou taxas de entrega.</Text>
+}
+
+
 
  return (
   <SafeAreaView style={styles.container}>
@@ -102,6 +107,8 @@ const Taxas = () => {
       data={taxas}
       keyExtractor={(item)=> item.id.toString()}
       renderItem={({item})=><TaxaItem item={item} onPress={onEdit}/>}
+      ListEmptyComponent={<EmptyList/>}
+      contentContainerStyle={taxas.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
       />}
       <ModalTaxa modalVisible={modalVisible} setModalVisible={setModalVisible} onSalvar={onSalvar} taxa={taxa} setTaxa={setTaxa} editando={editando}/>
 </SafeAreaView>

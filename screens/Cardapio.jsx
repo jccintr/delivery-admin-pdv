@@ -1,19 +1,21 @@
 import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Text } from 'react-native';
-import React, {useState,useContext,useEffect} from 'react';
-import Header from '../components/Header';
+import React, {useState,useContext,useEffect,useCallback} from 'react';
+import Header2 from '../components/Header2';
 import { cores } from '../style/globalStyle';
 import AccordionItem from '../components/AccordionItem';
 import Api from '../Api';
 import DataContext from '../context/DataContext';
+import { useNavigation } from '@react-navigation/native';
 import ModalProduto from '../components/modal/ModalProduto';
 
+
 const Cardapio = () => {
-  const [categorias,setCategorias] = useState([]);
-  const {apiToken} = useContext(DataContext);
+  const navigation = useNavigation();
+  const {apiToken,categorias,setCategorias} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
   const [modalVisible,setModalVisible] = useState(false);
   const [produto,setProduto] = useState(null);
-
+  
  
  
   useEffect(()=>{
@@ -30,18 +32,21 @@ const Cardapio = () => {
 
  },[]);
 
+
+
 const onEdit = (produto) => {
       setProduto(produto);
-      setModalVisible(true);
+      //setModalVisible(true);
+      navigation.navigate('EditProduto',{idProduto: produto.id, categorias: categorias})
 }
 
-const onSalvar = async (id,nome,preco,ativo) => {
+const onSalvar = async (id,nome,descricao,preco,categoria_id,ativo) => {
 
   if(isNaN(preco)){
      alert("Preço inválido."); 
   } else {
 
-    let response = await Api.updateProduto(apiToken,id,nome,preco,ativo);
+    let response = await Api.updateProduto(apiToken,id,nome,descricao,preco,categoria_id,ativo);
     if (response.status===200){
       let response2 = await Api.getCategorias(apiToken);
       let json = await response2.json();
@@ -61,7 +66,7 @@ const EmptyList = () => {
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-       <Header title="Cardápio"/>
+       <Header2 title="Cardápio" onAdd={()=>navigation.navigate('NovoProduto')}/>
       {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
       {!isLoading&&<FlatList 
         showsVerticalScrollIndicator={false}

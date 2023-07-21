@@ -4,10 +4,12 @@ import { cores } from '../style/globalStyle';
 import Api from '../Api';
 
 const ProductCard = ({produto,onPress,last}) => {
+  const screenWidth = Dimensions.get('window').width;
+
   return (
     <TouchableOpacity style={[styles.container,!last?styles.borda:'']} onPress={()=>onPress(produto)}>
-      <Image style={styles.imagem} source={{uri:`${Api.base_storage}/${produto.imagem}`,}}/>
-      <View style={styles.descricaoContainer}>
+      {produto.imagem&&<Image style={styles.imagem} source={{uri:`${Api.base_storage}/${produto.imagem}`,}}/>}
+      <View style={[styles.descricaoContainer,{width: produto.imagem===null? screenWidth*0.88:screenWidth*0.7}]}>
          <Text style={styles.nome}>{produto.nome}</Text>
          <Text style={styles.descricao}>{produto.descricao}</Text>
          <View style={styles.precoContainer}>
@@ -24,14 +26,12 @@ export default ProductCard
 const styles = StyleSheet.create({
 
     container: {
-       
         alignItems: 'center',
         justifyContent: 'flex-start',
         height: 80,
         width: '100%',
         flexDirection:'row',
         marginBottom: 5,
-        
       },
       borda:{
         borderBottomColor: '#f1f1f1',
@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
          flexDirection: 'column',
          alignItems: 'flex-start',
          justifyContent: 'space-evenly',
-         
-         width: Dimensions.get('window').width * 0.7,
+        
          height: 80,
+         
       },
       nome:{
         fontWeight: 'bold',

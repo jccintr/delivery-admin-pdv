@@ -311,7 +311,7 @@ export default {
         });
         return response;
     },
-    updateProduto: async (token,id,nome,preco,ativo) => {
+    updateProduto: async (token,id,nome,descricao,preco,categoria_id,ativo) => {
         const response = await fetch(`${BASE_API}/produtos/${id}`, {
             method: 'PUT',
             headers: {
@@ -319,10 +319,69 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({nome,preco,ativo})
+            body: JSON.stringify({nome,descricao,preco,categoria_id,ativo})
         });
         return response;
     },
-
+    updateImagemProduto: async (token,id,fd) => {
+        const response = await fetch(`${BASE_API}/produtos/imagem/${id}`, {
+            method: 'POST',
+            headers: {'Authorization': 'Bearer ' + token},
+            body: fd
+        });
+        return response;
+    },
+    getProduto: async (token,id) => {
+        const response = await fetch(`${BASE_API}/produtos/${id}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+        });
+        return response;
+    },
+    addProduto: async (token,fd) => {
+        const response = await fetch(`${BASE_API}/produtos`, {
+            method: 'POST',
+            headers: {'Authorization': 'Bearer ' + token},
+            body: fd
+        });
+        return response;
+    },
+    AddProdutoObrigatorio: async (token,produto_id,obrigatorio_id) => {
+        const response = await fetch(`${BASE_API}/produtoobrigatorio`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({produto_id,obrigatorio_id})
+        });
+        return response;
+    },
+    DeleteProdutoObrigatorio: async (token,id) => {
+        const response = await fetch(`${BASE_API}/produtoobrigatorio/${id}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            
+        });
+        return response;
+    },
+    addTenant: async (token,fd) => {
+        const response = await fetch(`${BASE_API}/tenant`, {
+            method: 'POST',
+            headers: {'Authorization': 'Bearer ' + token},
+            body: fd
+        });
+       return response;
+    },
+    
 };
 

@@ -56,7 +56,7 @@ const Login = () => {
         <View/>
         <View style={styles.logoArea}>
           <Feather name="shopping-cart" size={50} color={cores.whiteSmoke} />
-          <Text style={styles.headerText}>BraizFood PDV</Text>
+          <Text style={styles.headerText}>BrazPed PDV</Text>
         </View> 
         
         <Text style={styles.headerText}>Login</Text>

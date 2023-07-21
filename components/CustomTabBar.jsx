@@ -28,7 +28,7 @@ const CustomTabBar = ({state,navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.TabItem} onPress={()=>goTo('Cadastros')}>
-              <FontAwesome style={{color:state.index === 3 ? cores.primary:cores.menuItem}} name="user-circle-o" size={24}  />
+              <AntDesign style={{color:state.index === 3 ? cores.primary:cores.menuItem}} name="bars" size={24}  />
               <Text style={state.index === 3 ? styles.TabItemTextSelected:styles.TabItemText}>Cadastros</Text>
             </TouchableOpacity>
 

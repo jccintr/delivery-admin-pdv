@@ -6,10 +6,11 @@ const ItemPedidoCard = ({item,last}) => {
   return (
     <View style={[styles.container,!last?styles.borda:'']}>
         <View style={styles.itemContainer}>
-           <Text>{item.quantidade} x {item.produto.nome}</Text> 
+           <Text>{item.quantidade}  {item.produto.nome}</Text> 
            <Text style={{fontWeight:'bold'}}>R$ {item.total}</Text> 
         </View>
         {item.obrigatorios.map((item,index)=><Text key={index}>   {item}</Text>)}
+        {item.adicionais.map((item,index)=><Text key={index}>   + {item}</Text>)}
         {item.observacao!=null?<Text>Obs: {item.observacao}</Text>:''}
     </View>
   )

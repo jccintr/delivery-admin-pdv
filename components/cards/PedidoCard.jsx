@@ -37,7 +37,7 @@ const PedidoCard = ({pedido}) => {
         <Text style={styles.numeroText}>{`${pedido.token} | ${pedido.data}`}</Text>
         <View style={styles.firstLine}>
             {pedido.delivery?<Delivery/>:<Retira/>}
-            <Text style={styles.totalText}>R$ {pedido.total}</Text>
+            <Text style={styles.totalText}>R$ {pedido.total.toFixed(2)}</Text>
         </View>
     </TouchableOpacity>
   )

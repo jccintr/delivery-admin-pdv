@@ -20,6 +20,8 @@ const EditProduto = ({route}) => {
     const {apiToken,categorias,setCategorias} = useContext(DataContext);
     const [obrigatoriosProduto,setObrigatoriosProduto] = useState([]);
     const [obrigatorios,setObrigatorios] = useState([]);
+    const [adicionaisProduto,setAdicionaisProduto] = useState([]);
+    const [adicionais,setAdicionais] = useState([]);
     const [obrigatorioId,setObrigatorioId] = useState(0);
     const [obrigatoriosSelected,setObrigatorioSelected] = useState([]);
     const screenWidth = Dimensions.get('window').width;
@@ -38,6 +40,21 @@ const EditProduto = ({route}) => {
           setIsLoadingScreen(false);
         }
         getObrigatorios();
+    
+     },[]);
+
+     useEffect(()=>{
+        
+        const getAdicionais = async () => {
+          setIsLoadingScreen(true);
+          let response = await Api.getAdicionais(apiToken);
+          if(response.status===200) {
+            let json = await response.json();
+            setAdicionais(json);
+          }
+          setIsLoadingScreen(false);
+        }
+        getAdicionais();
     
      },[]);
 
@@ -82,6 +99,30 @@ const EditProduto = ({route}) => {
                 let response2 = await Api.getProduto(apiToken,idProduto);
                 let json = await response2.json();
                 setObrigatoriosProduto(json.obrigatorios);
+            }
+        }
+       
+        
+    }
+
+    const toggleAdicional = async (adicional) => {
+        // receber o adicional e determinar se ele já esta vinculado ao produto atual
+        if (adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)!==-1) {
+            // já vinculado, deletar
+            let indice = adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)
+            let response = await Api.DeleteProdutoAdicional(apiToken,adicionaisProduto[indice].id);
+            if(response.status===200) {
+                let response2 = await Api.getProduto(apiToken,idProduto);
+                let json = await response2.json();
+                setAdicionaisProduto(json.adicionais);
+            }
+        } else {
+            // não vinculado, incluir
+            let response = await Api.AddProdutoAdicional(apiToken,idProduto,adicional.id);
+            if(response.status===201) {
+                let response2 = await Api.getProduto(apiToken,idProduto);
+                let json = await response2.json();
+                setAdicionaisProduto(json.adicionais);
             }
         }
        
@@ -144,6 +185,13 @@ const EditProduto = ({route}) => {
         return (
             <TouchableOpacity onPress={()=>toggleSelecionavel(obrigatorio)} style={[{borderWidth:1,padding:5,margin:5,borderRadius:5},obrigatoriosProduto.findIndex(item=>item.obrigatorio_id===obrigatorio.id)!==-1?styles.categorySelected:'']}>
                  <Text style={obrigatoriosProduto.findIndex(item=>item.obrigatorio_id===obrigatorio.id)!==-1?styles.categorySelectedText:''}>{obrigatorio.nome}</Text>
+            </TouchableOpacity>
+        )
+    }
+    const Adicional = ({adicional}) => {
+        return (
+            <TouchableOpacity onPress={()=>toggleAdicional(adicional)} style={[{borderWidth:1,padding:5,margin:5,borderRadius:5},adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)!==-1?styles.categorySelected:'']}>
+                 <Text style={adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)!==-1?styles.categorySelectedText:''}>{adicional.nome}</Text>
             </TouchableOpacity>
         )
     }
@@ -224,6 +272,17 @@ const EditProduto = ({route}) => {
                             renderItem={({item})=><Obrigatorio obrigatorio={item}/>}
                             horizontal={true}
                         />
+
+                        <Text style={styles.label}>Itens Adicionais:</Text>
+                        <FlatList 
+                            showsHorizontalScrollIndicator={false}
+                            style={styles.flatList}
+                            data={adicionais}
+                            keyExtractor={(item)=> item.id.toString()}
+                            renderItem={({item})=><Adicional adicional={item}/>}
+                            horizontal={true}
+                        />
+
                     <TouchableOpacity onPress={changeImage} style={styles.imgButton}>
                         {imagem===null&&<>
                         <FontAwesome name="photo" size={50} color={cores.primary} />

@@ -374,6 +374,30 @@ export default {
         });
         return response;
     },
+    AddProdutoAdicional: async (token,produto_id,adicional_id) => {
+        const response = await fetch(`${BASE_API}/produtooadicional`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({produto_id,adicional_id})
+        });
+        return response;
+    },
+    DeleteProdutoAdicional: async (token,id) => {
+        const response = await fetch(`${BASE_API}/produtoadicional/${id}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            
+        });
+        return response;
+    },
     addTenant: async (token,fd) => {
         const response = await fetch(`${BASE_API}/tenant`, {
             method: 'POST',

@@ -87,7 +87,7 @@ const onAddStatus = async (idStatus) => {
                 <Text style={[styles.subTitle,{marginBottom:10}]}>Totais do Pedido</Text>
                 <View style={styles.totalLine}>
                     <Text>Total dos Produtos:</Text>
-                    <Text>R$ {pedido.total}</Text>
+                    <Text>R$ {pedido.total.toFixed(2)}</Text>
                 </View>
                 {pedido.delivery&&<View style={styles.totalLine}>
                     <Text>Taxa de Entrega:</Text>
@@ -95,7 +95,7 @@ const onAddStatus = async (idStatus) => {
                 </View>}
                 <View style={styles.totalLine}>
                     <Text style={{fontWeight:'bold'}}>Total do Pedido:</Text>
-                    <Text style={{fontWeight:'bold'}}>R$ {pedido.taxa_entrega*1 + pedido.total*1}</Text>
+                    <Text style={{fontWeight:'bold'}}>R$ {(parseFloat(pedido.taxa_entrega) + parseFloat(pedido.total)).toFixed(2)}</Text>
                 </View>
             </View>
             <View style={styles.itensArea}>

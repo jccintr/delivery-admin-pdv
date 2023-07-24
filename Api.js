@@ -375,7 +375,7 @@ export default {
         return response;
     },
     AddProdutoAdicional: async (token,produto_id,adicional_id) => {
-        const response = await fetch(`${BASE_API}/produtooadicional`, {
+        const response = await fetch(`${BASE_API}/produtoadicional`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

@@ -22,8 +22,8 @@ const EditProduto = ({route}) => {
     const [obrigatorios,setObrigatorios] = useState([]);
     const [adicionaisProduto,setAdicionaisProduto] = useState([]);
     const [adicionais,setAdicionais] = useState([]);
-    const [obrigatorioId,setObrigatorioId] = useState(0);
-    const [obrigatoriosSelected,setObrigatorioSelected] = useState([]);
+    //const [obrigatorioId,setObrigatorioId] = useState(0);
+    //const [obrigatoriosSelected,setObrigatorioSelected] = useState([]);
     const screenWidth = Dimensions.get('window').width;
     const [isLoading,setIsLoading] = useState(false);
     const [isLoadingScreen,setIsLoadingScreen] = useState(true);
@@ -71,6 +71,7 @@ const EditProduto = ({route}) => {
             setAtivo(json.ativo);
             setImagem(json.imagem);
             setObrigatoriosProduto(json.obrigatorios);
+            setAdicionaisProduto(json.adicionais);
           }
           setIsLoadingScreen(false);
         }
@@ -119,6 +120,7 @@ const EditProduto = ({route}) => {
         } else {
             // não vinculado, incluir
             let response = await Api.AddProdutoAdicional(apiToken,idProduto,adicional.id);
+            //console.log(response.status);
             if(response.status===201) {
                 let response2 = await Api.getProduto(apiToken,idProduto);
                 let json = await response2.json();

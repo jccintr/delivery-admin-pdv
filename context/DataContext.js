@@ -1,5 +1,5 @@
-import { createContext,useState,useEffect } from "react";
-import Api from "../Api";
+import { createContext,useState } from "react";
+//import Api from "../Api";
 
 const DataContext = createContext({});
 
@@ -8,6 +8,7 @@ export const DataProvider = ({children}) => {
    const [expoPushToken, setExpoPushToken] = useState('');
    const [apiToken, setApiToken] = useState(null);
    const [pedidos,setPedidos] = useState([]);
+   const [pedidosFiltrados,setPedidosFiltrados] = useState([]);
    const [categorias,setCategorias] = useState([]);
    
    
@@ -17,7 +18,7 @@ export const DataProvider = ({children}) => {
 
 
    return (
-    <DataContext.Provider value={{loggedUser, setLoggedUser,setExpoPushToken,expoPushToken,apiToken,setApiToken,pedidos,setPedidos,categorias,setCategorias}}>
+    <DataContext.Provider value={{loggedUser,setLoggedUser,setExpoPushToken,expoPushToken,apiToken,setApiToken,pedidos,setPedidos,pedidosFiltrados,setPedidosFiltrados,categorias,setCategorias}}>
       {children}
     </DataContext.Provider>
 )

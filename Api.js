@@ -406,6 +406,18 @@ export default {
         });
        return response;
     },
+    storePushToken: async (token,push_token) => {
+        const response = await fetch(`${BASE_API}/tenant/token`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({push_token})
+        });
+        return response;
+    },
     
 };
 

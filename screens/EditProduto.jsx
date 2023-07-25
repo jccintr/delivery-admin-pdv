@@ -396,6 +396,7 @@ const styles = StyleSheet.create({
      loading:{
         position: 'absolute',
         top: '50%',
+        width: '100%',
        }
 
 })

@@ -25,7 +25,7 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-      <Header title="BrazPed Ponto de Venda"/>
+      <Header title="BrazPed"/>
       <Image style={styles.logotipo} source={{uri:`${Api.base_storage}/${loggedUser.logotipo}`,}}/>
       <Text style={styles.name}>{loggedUser.name}</Text>
       <Status />

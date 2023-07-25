@@ -1,16 +1,65 @@
 import React, { useEffect,useState,useContext } from 'react';
-import { StyleSheet, SafeAreaView,ActivityIndicator,StatusBar } from 'react-native';
+import { StyleSheet, SafeAreaView,ActivityIndicator,StatusBar,Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../Api';
 import { cores } from '../style/globalStyle';
 import DataContext from '../context/DataContext';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+
+  // pede permisao para enviar notificacoes
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+  
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+  
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Falha ao obter token de notificação!');
+        return;
+      }
+      //android 13 call -> setNotificationChannelAsync
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+  
+    return token;
+  }
+
+
+
 
 const Preload = () => {
     const navigation = useNavigation();
     const [isLoading,setIsLoading] = useState(false);
-    const {setLoggedUser,loggedUser,setApiToken} = useContext(DataContext);
+    const {setLoggedUser,loggedUser,setApiToken,setExpoPushToken} = useContext(DataContext);
+    
 
     useEffect(()=>{
         const checkToken = async () => {
@@ -48,6 +97,9 @@ const Preload = () => {
         checkToken();
     }, []);
 
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>

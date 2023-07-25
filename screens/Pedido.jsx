@@ -16,7 +16,7 @@ import DataContext from '../context/DataContext';
 
 const Pedido = ({route}) => {
     const [pedido,setPedido] = useState(route.params.pedido);
-    const {apiToken,setPedidos} = useContext(DataContext);
+    const {apiToken,setPedidos,pedidosFiltrados,setPedidosFiltrados} = useContext(DataContext);
     const navigation = useNavigation();
     const screenWidth = Dimensions.get('window').width;
     const [modalVisible,setModalVisible] = useState(false);
@@ -52,6 +52,7 @@ const onAddStatus = async (idStatus) => {
        let response3 = await Api.getPedidos(apiToken);
        let jsonPedidos = await response3.json();
        setPedidos(jsonPedidos);
+       setPedidosFiltrados(jsonPedidos);
     }
     setModalVisible(false);
 

@@ -7,6 +7,7 @@ import { Feather } from '@expo/vector-icons';
 import Api from '../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DataContext from '../context/DataContext';
+import logo from '../assets/logo-branco-250.png';
 
 const Login = () => {
   const [email,setEmail] = useState('');
@@ -56,7 +57,8 @@ const Login = () => {
      <View style={styles.header}>  
         <View/>
         <View style={styles.logoArea}>
-          <Feather name="shopping-cart" size={50} color={cores.whiteSmoke} />
+          <Image source={logo} style={styles.logo}/>
+          {/*<Feather name="shopping-cart" size={50} color={cores.whiteSmoke} />*/}
           <Text style={styles.headerText}>BrazPed PDV</Text>
         </View> 
         
@@ -149,6 +151,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: cores.primary,
     fontWeight: 'bold',
+  },
+  logo:{
+    height: 150,
+    width: 150,
   },
   
  

@@ -1,5 +1,5 @@
 import React, { useEffect,useState,useContext } from 'react';
-import { StyleSheet, SafeAreaView,ActivityIndicator,StatusBar,Platform } from 'react-native';
+import { StyleSheet, SafeAreaView,ActivityIndicator,StatusBar,Platform,Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,6 +8,7 @@ import { cores } from '../style/globalStyle';
 import DataContext from '../context/DataContext';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import logo from '../assets/logo-branco-250.png';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -108,7 +109,8 @@ const Preload = () => {
                 backgroundColor={cores.branco}
                 barStyle="dark-content"
             />
-            <Feather name="shopping-cart" size={50} color={cores.whiteSmoke} />
+             <Image source={logo} style={styles.logo}/>
+            {/*<Feather name="shopping-cart" size={50} color={cores.whiteSmoke} />*/}
             {isLoading&&<ActivityIndicator size="large" color={cores.white}/>}
         </SafeAreaView>
        )
@@ -123,6 +125,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: cores.primary,
         
+    },
+    logo:{
+      height: 150,
+      width: 150,
     },
     
   });

@@ -84,13 +84,14 @@ const onAddStatus = async (idStatus) => {
                 <Text style={styles.subTitle}>Itens do Pedido</Text>
                 {pedido.itens_pedido.map((item,index,arr)=><ItemPedidoCard key={item.id} last={index===(arr.length-1)} item={item}/>)}
             </View>
+            
             <View style={styles.itensArea}>
                 <Text style={[styles.subTitle,{marginBottom:10}]}>Totais do Pedido</Text>
                 <View style={styles.totalLine}>
                     <Text>Total dos Produtos:</Text>
                     <Text>R$ {pedido.total.toFixed(2)}</Text>
                 </View>
-                {pedido.delivery&&<View style={styles.totalLine}>
+                {(pedido.delivery===1 || pedido.delivery === true)&&<View style={styles.totalLine}>
                     <Text>Taxa de Entrega:</Text>
                     <Text>R$ {pedido.taxa_entrega}</Text>
                 </View>}
@@ -105,12 +106,14 @@ const onAddStatus = async (idStatus) => {
                     <Text>{pedido.forma_pagamento}</Text>
                 </View>
             </View>
-            {pedido.delivery&&<View style={styles.itensArea}>
+           
+            {(pedido.delivery===1 || pedido.delivery===true)&&<View style={styles.itensArea}>
                 <Text style={[styles.subTitle,{marginBottom:10}]}>Endereço para Entrega</Text>
                 <View style={styles.totalLine}>
                     <Text>{pedido.endereco} - {pedido.bairro}</Text>
                 </View>
             </View>}
+             
             {pedido.observacao&&<View style={styles.itensArea}>
                 <Text style={[styles.subTitle,{marginBottom:10}]}>Observações</Text>
                 <View style={styles.totalLine}>
@@ -125,6 +128,7 @@ const onAddStatus = async (idStatus) => {
                         <Text style={styles.addButtonText}>Atualizar Status</Text>
             </TouchableOpacity>
             <ModalStatus setModalVisible={setModalVisible} modalVisible={modalVisible} statusList={statusList} onAddStatus={onAddStatus}/>
+            
        </ScrollView>
     </SafeAreaView>
   )

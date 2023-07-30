@@ -1,10 +1,12 @@
 
 
 //const BASE_API = 'localhost:8000/api';
-const BASE_API = 'http://192.168.0.117:8000/api';
+//const BASE_API = 'http://192.168.0.117:8000/api';
+const BASE_API = 'https://brazped-api.js-software.tech/api';
 
 export default {
-  base_storage: 'http://192.168.0.117:8000/storage',
+ // base_storage: 'http://192.168.0.117:8000/storage',
+  base_storage: 'https://brazped-api.js-software.tech/storage',
  // base_storage: 'https://tripsun.tk/storage',
   //  base_storage: 'http://177.104.209.216:8000/storage',
 

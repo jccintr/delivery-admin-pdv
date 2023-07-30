@@ -1,16 +1,12 @@
 {
   "expo": {
-    "name": "admin-pdv",
+    "name": "BrazPed",
     "slug": "admin-pdv",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -18,13 +14,20 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.jccintr.adminpdv"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "46d52956-7650-4660-b5e9-291697b99e8e"
+      }
     }
   }
 }

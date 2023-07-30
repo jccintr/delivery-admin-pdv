@@ -1,4 +1,4 @@
-import { StyleSheet,Text,SafeAreaView,View,TouchableOpacity,ActivityIndicator,StatusBar} from 'react-native';
+import { StyleSheet,Text,SafeAreaView,View,TouchableOpacity,ActivityIndicator,StatusBar,Image} from 'react-native';
 import { cores } from '../style/globalStyle';
 import React, {useState,useContext} from 'react';
 import { useNavigation } from '@react-navigation/native';

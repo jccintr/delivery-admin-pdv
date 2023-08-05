@@ -28,7 +28,8 @@ const Status = () => {
   return (
     <TouchableOpacity onPress={toggleStatus} style={[styles.container,aberto?{backgroundColor:'#006400'}:'']}>
       {isLoading&&<ActivityIndicator  size="small" color={cores.branco}/>}
-      {!isLoading&&<Text style={styles.status}>LOJA {aberto?'ABERTA':'FECHADA'}</Text>}
+      {!isLoading&&<><Text style={styles.status}>LOJA</Text>
+      <Text style={styles.status}>{aberto?'ABERTA':'FECHADA'}</Text></>}
     </TouchableOpacity>
   )
 }
@@ -42,15 +43,15 @@ const styles = StyleSheet.create({
         backgroundColor: cores.whiteSmoke,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 180,
-        height: 40,
+        padding: 5,
+        paddingHorizontal: 10,
         backgroundColor: cores.vermelho,
-        borderRadius: 20,
+        borderRadius: 12,
         
        },
        status:{
            fontWeight: 'bold',
-           fontSize: 16,
+           fontSize: 14,
            color: cores.white,
        }
 })

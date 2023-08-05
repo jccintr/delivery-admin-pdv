@@ -91,7 +91,7 @@ const onAddStatus = async (idStatus) => {
                     <Text>Total dos Produtos:</Text>
                     <Text>R$ {pedido.total.toFixed(2)}</Text>
                 </View>
-                {(pedido.delivery===1 || pedido.delivery === true)&&<View style={styles.totalLine}>
+                {pedido.delivery&&<View style={styles.totalLine}>
                     <Text>Taxa de Entrega:</Text>
                     <Text>R$ {pedido.taxa_entrega}</Text>
                 </View>}
@@ -107,7 +107,7 @@ const onAddStatus = async (idStatus) => {
                 </View>
             </View>
            
-            {(pedido.delivery===1 || pedido.delivery===true)&&<View style={styles.itensArea}>
+            {pedido.delivery&&<View style={styles.itensArea}>
                 <Text style={[styles.subTitle,{marginBottom:10}]}>Endereço para Entrega</Text>
                 <View style={styles.totalLine}>
                     <Text>{pedido.endereco} - {pedido.bairro}</Text>

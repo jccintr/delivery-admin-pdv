@@ -71,7 +71,7 @@ const Horarios = () => {
   } else {
    
    let response = await Api.updateHorario(apiToken,horario.id,horario.horario);
-   console.log(response.status);
+   //console.log(response.status);
    if(response.status===200){
      let response2 = await Api.getHorarios(apiToken);
          if(response2.status===200){

@@ -1,6 +1,7 @@
 export const cores = {
     primary: '#0073e6',
     white: '#fff',
+    orange: '#FFAC1C',
     whiteSmoke: '#f5f5f5',
 	ghostWhite: '#f8f8ff',
     vermelho: '#EB0303',

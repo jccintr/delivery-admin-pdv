@@ -1,60 +1,41 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 
 
-const days = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
-
-
-const ModalHorario = ({modalVisible,setModalVisible,editando,onSalvar,horario,setHorario}) => {
- 
-    return (
-        <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
-
+const ModalWait = ({modalVisible,setModalVisible, value,onSalvar}) => {
+    const [valor,setValor] = useState(value)
+  return (
+    <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
           <View style={styles.modalArea}>
-
             <View style={styles.modalBody}>
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
                     <Entypo name="chevron-down" size={34} color={cores.azul} />
-                    <Text style={styles.modalTitleText}>{!editando?'Novo':'Editando'} Horário</Text>
+                    <Text style={styles.modalTitleText}>Tempo de Espera</Text>
                 </TouchableOpacity>
-                
                 <View style={styles.content}>
-                    <View>
-                      <Text style={styles.label}>{days[horario.dia]}:</Text>
                       <View style={styles.inputArea}>
                           <TextInput style={styles.input}
-                                  placeholder="Horario de funcionamento..."
-                                  value={horario.horario}
-                                  onChangeText={t=>setHorario({...horario,horario: t})}
+                                  placeholder="Tempo de espera..."
+                                  value={valor}
+                                  onChangeText={t=>setValor(t)}
                                   placeholderTextColor="#c1c1c1" 
                               />
                       </View>
-                    </View>
-                    
-                        <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar()} >
+                      <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar(valor)} >
                             <Text style={styles.addButtonText}>SALVAR</Text>
                         </TouchableOpacity>
                 </View>
             </View>
-                
           </View>
         </Modal>
-      )
-
-
-
-
-
-
+  )
 }
 
-export default ModalHorario
+export default ModalWait
 
 const styles = StyleSheet.create({
-
-
 
     modalArea:{
         flex:1,
@@ -64,7 +45,7 @@ const styles = StyleSheet.create({
         },
     modalBody:{
         width: '100%',
-        height: 210,
+        height: 180,
         backgroundColor: '#fff',
         borderTopLeftRadius:10,
         borderTopRightRadius: 10,
@@ -140,8 +121,6 @@ const styles = StyleSheet.create({
       fontSize: 17,
       fontWeight:'bold',
    },
-
-
 
 
 })

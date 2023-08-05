@@ -5,9 +5,9 @@
 const BASE_API = 'https://brazped-api.js-software.tech/api';
 
 export default {
- // base_storage: 'http://192.168.0.117:8000/storage',
+//  base_storage: 'http://192.168.0.117:8000/storage',
   base_storage: 'https://brazped-api.js-software.tech/storage',
- // base_storage: 'https://tripsun.tk/storage',
+ 
   //  base_storage: 'http://177.104.209.216:8000/storage',
 
 
@@ -149,6 +149,18 @@ export default {
                 'Authorization': 'Bearer ' + token
             },
            
+        });
+        return response;
+    },
+    updateEspera: async (token,tempo_espera) => {
+        const response = await fetch(`${BASE_API}/espera`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({tempo_espera})
         });
         return response;
     },
@@ -417,6 +429,17 @@ export default {
                 'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({push_token})
+        });
+        return response;
+    },
+    getResumo: async (token) => {
+        const response = await fetch(`${BASE_API}/pedidosresumo`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
         });
         return response;
     },

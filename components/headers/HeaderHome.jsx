@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet,View,TouchableOpacity,Text } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons,Feather } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 
 
-const HeaderHome = ({title,onRefresh}) => {
+const HeaderHome = ({title,onRefresh,onLogout}) => {
   return (
     <View style={styles.container}>
         <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
@@ -12,7 +12,10 @@ const HeaderHome = ({title,onRefresh}) => {
         </View>
         <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={onRefresh}>
-                   <Feather name="refresh-ccw" size={24} color="white" />
+                   <Feather  style={{marginRight:20}} name="refresh-ccw" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onLogout}>
+                   <MaterialCommunityIcons name="logout" size={24} color="white" />
             </TouchableOpacity>
         </View>
       

@@ -85,7 +85,7 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-      <HeaderHome title="BrazPed" onRefresh={onRefresh}/>
+      <HeaderHome title="BrazPed" onRefresh={onRefresh} onLogout={onLogout}/>
       {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
       <View style={styles.tenantArea}>
           <Image style={styles.logotipo} source={{uri:`${Api.base_storage}/${loggedUser.logotipo}`,}}/>
@@ -116,9 +116,9 @@ const Home = () => {
       </View> 
 
 
-      <TouchableOpacity onPress={onLogout}>
+      {/*<TouchableOpacity onPress={onLogout}>
         <Text style={{color:'#f00',fontWeight:'bold',fontSize:16}}>Desconectar</Text>
-      </TouchableOpacity>
+        </TouchableOpacity>*/}
        <ModalWait setModalVisible={setModalVisible} modalVisible={modalVisible} value={espera}  onSalvar={onSaveWait}/>
     </SafeAreaView>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text,TouchableOpacity,View} from 'react-native';
-import { Entypo,FontAwesome,AntDesign,Ionicons,Feather} from '@expo/vector-icons'; 
+import { Entypo,AntDesign,Ionicons,Feather} from '@expo/vector-icons'; 
 import { cores } from '../style/globalStyle';
 
 const CustomTabBar = ({state,navigation}) => {
@@ -28,8 +28,8 @@ const CustomTabBar = ({state,navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.TabItem} onPress={()=>goTo('Cadastros')}>
-              <AntDesign style={{color:state.index === 3 ? cores.primary:cores.menuItem}} name="bars" size={24}  />
-              <Text style={state.index === 3 ? styles.TabItemTextSelected:styles.TabItemText}>Cadastros</Text>
+              <Feather style={{color:state.index === 3 ? cores.primary:cores.menuItem}} name="settings" size={24}  />
+              <Text style={state.index === 3 ? styles.TabItemTextSelected:styles.TabItemText}>Ajustes</Text>
             </TouchableOpacity>
 
     </View>

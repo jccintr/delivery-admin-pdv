@@ -16,6 +16,7 @@ const menuData = [
   {id:4,title: "Horários"},
   {id:5,title: "Itens Selecionáveis"},
   {id:6,title: "Itens Adicionais"},
+  {id:7,title: "Alterar Senha de Acesso"},
 
 ];
 
@@ -40,6 +41,9 @@ const onMenuPress = (id) => {
     case 6:
       navigation.navigate('Adicionais');
     break;
+    case 7:
+      navigation.navigate('Adicionais');
+    break;
     default:
       // code block
   }
@@ -51,7 +55,7 @@ const onMenuPress = (id) => {
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-       <Header title="Cadastros"/>
+       <Header title="Ajustes"/>
        <FlatList 
         showsVerticalScrollIndicator={false}
         style={styles.flatList}

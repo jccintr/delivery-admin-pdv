@@ -2,7 +2,7 @@ import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,View,Tou
 import React, {useState,useEffect,useContext} from 'react';
 import Header2 from '../../components/Header2';
 import { cores } from '../../style/globalStyle';
-import { useNavigation } from '@react-navigation/native';
+//import { useNavigation } from '@react-navigation/native';
 import DataContext from '../../context/DataContext';
 import Api from '../../Api';
 import {FontAwesome } from '@expo/vector-icons';
@@ -19,8 +19,12 @@ const TaxaItem = ({item,onPress}) => {
         <View style={styles.titleItemContainer}>
             <View>
               <Text style={styles.titleItem}>{item.bairro}</Text>
-              <Text>R$ {item.valor}</Text>
+              <View style={{flexDirection:'row'}}>
+                 <Text>R$ {item.valor}</Text>
+                 {!item.ativo&&<Text style={{marginLeft: 50,color: '#f00',}}>Desativado</Text>}
+              </View>
             </View>
+            
             <FontAwesome name="edit" size={20} color="black" />
         </View>
       </TouchableOpacity>
@@ -36,7 +40,7 @@ const Taxas = () => {
   const {apiToken} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
   const [modalVisible,setModalVisible] = useState(false);
-  const [taxa,setTaxa] = useState({bairro: '',valor:0});
+  const [taxa,setTaxa] = useState({bairro: '',valor:0, ativo:true});
   const [editando,setEditando] = useState(false);
 
   useEffect(()=>{
@@ -55,8 +59,9 @@ const Taxas = () => {
 
  const onSalvar = async () => {
      setModalVisible(false);
+     //console.log(taxa);
      if (!editando){  // adiciona
-          let response = await Api.addTaxa(apiToken,taxa.bairro,taxa.valor);
+          let response = await Api.addTaxa(apiToken,taxa.bairro,taxa.valor,taxa.ativo);
           if(response.status===201){
             let response2 = await Api.getTaxas(apiToken);
             if(response2.status===200){
@@ -65,9 +70,10 @@ const Taxas = () => {
             }
           }
      } else {
-      
-      let response = await Api.updateTaxa(apiToken,taxa.id,taxa.bairro,taxa.valor);
+      //console.log('taxa ativo= '+taxa.ativo);
+      let response = await Api.updateTaxa(apiToken,taxa.id,taxa.bairro,taxa.valor,taxa.ativo);
       if(response.status===200){
+        //console.log(response.status);
         let response2 = await Api.getTaxas(apiToken);
             if(response2.status===200){
               let json = await response2.json();
@@ -80,7 +86,7 @@ const Taxas = () => {
 
  const onAdd = () => {
      setEditando(false);
-     setTaxa({bairro:'',valor:0});
+     setTaxa({bairro:'',valor:0,ativo:true});
      setModalVisible(true);
  }
 

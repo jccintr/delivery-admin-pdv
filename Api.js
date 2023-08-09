@@ -115,7 +115,7 @@ export default {
         });
         return response;
     },
-    addTaxa: async (token,bairro,valor) => {
+    addTaxa: async (token,bairro,valor,ativo) => {
         const response = await fetch(`${BASE_API}/taxas`, {
             method: 'POST',
             headers: {
@@ -127,7 +127,7 @@ export default {
         });
         return response;
     },
-    updateTaxa: async (token,id,bairro,valor) => {
+    updateTaxa: async (token,id,bairro,valor,ativo) => {
         const response = await fetch(`${BASE_API}/taxas/${id}`, {
             method: 'PUT',
             headers: {
@@ -135,7 +135,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({bairro,valor})
+            body: JSON.stringify({bairro,valor,ativo})
         });
         return response;
     },
@@ -440,6 +440,18 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
+        });
+        return response;
+    },
+    changePassword: async (token,password) => {
+        const response = await fetch(`${BASE_API}/changepassword`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({password})
         });
         return response;
     },

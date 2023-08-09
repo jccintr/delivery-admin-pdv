@@ -74,8 +74,8 @@ const Login = () => {
             password={false}
         />
         <InputField 
-            iconProvider="AntDesign"
-            iconName="lock1"
+            iconProvider="MaterialCommunityIcons"
+            iconName="lock-outline"
             placeholder="Digite a sua senha"
             value={password}
             onChangeText={t=>setPassword(t)}

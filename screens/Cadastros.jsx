@@ -1,12 +1,14 @@
 import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Dimensions } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../components/Header';
 import { cores } from '../style/globalStyle';
 import MenuItem from '../components/MenuItem';
 import { useNavigation } from '@react-navigation/native';
+import ModalSenha from '../components/modal/ModalSenha';
 
 const Cadastros = () => {
   const navigation = useNavigation();
+  const [modalVisible,setModalVisible] = useState(false);
 
 
 const menuData = [
@@ -42,7 +44,7 @@ const onMenuPress = (id) => {
       navigation.navigate('Adicionais');
     break;
     case 7:
-      navigation.navigate('Adicionais');
+      setModalVisible(true);
     break;
     default:
       // code block
@@ -63,6 +65,7 @@ const onMenuPress = (id) => {
         keyExtractor={(item)=> item.id.toString()}
         renderItem={({item})=><MenuItem item={item} onPress={onMenuPress} />}
         />
+        <ModalSenha setModalVisible={setModalVisible} modalVisible={modalVisible}/>
     </SafeAreaView>
   )
 }

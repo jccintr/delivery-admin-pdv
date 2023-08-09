@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput} from 'react-native';
+import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput,Switch} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 
 const ModalTaxa = ({modalVisible,setModalVisible,editando,onSalvar,taxa,setTaxa}) => {
-     
+  //   console.log(taxa.ativo);
+  const toggleSwitch = () => setTaxa({...taxa,ativo: !taxa.ativo});
+  
  
     return (
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
@@ -40,6 +42,18 @@ const ModalTaxa = ({modalVisible,setModalVisible,editando,onSalvar,taxa,setTaxa}
                                 />
                         </View>
                     </View>
+
+                    <View style={{width:'100%',flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-start'}}>
+                        <Text style={[styles.labelAtivo]}>Ativo:</Text>  
+                        <Switch
+                            style={{marginLeft: 10,}}
+                            trackColor={{false: '#767577', true: '#767577'}}
+                            thumbColor={taxa.ativo ? cores.primary : '#f4f3f4'}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={taxa.ativo}
+                        />    
+                    </View>
                     
                     <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar()} >
                         <Text style={styles.addButtonText}>SALVAR</Text>
@@ -65,7 +79,7 @@ const styles = StyleSheet.create({
         },
     modalBody:{
         width: '100%',
-        height: 280,
+        height: 320,
         backgroundColor: '#fff',
         borderTopLeftRadius:10,
         borderTopRightRadius: 10,
@@ -140,5 +154,12 @@ const styles = StyleSheet.create({
       fontSize: 17,
       fontWeight:'bold',
    },
+   labelAtivo:{
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginLeft:5,
+    marginBottom:5,
+    
+},
 
 })

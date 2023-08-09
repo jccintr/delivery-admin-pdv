@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, View,TextInput} from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
-import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign,FontAwesome,MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
@@ -17,7 +16,9 @@ const Icone = ({iconName,iconProvider}) => {
         case 'FontAwesome':
             return <FontAwesome name={iconName} size={22} color="#000" />;
              break;
-       
+        case 'MaterialCommunityIcons':
+             return <MaterialCommunityIcons name={iconName} size={22} color="#000" />;
+             break;
         default:
           console.log(`icone não encontrado`);
       }

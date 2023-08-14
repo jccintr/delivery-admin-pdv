@@ -25,11 +25,11 @@ const Retira = () => {
     )
 }
 
-const PedidoCard = ({pedido}) => {
+const PedidoCard = ({pedido, onPress}) => {
     const navigation = useNavigation();
     
   return (
-    <TouchableOpacity style={styles.container} onPress={()=>navigation.navigate('Pedido',{pedido: pedido})}>
+    <TouchableOpacity style={styles.container} onPress={()=>onPress(pedido)}>
         <View style={styles.firstLine}>
             <Text style={styles.nomeText}>{pedido.nome}</Text>
             <StatusPedido status={pedido.status_pedido} />
@@ -37,7 +37,7 @@ const PedidoCard = ({pedido}) => {
         <Text style={styles.numeroText}>{`${pedido.token} | ${pedido.data}`}</Text>
         <View style={styles.firstLine}>
             {pedido.delivery?<Delivery/>:<Retira/>}
-            <Text style={styles.totalText}>R$ {pedido.total.toFixed(2)}</Text>
+            <Text style={styles.totalText}>R$ {(pedido.total+pedido.taxa_entrega*1).toFixed(2)}</Text>
         </View>
     </TouchableOpacity>
   )

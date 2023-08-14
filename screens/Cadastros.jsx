@@ -19,6 +19,7 @@ const menuData = [
   {id:5,title: "Itens Selecionáveis"},
   {id:6,title: "Itens Adicionais"},
   {id:7,title: "Alterar Senha de Acesso"},
+  {id:8,title: "Histórico de Pedidos"},
 
 ];
 
@@ -45,6 +46,9 @@ const onMenuPress = (id) => {
     break;
     case 7:
       setModalVisible(true);
+    break;
+    case 8:
+      navigation.navigate('Historico');
     break;
     default:
       // code block

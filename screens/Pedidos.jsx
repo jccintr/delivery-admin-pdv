@@ -7,6 +7,7 @@ import Api from '../Api';
 import PedidoCard from '../components/cards/PedidoCard';
 import ModalStatus from '../components/modal/ModalStatus';
 //import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -16,6 +17,7 @@ const Pedidos = () => {
   const [statusId,setStatusId] = useState(4);
   const [modalVisible,setModalVisible] = useState(false);
   const [statusList,setStatusList] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(()=>{
     const getPedidos = async () => {
@@ -87,7 +89,9 @@ useFocusEffect(
 
  }
 
- 
+ const onPressPedido = (pedido) => {
+      navigation.navigate('Pedido',{pedido: pedido})
+ }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -100,7 +104,7 @@ useFocusEffect(
         style={styles.flatList}
         data={pedidosFiltrados}
         keyExtractor={(item)=> item.id.toString()}
-        renderItem={({item})=><PedidoCard pedido={item}/>}
+        renderItem={({item})=><PedidoCard pedido={item} onPress={onPressPedido}/>}
         ListEmptyComponent={<EmptyList/>}
         contentContainerStyle={pedidosFiltrados.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
         />}

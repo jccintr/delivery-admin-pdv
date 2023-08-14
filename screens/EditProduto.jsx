@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import Api from '../Api';
 import DataContext from '../context/DataContext';
 import * as ImagePicker from 'expo-image-picker';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome,Fontisto } from '@expo/vector-icons';
 
 const EditProduto = ({route}) => {
     const navigation = useNavigation();
@@ -22,10 +22,9 @@ const EditProduto = ({route}) => {
     const [obrigatorios,setObrigatorios] = useState([]);
     const [adicionaisProduto,setAdicionaisProduto] = useState([]);
     const [adicionais,setAdicionais] = useState([]);
-    //const [obrigatorioId,setObrigatorioId] = useState(0);
-    //const [obrigatoriosSelected,setObrigatorioSelected] = useState([]);
     const screenWidth = Dimensions.get('window').width;
     const [isLoading,setIsLoading] = useState(false);
+    const [isLoadingClone,setIsLoadingClone] = useState(false);
     const [isLoadingScreen,setIsLoadingScreen] = useState(true);
 
     useEffect(()=>{
@@ -130,6 +129,20 @@ const EditProduto = ({route}) => {
        
         
     }
+    const onClonar = async (idProduto) => {
+        setIsLoadingClone(true);
+        let response = await Api.cloneProduto(apiToken,idProduto);
+        if (response.status===201){
+            let response2 = await Api.getCategorias(apiToken);
+            let json = await response2.json();
+            setCategorias(json);
+            navigation.navigate('Cardapio');
+        } else {
+            alert(response.status);
+            let json = await response.json();
+        }
+        setIsLoadingClone(false);
+    }
 
     const onSalvar = async (id,nome,descricao,preco,categoria_id,ativo) => {
         
@@ -183,6 +196,7 @@ const EditProduto = ({route}) => {
          newArray.push(id);
          setObrigatorioSelected(newArray);
     }  
+   /*
     const Obrigatorio = ({obrigatorio}) => {
         return (
             <TouchableOpacity onPress={()=>toggleSelecionavel(obrigatorio)} style={[{borderWidth:1,padding:5,margin:5,borderRadius:5},obrigatoriosProduto.findIndex(item=>item.obrigatorio_id===obrigatorio.id)!==-1?styles.categorySelected:'']}>
@@ -190,10 +204,30 @@ const EditProduto = ({route}) => {
             </TouchableOpacity>
         )
     }
+   */
+    const Obrigatorio = ({obrigatorio}) => {
+        return (
+            <TouchableOpacity onPress={()=>toggleSelecionavel(obrigatorio)} style={{width: '98%',flexDirection:'row',alignItems:'flex-start',backgroundColor: '#daeaf5',padding:10,margin:5}}>
+                 {obrigatoriosProduto.findIndex(item=>item.obrigatorio_id===obrigatorio.id)!==-1?<Fontisto name="checkbox-active" size={18} color="black" />:<Fontisto name="checkbox-passive" size={18} color="black" />}
+                 <Text style={{marginLeft:10}}>{obrigatorio.nome}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    /*
     const Adicional = ({adicional}) => {
         return (
             <TouchableOpacity onPress={()=>toggleAdicional(adicional)} style={[{borderWidth:1,padding:5,margin:5,borderRadius:5},adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)!==-1?styles.categorySelected:'']}>
                  <Text style={adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)!==-1?styles.categorySelectedText:''}>{adicional.nome}</Text>
+            </TouchableOpacity>
+        )
+    }
+   */
+    const Adicional = ({adicional}) => {
+        return (
+            <TouchableOpacity onPress={()=>toggleAdicional(adicional)} style={{width: '98%',flexDirection:'row',alignItems:'flex-start',backgroundColor: '#daeaf5',padding:10,margin:5}}>
+                 {adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)!==-1?<Fontisto name="checkbox-active" size={18} color="black" />:<Fontisto name="checkbox-passive" size={18} color="black" />}
+                 <Text style={{marginLeft:10}}>{adicional.nome}</Text>
             </TouchableOpacity>
         )
     }
@@ -266,24 +300,12 @@ const EditProduto = ({route}) => {
                         />    
                     </View>
                         <Text style={styles.label}>Itens Selecionáveis:</Text>
-                        <FlatList 
-                            showsHorizontalScrollIndicator={false}
-                            style={styles.flatList}
-                            data={obrigatorios}
-                            keyExtractor={(item)=> item.id.toString()}
-                            renderItem={({item})=><Obrigatorio obrigatorio={item}/>}
-                            horizontal={true}
-                        />
+                        {obrigatorios.map((item)=><Obrigatorio key={item.id} obrigatorio={item}/>)}
+                        
 
                         <Text style={styles.label}>Itens Adicionais:</Text>
-                        <FlatList 
-                            showsHorizontalScrollIndicator={false}
-                            style={styles.flatList}
-                            data={adicionais}
-                            keyExtractor={(item)=> item.id.toString()}
-                            renderItem={({item})=><Adicional adicional={item}/>}
-                            horizontal={true}
-                        />
+                        {adicionais.map((item)=><Adicional key={item.id} adicional={item}/>)}
+                        
 
                     <TouchableOpacity onPress={changeImage} style={styles.imgButton}>
                         {imagem===null&&<>
@@ -291,6 +313,9 @@ const EditProduto = ({route}) => {
                         <Text style={{color:cores.primary,fontSize:14,fontWeight:'bold'}}>Adicionar Imagem</Text>
                         </>}
                         {imagem&&<Image style={styles.imagem} source={{uri:`${Api.base_storage}/${imagem}`,}}/>}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.botaoClonar} onPress={()=>onClonar(idProduto)} >
+                        {!isLoadingClone?<Text style={styles.botaoClonarText}>CLONAR ESTE PRODUTO</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar(idProduto,nome,descricao,preco,categoriaId,ativo)} >
                         {!isLoading?<Text style={styles.buttonText}>SALVAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
@@ -379,6 +404,16 @@ const styles = StyleSheet.create({
       height: 140,
       borderRadius: 5,
    },
+   botaoClonar:{
+    borderColor: cores.primary,
+    justifyContent:'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    height:50,
+    width: '100%',
+    marginBottom: 10,
+},
     botaoSalvar:{
         backgroundColor: cores.primary,
         justifyContent:'center',
@@ -387,6 +422,11 @@ const styles = StyleSheet.create({
         height:50,
         width: '100%',
         marginBottom: 10,
+    },
+    botaoClonarText:{
+        color: cores.primary,
+        fontSize: 17,
+        fontWeight:'bold',
     },
     buttonText:{
         color: '#fff',

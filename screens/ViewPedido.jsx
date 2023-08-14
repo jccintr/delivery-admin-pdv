@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View,SafeAreaView,StatusBar,ScrollView,Dimensions,TouchableOpacity,Linking } from 'react-native';
-import React, {useState,useEffect,useContext} from 'react';
+import React, {useState} from 'react';
 import { cores } from '../style/globalStyle';
 import Header4 from '../components/Header4';
 import { useNavigation } from '@react-navigation/native'; 
@@ -8,21 +8,19 @@ import Delivery from '../components/Delivery';
 import Retira from '../components/Retira';
 import ItemPedidoCard from '../components/cards/ItemPedidoCard';
 import StatusLogCard from '../components/cards/StatusLogCard';
-import ModalStatus from '../components/modal/ModalStatus';
-import Api from '../Api';
-import DataContext from '../context/DataContext';
+
+//import Api from '../Api';
+//import DataContext from '../context/DataContext';
 
 
 
-const Pedido = ({route}) => {
+const ViewPedido = ({route}) => {
     const [pedido,setPedido] = useState(route.params.pedido);
-    const {apiToken,setPedidos,pedidosFiltrados,setPedidosFiltrados} = useContext(DataContext);
+   // const {apiToken} = useContext(DataContext);
     const navigation = useNavigation();
     const screenWidth = Dimensions.get('window').width;
-    const [modalVisible,setModalVisible] = useState(false);
-    const [statusList,setStatusList] = useState([]);
-
-
+    
+/*
     useEffect(()=>{
         const getStatus = async () => {
          // setIsLoading(true);
@@ -36,68 +34,14 @@ const Pedido = ({route}) => {
         getStatus();
     
      },[]);
+*/
+
     
 const onBack = () => {
-    navigation.navigate('Pedidos');
+    navigation.goBack()
 }
 
-const sendUserNotification = (idStatus,phone,nome) => {
-     let mensagem = ''
-     let telefone = phone.replace(/\D/g,'');
-    switch (idStatus) {
-        case 4:
-            mensagem = `Olá ${nome}, recebemos o seu pedido e já o estamos preparando.`; // em preparação 
-            Linking.openURL(`whatsapp://send?phone=55${telefone}&text=${mensagem}`);
-            break;
-        case 5:
-            mensagem = 'Oba, o seu pedido já está a caminho !'; // a caminho
-            Linking.openURL(`whatsapp://send?phone=55${telefone}&text=${mensagem}`);
-            break;
-        case 6:
-            mensagem = 'Oba, o seu pedido já está pronto para retirada !';  // pronto para retirada
-            Linking.openURL(`whatsapp://send?phone=55${telefone}&text=${mensagem}`);
-            break;
-        case 2:
-            mensagem = 'O seu pedido foi entregue. Obrigado pela preferência. Volte sempre.'; // retirado
-            Linking.openURL(`whatsapp://send?phone=55${telefone}&text=${mensagem}`);
-            break;        
-        case 3:
-             mensagem = 'O seu pedido foi retirado em nossa loja. Obrigado pela preferência. Volte sempre.'; // entregue
-             Linking.openURL(`whatsapp://send?phone=55${telefone}&text=${mensagem}`);
-             break;    
-        case 7:
-            mensagem = 'Que chato, lamentamos mas não poderemos atender ao seu pedido no momento.'; //rejeitado
-            Linking.openURL(`whatsapp://send?phone=55${telefone}&text=${mensagem}`);
-            break;
-        case 8:
-            mensagem = 'Que chato, infelizmente o seu pedido foi cancelado.'; // cancelado
-            Linking.openURL(`whatsapp://send?phone=55${telefone}&text=${mensagem}`);
-            break;
-          
-        default:
-            break;
-    }
 
-    //Linking.openURL(`whatsapp://send?phone=55${telefone}&text=${mensagem}`);
-}
-
-const onAddStatus = async (idStatus) => {
-    
-    let response = await Api.addStatusLog(apiToken,pedido.id,idStatus);
-    let response2 = await Api.getPedido(apiToken,pedido.id);
-    
-    if (response2.status===200){
-       let jsonPedido = await response2.json();
-       setPedido(jsonPedido);
-       let response3 = await Api.getPedidos(apiToken);
-       let jsonPedidos = await response3.json();
-       setPedidos(jsonPedidos);
-       setPedidosFiltrados(jsonPedidos);
-    }
-    setModalVisible(false);
-    sendUserNotification(idStatus,pedido.telefone,pedido.nome);
-
-}
 
   return (
     <SafeAreaView style={styles.container}>
@@ -165,17 +109,14 @@ const onAddStatus = async (idStatus) => {
                 <Text style={[styles.subTitle,{marginBottom:10}]}>Status do Pedido</Text>
                 {pedido.status_pedido_log.map((item)=><StatusLogCard log={item} key={item.id} />)}
             </View>
-            <TouchableOpacity style={styles.botaoAddLog} onPress={()=>setModalVisible(true)} >
-                        <Text style={styles.addButtonText}>Atualizar Status</Text>
-            </TouchableOpacity>
-            <ModalStatus setModalVisible={setModalVisible} modalVisible={modalVisible} statusList={statusList} onAddStatus={onAddStatus}/>
+           
             
        </ScrollView>
     </SafeAreaView>
   )
 }
 
-export default Pedido
+export default ViewPedido
 
 const styles = StyleSheet.create({
     container: {

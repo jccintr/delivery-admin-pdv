@@ -455,6 +455,29 @@ export default {
         });
         return response;
     },
+    getHistoricoPedidos: async (token,ano,mes) => { 
+        const response = await fetch(`${BASE_API}/pedidos/${ano}/${mes}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+        });
+        return response;
+    },
+    cloneProduto: async (token,id) => {
+        const response = await fetch(`${BASE_API}/produtos/clone/${id}`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            //body: JSON.stringify({push_token})
+        });
+        return response;
+    },
     
 };
 

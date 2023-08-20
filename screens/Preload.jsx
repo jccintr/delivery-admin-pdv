@@ -8,7 +8,7 @@ import { cores } from '../style/globalStyle';
 import DataContext from '../context/DataContext';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import logo from '../assets/logo-branco-250.png';
+import logo from '../assets/logo-delivroo-azul-1024.png';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
         
     },
     logo:{
-      height: 150,
-      width: 150,
+      height: 200,
+      width: 200,
       marginBottom: 20,
     },
     

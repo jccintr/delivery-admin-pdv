@@ -14,6 +14,7 @@ import ViewPedido from "../screens/ViewPedido";
 import EditProduto from "../screens/EditProduto";
 import NovoProduto from "../screens/NovoProduto";
 import Historico from "../screens/Historico";
+import VisualLoja from "../screens/cadastros/VisualLoja";
 
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ const MainStack = () => {
         <Stack.Screen name="EditProduto" component={EditProduto} />
         <Stack.Screen name="NovoProduto" component={NovoProduto} />
         <Stack.Screen name="Historico" component={Historico} />
+        <Stack.Screen name="Visual" component={VisualLoja} />
     </Stack.Navigator>
   )
 }

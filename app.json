@@ -1,12 +1,14 @@
 {
   "expo": {
-    "name": "BrazPed",
+    "name": "Delivroo",
     "slug": "admin-pdv",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    
+    "notification":{
+      "icon": "./assets/push-icon.png"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],

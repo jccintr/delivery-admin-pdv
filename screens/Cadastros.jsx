@@ -5,10 +5,12 @@ import { cores } from '../style/globalStyle';
 import MenuItem from '../components/MenuItem';
 import { useNavigation } from '@react-navigation/native';
 import ModalSenha from '../components/modal/ModalSenha';
+import ModalPix from '../components/modal/ModalPix';
 
 const Cadastros = () => {
   const navigation = useNavigation();
   const [modalVisible,setModalVisible] = useState(false);
+  const [modalPixVisible,setModalPixVisible] = useState(false);
 
 
 const menuData = [
@@ -20,6 +22,8 @@ const menuData = [
   {id:6,title: "Itens Adicionais"},
   {id:7,title: "Alterar Senha de Acesso"},
   {id:8,title: "Histórico de Pedidos"},
+  {id:9,title: "Chave Pix"},
+  {id:10,title: "Visual da Loja"},
 
 ];
 
@@ -50,6 +54,12 @@ const onMenuPress = (id) => {
     case 8:
       navigation.navigate('Historico');
     break;
+    case 9:
+      setModalPixVisible(true);
+    break;
+    case 10:
+      navigation.navigate('Visual');
+    break;
     default:
       // code block
   }
@@ -70,6 +80,7 @@ const onMenuPress = (id) => {
         renderItem={({item})=><MenuItem item={item} onPress={onMenuPress} />}
         />
         <ModalSenha setModalVisible={setModalVisible} modalVisible={modalVisible}/>
+        <ModalPix setModalVisible={setModalPixVisible} modalVisible={modalPixVisible}/>
     </SafeAreaView>
   )
 }

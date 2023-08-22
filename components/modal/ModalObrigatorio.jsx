@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput,FlatList} from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 import { FontAwesome } from '@expo/vector-icons'; 
 
@@ -58,8 +58,8 @@ const ModalObrigatorio = ({modalVisible,setModalVisible,editando,onSalvar,obriga
           <View style={styles.modalArea}>
             <View style={styles.modalBody}>
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
-                    <Entypo name="chevron-down" size={34} color={cores.azul} />
                     <Text style={styles.modalTitleText}>{!editando?'Novo':'Editando'} Item Selecionável</Text>
+                    <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.content}>
                     <View>
@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 500,
         backgroundColor: '#fff',
-        borderTopLeftRadius:10,
-        borderTopRightRadius: 10,
+        borderTopLeftRadius:15,
+        borderTopRightRadius: 15,
         paddingTop: 5,
         paddingLeft: 10,
         paddingRight: 10,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
       marginBottom: 10,
     },
     modalTitleText:{

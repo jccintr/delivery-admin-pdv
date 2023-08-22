@@ -1,33 +1,71 @@
-import { StyleSheet, StatusBar, SafeAreaView,View,Text,TouchableOpacity } from 'react-native';
-import React, {useState,useContext} from 'react';
+import { StyleSheet, StatusBar, SafeAreaView,ActivityIndicator,Text,TouchableOpacity,ToastAndroid } from 'react-native';
+import React, {useState,useContext,useEffect} from 'react';
 import Header from '../../components/Header';
 import { cores } from '../../style/globalStyle';
 import HeaderLoja from '../../components/HeaderLoja';
 import DataContext from '../../context/DataContext';
+import ColorPickerModal from '../../components/modal/ColorPickerModal';
+import Api from '../../Api';
+import { useNavigation } from '@react-navigation/native';
 
 const VisualLoja = () => {
-    const {loggedUser,setLoggedUser} = useContext(DataContext);
+    const navigation = useNavigation();
+    const [isLoading,setIsLoading] = useState(false);
+    const {loggedUser,setLoggedUser,apiToken} = useContext(DataContext);
+    const [corFundo,setCorFundo] = useState(loggedUser.cor_fundo);
+    const [modalCorFundoVisible,setModalCorFundoVisible] = useState(false);
+    const [corTexto,setCorTexto] = useState(loggedUser.cor_texto);
+    const [modalCorTextoVisible,setModalCorTextoVisible] = useState(false);
     
+/*
+    useEffect(()=>{
+     setCorFundo(loggedUser.cor_fundo);
+     setCorTexto(loggedUser.cor_texto)
+  
+   },[]);
+  */
+
+
+    const onSalvar = async () => {
+      setIsLoading(true);
+      let response = await Api.changeColors(apiToken,corFundo,corTexto);
+      if(response.status===200){
+           let responseUser = await Api.getUser(apiToken);
+           if (responseUser.status===200){
+              let jsonUser = await responseUser.json(); 
+              setLoggedUser(jsonUser);
+           }
+           ToastAndroid.show('Visual da loja alterado com sucesso.', ToastAndroid.SHORT);
+           navigation.navigate('Cadastros');
+      } else {
+        ToastAndroid.show('Falha ao alterar visual da loja.', ToastAndroid.SHORT);
+      }
+      setIsLoading(false);
+    }
+
+
     return (
         <SafeAreaView style={styles.container}>
            <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
            
            <Header title="Visual da Loja"/>
-           <HeaderLoja />
+           {corFundo!=null&&<HeaderLoja corFundo={corFundo} corTexto={corTexto}/>}
            
 
            <>
-                <TouchableOpacity style={styles.botaoCor} onPress={()=>{}} >
+                <TouchableOpacity style={styles.botaoCor} onPress={()=>setModalCorFundoVisible(true)} >
                         <Text style={styles.botaoCorText}>Alterar a Cor do Fundo</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.botaoCor} onPress={()=>{}} >
+                <TouchableOpacity style={styles.botaoCor} onPress={()=>setModalCorTextoVisible(true)} >
                         <Text style={styles.botaoCorText}>Alterar a Cor do Texto</Text>
                 </TouchableOpacity>
            </>
            
-           <TouchableOpacity style={styles.botaoSalvar} onPress={()=>{}} >
-                   <Text style={styles.botaoSalvarText}>SALVAR</Text>
+           <TouchableOpacity style={styles.botaoSalvar} onPress={onSalvar} >
+                   {!isLoading?<Text style={styles.botaoSalvarText}>Salvar</Text>:<ActivityIndicator style={styles.loading} size="large" color={cores.branco}/>}
             </TouchableOpacity>
+            <ColorPickerModal title="Selecione a cor do fundo" color={corFundo} setColor={setCorFundo} visible={modalCorFundoVisible} setVisible={setModalCorFundoVisible}/>
+            <ColorPickerModal title="Selecione a cor do texto" color={corTexto} setColor={setCorTexto} visible={modalCorTextoVisible} setVisible={setModalCorTextoVisible}/>
         </SafeAreaView>
       )
 }

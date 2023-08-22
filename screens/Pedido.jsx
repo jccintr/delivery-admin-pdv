@@ -16,12 +16,73 @@ import DataContext from '../context/DataContext';
 
 const Pedido = ({route}) => {
     const [pedido,setPedido] = useState(route.params.pedido);
-    const {apiToken,setPedidos,pedidosFiltrados,setPedidosFiltrados} = useContext(DataContext);
+    const {apiToken,setPedidos,pedidosFiltrados,setPedidosFiltrados,loggedUser} = useContext(DataContext);
     const navigation = useNavigation();
     const screenWidth = Dimensions.get('window').width;
     const [modalVisible,setModalVisible] = useState(false);
     const [statusList,setStatusList] = useState([]);
 
+
+    const headerPedido = `
+    <html>
+      <body style="text-align: center;">
+        
+        <div style="width: 100%;align-items:center"><img src="https://js-software.tech/logo-delivroo.png" style="width: 50px; height:50px" /></div>
+        <p style="font-size: 8px; font-weight: normal">${loggedUser.name}</p>
+        <p style="font-size: 8px;font-weight: bold">Pedido: ${pedido.token}</p>
+        <p style="font-size: 8px;">${pedido.data}</p>
+        <p style="font-size: 8px;">***${pedido.delivery?'Delivery':'Retirar'}***</p>
+        
+        <p style="font-size: 8px;font-weight: bold">Cliente</p>
+        <p style="font-size: 8px;">${pedido.nome}</p>
+        <p style="font-size: 8px;">${pedido.telefone}</p>
+        <p style="font-size: 8px;font-weight: bold">Endereço para Entrega</p>
+        <p style="font-size: 8px;">Rua Dona Ana Chaves, 65</p>
+        <p style="font-size: 8px;">Centro - Brazópolis</p>
+
+        <p style="font-size: 8px;font-weight: bold">Itens do Pedido</p>
+         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
+           <p style="font-size: 8px;">Cheese Salada x 1</p>
+           <p style="font-size: 8px">R$ 15,00</p>
+         </div>
+         <div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">
+           <p style="font-size: 8px;">Carne: ao ponto</p>
+         </div>  
+         <div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">
+           <p style="font-size: 8px;">+ Hambúrguer: R$ 2,00</p>
+         </div>  
+         <div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">
+           <p style="font-size: 8px;">+ Ovo: R$ 2,00</p>
+         </div>  
+         <hr/>
+         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
+           <p style="font-size: 8px;">Coca-cola lata 350ml x 1</p>
+           <p style="font-size: 8px">R$ 5,00</p>
+         </div>
+         <hr/>
+         <body style="text-align: center;">
+         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
+            <p style="font-size: 8px">Total dos Produtos</p>
+            <p style="font-size: 8px">R$ 35,00</p>
+         </div>
+         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
+            <p style="font-size: 8px">Taxa de Entrega</p>
+            <p style="font-size: 8px">R$ 3,00</p>
+         </div>
+         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
+            <p style="font-size: 8px;font-weight: bold">Total a Pagar</p>
+            <p style="font-size: 8px;font-weight: bold">R$ 38,00</p>
+         </div>
+         <hr/>
+         <p style="font-size: 8px;font-weight: bold">Forma de Pagamento</p>
+         <p style="font-size: 8px;">Cartão de Débito</p>
+         <p style="font-size: 8px;"></p>
+       </body>
+        
+        
+      </body>
+    </html>
+  `; 
 
     useEffect(()=>{
         const getStatus = async () => {
@@ -96,6 +157,10 @@ const onAddStatus = async (idStatus) => {
     }
     setModalVisible(false);
     sendUserNotification(idStatus,pedido.telefone,pedido.nome);
+
+}
+
+const onPrint = () => {
 
 }
 

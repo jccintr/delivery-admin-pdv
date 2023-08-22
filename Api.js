@@ -467,6 +467,18 @@ export default {
         });
         return response;
     },
+    changeColors: async (token,cor_fundo,cor_texto) => {
+        const response = await fetch(`${BASE_API}/changecolors`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({cor_fundo,cor_texto})
+        });
+        return response;
+    },
     getHistoricoPedidos: async (token,ano,mes) => { 
         const response = await fetch(`${BASE_API}/pedidos/${ano}/${mes}`, {
             method: 'GET',

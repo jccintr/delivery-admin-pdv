@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View,Modal,TouchableOpacity,ActivityIndicator,TextInput } from 'react-native';
+import { StyleSheet, Text, View,Modal,TouchableOpacity,ActivityIndicator,TextInput,ToastAndroid } from 'react-native';
 import React, {useState,useContext} from 'react';
 import Api from '../../Api';
 import { cores } from '../../style/globalStyle';
-import { Entypo,EvilIcons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import DataContext from '../../context/DataContext';
 import InputField from '../InputField';
 
@@ -20,12 +20,13 @@ const ModalPix = ({modalVisible,setModalVisible}) => {
       if(response.status===200){
            let responseUser = await Api.getUser(apiToken);
            if (responseUser.status===200){
-              let jsonUser = await response.json(); 
+              let jsonUser = await responseUser.json(); 
               setLoggedUser(jsonUser);
            }
+           ToastAndroid.show('Chave Pix alterada com sucesso.', ToastAndroid.SHORT);
            setModalVisible(false)
       } else {
-        alert("Falha ao alterar pix.");
+        ToastAndroid.show('Falha ao alterar Chave Pix.', ToastAndroid.SHORT);
       }
       setIsLoading(false);
     }

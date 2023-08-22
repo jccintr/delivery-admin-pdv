@@ -7,12 +7,18 @@ import { FontAwesome,Ionicons } from '@expo/vector-icons';
 const Header4 = ({title,onPress}) => {
   return (
     <View style={styles.container}>
-        <TouchableOpacity onPress={()=>onPress()}>
-                <Ionicons name="arrow-back-outline" size={24} color="white" />
-        </TouchableOpacity>
-        <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
-            <Text style={styles.title}>{title}</Text>
+        <View style={{alignItems:'center',justifyContent: 'flex-start',flexDirection:'row'}}>
+            <TouchableOpacity onPress={()=>onPress()}>
+                    <Ionicons name="arrow-back-outline" size={24} color="white" />
+            </TouchableOpacity>
+            <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
+                <Text style={styles.title}>{title}</Text>
+            </View>
         </View>
+        
+        <TouchableOpacity onPress={()=>{}}>
+                <FontAwesome name="print" size={24} color="white" />
+        </TouchableOpacity>
     </View>
   )
 }
@@ -24,7 +30,7 @@ const styles = StyleSheet.create({
       
       backgroundColor: cores.primary,
       alignItems: 'center',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
       height: 50,
       width: '100%',
       flexDirection:'row',

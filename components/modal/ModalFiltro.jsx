@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,FlatList,SafeAreaView} from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 import { Octicons } from '@expo/vector-icons';
 
@@ -30,8 +30,8 @@ const ModalFiltro = ({modalVisible,setModalVisible,statusList,onAddStatus}) => {
           <View style={styles.modalArea}>
             <View style={styles.modalBody}>
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
-                    <Entypo name="chevron-down" size={34} color={cores.azul} />
                     <Text style={styles.modalTitleText}>Selecione o Status</Text>
+                    <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.content}>
                     <FlatList 
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 450,
         backgroundColor: '#fff',
-        borderTopLeftRadius:10,
-        borderTopRightRadius: 10,
+        borderTopLeftRadius:15,
+        borderTopRightRadius: 15,
         paddingTop: 5,
         paddingLeft: 10,
         paddingRight: 10,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
       marginBottom: 10,
     },
     modalTitleText:{

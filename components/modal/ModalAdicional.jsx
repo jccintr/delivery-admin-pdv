@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput} from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 
 const ModalAdicional = ({modalVisible,setModalVisible,editando,onSalvar,adicional,setAdicional}) => {
@@ -11,8 +11,8 @@ const ModalAdicional = ({modalVisible,setModalVisible,editando,onSalvar,adiciona
           <View style={styles.modalArea}>
             <View style={styles.modalBody}>
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
-                    <Entypo name="chevron-down" size={34} color={cores.azul} />
                     <Text style={styles.modalTitleText}>{!editando?'Nova':'Editando'} Adicional</Text>
+                    <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.content}>
                     <View>
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 280,
         backgroundColor: '#fff',
-        borderTopLeftRadius:10,
-        borderTopRightRadius: 10,
+        borderTopLeftRadius:15,
+        borderTopRightRadius: 15,
         paddingTop: 5,
         paddingLeft: 10,
         paddingRight: 10,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
       marginBottom: 10,
     },
     modalTitleText:{

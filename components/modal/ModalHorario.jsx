@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput} from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 
 
@@ -16,8 +16,8 @@ const ModalHorario = ({modalVisible,setModalVisible,editando,onSalvar,horario,se
 
             <View style={styles.modalBody}>
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
-                    <Entypo name="chevron-down" size={34} color={cores.azul} />
                     <Text style={styles.modalTitleText}>{!editando?'Novo':'Editando'} Horário</Text>
+                    <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 
                 <View style={styles.content}>
@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 210,
         backgroundColor: '#fff',
-        borderTopLeftRadius:10,
-        borderTopRightRadius: 10,
+        borderTopLeftRadius:15,
+        borderTopRightRadius: 15,
         paddingTop: 5,
         paddingLeft: 10,
         paddingRight: 10,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
       marginBottom: 10,
     },
     modalTitleText:{

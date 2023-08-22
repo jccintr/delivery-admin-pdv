@@ -4,32 +4,32 @@ import DataContext from '../context/DataContext';
 import Api from '../Api';
 import { FontAwesome5,FontAwesome } from '@expo/vector-icons';
 
-const HeaderLoja = () => {
+const HeaderLoja = ({corFundo,corTexto}) => {
     const {loggedUser,setLoggedUser} = useContext(DataContext);
 
 
     const TempoEspera = () => {
         return (
-            <View style={[styles.containerInfo,{borderColor: loggedUser.cor_texto}]}>
-                <FontAwesome5 name="clock" size={14} color={loggedUser.cor_texto} />
-                <Text style={{marginLeft:5,borderColor: loggedUser.cor_texto,color: loggedUser.cor_texto,fontSize:12}}>{loggedUser.tempo_espera}</Text>
+            <View style={[styles.containerInfo,{borderColor: corTexto}]}>
+                <FontAwesome5 name="clock" size={14} color={corTexto} />
+                <Text style={{marginLeft:5,borderColor: corTexto,color: corTexto,fontSize:12}}>{loggedUser.tempo_espera}</Text>
             </View>
           )
     }
 
     const Telefone = () => {
         return (
-            <View style={[styles.containerInfo,{borderColor: loggedUser.cor_texto}]}>
-                <FontAwesome name="phone" size={14} color={loggedUser.cor_texto} />
-                <Text style={{marginLeft:5,borderColor: loggedUser.cor_texto,color: loggedUser.cor_texto,fontSize:12}}>{loggedUser.telefone}</Text>
+            <View style={[styles.containerInfo,{borderColor: corTexto}]}>
+                <FontAwesome name="phone" size={14} color={corTexto} />
+                <Text style={{marginLeft:5,borderColor: corTexto,color: corTexto,fontSize:12}}>{loggedUser.telefone}</Text>
             </View>
           )
       }
       
       const Status = () => {
         return (
-            <View style={[styles.containerInfo,{borderColor: loggedUser.cor_texto}]}>
-                <Text style={{borderColor: loggedUser.cor_texto,color: loggedUser.cor_texto,fontSize:12}}>{loggedUser.aberto?'ABERTO':'FECHADO'}</Text>
+            <View style={[styles.containerInfo,{borderColor: corTexto}]}>
+                <Text style={{borderColor: corTexto,color: corTexto,fontSize:12}}>{loggedUser.aberto?'ABERTO':'FECHADO'}</Text>
             </View>
           )
       }
@@ -39,9 +39,9 @@ const HeaderLoja = () => {
 
 
   return (
-    <View style={[styles.container,{backgroundColor:loggedUser.cor_fundo}]}>
+    <View style={[styles.container,{backgroundColor:corFundo}]}>
         <Image style={styles.logotipo} source={{uri:`${Api.base_storage}/${loggedUser.logotipo}`,}}/>
-        <Text style={{color: loggedUser.cor_texto,fontSize:16,marginBottom:5}}>{loggedUser.name}</Text>
+        <Text style={{color: corTexto,fontSize:16,marginBottom:5}}>{loggedUser.name}</Text>
         <View style={{flexDirection:'row',alignItems:'center'}}>
            <TempoEspera/>
            <Status/>

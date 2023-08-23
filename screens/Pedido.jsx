@@ -31,6 +31,11 @@ const Pedido = ({route}) => {
 
     const headerPedido = `
     <html>
+      <head>
+       <style>
+         p {margin:0;}
+       </style>
+      </head>
       <body style="text-align: center;">
         <div style="width: 100%;align-items:center"><img src="https://js-software.tech/logo-delivroo.png" style="width: 50px; height:50px" /></div>
         <p style="font-size: 8px; font-weight: normal">${loggedUser.name}</p>
@@ -78,8 +83,8 @@ const Pedido = ({route}) => {
   
  
   const totalPedido = `<div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
-                           <p style="font-size: 8px">Total dos Produtos</p>
-                           <p style="font-size: 8px">R$ ${pedido.total.toFixed(2)}</p>
+                           <p style="font-size: 8px;margin-top:0;margin-bottom:0">Total dos Produtos</p>
+                           <p style="font-size: 8px;margin-top:0;margin-bottom:0">R$ ${pedido.total.toFixed(2)}</p>
                        </div>
                        <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
                           <p style="font-size: 8px">Taxa de Entrega</p>

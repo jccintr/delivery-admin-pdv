@@ -4,7 +4,7 @@ import { cores } from '../style/globalStyle';
 import { FontAwesome,Ionicons } from '@expo/vector-icons';
 
 
-const Header4 = ({title,onPress}) => {
+const Header4 = ({title,onPress,onPrint}) => {
   return (
     <View style={styles.container}>
         <View style={{alignItems:'center',justifyContent: 'flex-start',flexDirection:'row'}}>
@@ -16,7 +16,7 @@ const Header4 = ({title,onPress}) => {
             </View>
         </View>
         
-        <TouchableOpacity onPress={()=>{}}>
+        <TouchableOpacity onPress={onPrint}>
                 <FontAwesome name="print" size={24} color="white" />
         </TouchableOpacity>
     </View>

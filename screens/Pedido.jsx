@@ -11,6 +11,9 @@ import StatusLogCard from '../components/cards/StatusLogCard';
 import ModalStatus from '../components/modal/ModalStatus';
 import Api from '../Api';
 import DataContext from '../context/DataContext';
+import { printToFileAsync } from 'expo-print';
+import { shareAsync } from 'expo-sharing';
+
 
 
 
@@ -23,66 +26,93 @@ const Pedido = ({route}) => {
     const [statusList,setStatusList] = useState([]);
 
 
+
+   
+
     const headerPedido = `
     <html>
       <body style="text-align: center;">
-        
         <div style="width: 100%;align-items:center"><img src="https://js-software.tech/logo-delivroo.png" style="width: 50px; height:50px" /></div>
         <p style="font-size: 8px; font-weight: normal">${loggedUser.name}</p>
         <p style="font-size: 8px;font-weight: bold">Pedido: ${pedido.token}</p>
         <p style="font-size: 8px;">${pedido.data}</p>
-        <p style="font-size: 8px;">***${pedido.delivery?'Delivery':'Retirar'}***</p>
+        <p style="font-size: 8px;">*** ${pedido.delivery?'Delivery':'Retirar'} ***</p>
         
         <p style="font-size: 8px;font-weight: bold">Cliente</p>
         <p style="font-size: 8px;">${pedido.nome}</p>
-        <p style="font-size: 8px;">${pedido.telefone}</p>
-        <p style="font-size: 8px;font-weight: bold">Endereço para Entrega</p>
-        <p style="font-size: 8px;">Rua Dona Ana Chaves, 65</p>
-        <p style="font-size: 8px;">Centro - Brazópolis</p>
+        <p style="font-size: 8px;">${pedido.telefone}</p>`; 
 
-        <p style="font-size: 8px;font-weight: bold">Itens do Pedido</p>
-         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
-           <p style="font-size: 8px;">Cheese Salada x 1</p>
-           <p style="font-size: 8px">R$ 15,00</p>
-         </div>
-         <div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">
-           <p style="font-size: 8px;">Carne: ao ponto</p>
-         </div>  
-         <div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">
-           <p style="font-size: 8px;">+ Hambúrguer: R$ 2,00</p>
-         </div>  
-         <div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">
-           <p style="font-size: 8px;">+ Ovo: R$ 2,00</p>
-         </div>  
-         <hr/>
-         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
-           <p style="font-size: 8px;">Coca-cola lata 350ml x 1</p>
-           <p style="font-size: 8px">R$ 5,00</p>
-         </div>
-         <hr/>
-         <body style="text-align: center;">
-         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
-            <p style="font-size: 8px">Total dos Produtos</p>
-            <p style="font-size: 8px">R$ 35,00</p>
-         </div>
-         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
-            <p style="font-size: 8px">Taxa de Entrega</p>
-            <p style="font-size: 8px">R$ 3,00</p>
-         </div>
-         <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
-            <p style="font-size: 8px;font-weight: bold">Total a Pagar</p>
-            <p style="font-size: 8px;font-weight: bold">R$ 38,00</p>
-         </div>
-         <hr/>
-         <p style="font-size: 8px;font-weight: bold">Forma de Pagamento</p>
-         <p style="font-size: 8px;">Cartão de Débito</p>
-         <p style="font-size: 8px;"></p>
-       </body>
-        
-        
-      </body>
-    </html>
-  `; 
+
+  const enderecoPedido = pedido.delivery?`<p style="font-size: 8px;font-weight: bold">Endereço para Entrega</p>
+                          <p style="font-size: 8px;">${pedido.endereco}</p>
+                          <p style="font-size: 8px;">${pedido.bairro} - ${loggedUser.cidade}</p>`:'';
+
+  const itensPedido = () => {
+       ret = `<p style="font-size: 8px;font-weight: bold">Itens do Pedido</p>`;
+       for(let i=0;i<pedido.itens_pedido.length;i++){
+            ret = ret + '<div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">';
+            ret = ret + `<p style="font-size: 8px;">${pedido.itens_pedido[i].quantidade} ${pedido.itens_pedido[i].produto.nome}</p>`;
+            ret = ret + `<p style="font-size: 8px">R$ ${pedido.itens_pedido[i].total}</p>`;
+            ret = ret + '</div>';
+            for(let j=0;j<pedido.itens_pedido[i].obrigatorios.length;j++){
+                ret = ret + '<div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">';
+                ret = ret + `<p style="font-size: 8px;">${pedido.itens_pedido[i].obrigatorios[j]}</p>`;
+                ret = ret + '</div>';
+            }
+            for(let k=0;k<pedido.itens_pedido[i].adicionais.length;k++){
+                ret = ret + '<div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">';
+                ret = ret + `<p style="font-size: 8px;">+${pedido.itens_pedido[i].adicionais[k]}</p>`;
+                ret = ret + '</div>';
+            }
+            if(pedido.itens_pedido[i].observacao){
+               ret = ret + '<div style="display: flex;flex-direction:row; align-items:center;justify-content:flex-start">'; 
+               ret = ret + `<p style="font-size: 8px;">Obs.: ${pedido.itens_pedido[i].observacao}</p>`;
+               ret = ret + '</div>';
+            }
+            
+           ret = ret + '<hr/>';
+       }
+    
+      return ret; 
+  }
+  
+ 
+  const totalPedido = `<div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
+                           <p style="font-size: 8px">Total dos Produtos</p>
+                           <p style="font-size: 8px">R$ ${pedido.total.toFixed(2)}</p>
+                       </div>
+                       <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
+                          <p style="font-size: 8px">Taxa de Entrega</p>
+                          <p style="font-size: 8px">R$ ${pedido.taxa_entrega}</p>
+                       </div>
+                       <div style="display: flex;flex-direction:row; align-items:center;justify-content:space-between">
+                          <p style="font-size: 8px;font-weight: bold">Total a Pagar</p>
+                          <p style="font-size: 8px;font-weight: bold">R$ ${(parseFloat(pedido.taxa_entrega) + parseFloat(pedido.total)).toFixed(2)}</p>
+                       </div>
+                       <hr/>`;
+
+
+  const pagamentoPedido = `<p style="font-size: 8px;font-weight: bold">Forma de Pagamento</p>
+                           <p style="font-size: 8px;">${pedido.forma_pagamento}</p>
+                           <p style="font-size: 8px;"></p>`;
+
+  const observacaoPedido = pedido.observacao?`<p style="font-size: 8px;font-weight: bold">Observação</p>
+                            <p style="font-size: 8px;">${pedido.observacao}</p>
+                            <p style="font-size: 8px;"></p>`:'';
+
+  const fimPedido = `</body></html>`;
+
+  const html = headerPedido + enderecoPedido + itensPedido() + totalPedido + pagamentoPedido + observacaoPedido + fimPedido;
+
+  let onPrint = async () => {
+    const file = await printToFileAsync({
+      html: html,
+      base64: false,
+      width: 165
+    });
+    //await shareAsync(file.uri);
+    await shareAsync(file.uri,{UTI: '.pdf',mimeType: 'application/pdf'});
+  };
 
     useEffect(()=>{
         const getStatus = async () => {
@@ -160,14 +190,11 @@ const onAddStatus = async (idStatus) => {
 
 }
 
-const onPrint = () => {
-
-}
 
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/> 
-       <Header4 title={`Pedido # ${pedido.token}`} onPress={onBack}/>
+       <Header4 title={`Pedido # ${pedido.token}`} onPress={onBack} onPrint={onPrint}/>
        <ScrollView style={{width: screenWidth}} contentContainerStyle={{alignItems:'center',padding:5,}} showsVerticalScrollIndicator={false}>
             <View style={styles.cabecalho}>
                 <View style={styles.nameArea}>

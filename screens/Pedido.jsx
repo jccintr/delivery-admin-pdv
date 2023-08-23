@@ -38,19 +38,19 @@ const Pedido = ({route}) => {
       </head>
       <body style="text-align: center;">
         <div style="width: 100%;align-items:center"><img src="https://js-software.tech/logo-delivroo.png" style="width: 50px; height:50px" /></div>
-        <p style="font-size: 8px; font-weight: normal">${loggedUser.name}</p>
+        <p style="font-size: 8px; font-weight: normal;margin-bottom:5px;">${loggedUser.name}</p>
         <p style="font-size: 8px;font-weight: bold">Pedido: ${pedido.token}</p>
         <p style="font-size: 8px;">${pedido.data}</p>
-        <p style="font-size: 8px;">*** ${pedido.delivery?'Delivery':'Retirar'} ***</p>
+        <p style="font-size: 8px;margin-bottom:5px;">*** ${pedido.delivery?'Delivery':'Retirar'} ***</p>
         
         <p style="font-size: 8px;font-weight: bold">Cliente</p>
         <p style="font-size: 8px;">${pedido.nome}</p>
-        <p style="font-size: 8px;">${pedido.telefone}</p>`; 
+        <p style="font-size: 8px;margin-bottom:5px;">${pedido.telefone}</p>`; 
 
 
   const enderecoPedido = pedido.delivery?`<p style="font-size: 8px;font-weight: bold">Endereço para Entrega</p>
                           <p style="font-size: 8px;">${pedido.endereco}</p>
-                          <p style="font-size: 8px;">${pedido.bairro} - ${loggedUser.cidade}</p>`:'';
+                          <p style="font-size: 8px;margin-bottom:5px;">${pedido.bairro} - ${loggedUser.cidade}</p>`:'';
 
   const itensPedido = () => {
        ret = `<p style="font-size: 8px;font-weight: bold">Itens do Pedido</p>`;
@@ -74,10 +74,12 @@ const Pedido = ({route}) => {
                ret = ret + `<p style="font-size: 8px;">Obs.: ${pedido.itens_pedido[i].observacao}</p>`;
                ret = ret + '</div>';
             }
-            
-           ret = ret + '<hr/>';
+           if(i !== pedido.itens_pedido.length-1){
+              ret = ret + '<hr style="margin:0;"/>';
+           } 
+          
        }
-    
+      ret = ret + '<hr style="border-top:1px solid;margin:0;"/>'; 
       return ret; 
   }
   

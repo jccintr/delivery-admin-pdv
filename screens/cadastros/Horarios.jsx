@@ -40,6 +40,7 @@ const Horarios = () => {
   const [modalVisible,setModalVisible] = useState(false);
   const [horario,setHorario] = useState({dia:0,horario:''});
   const [editando,setEditando] = useState(false);
+  const navigation = useNavigation();
   
 
   useEffect(()=>{
@@ -83,6 +84,11 @@ const Horarios = () => {
   
 }
 
+const onBack = () => {
+  navigation.goBack()
+}
+
+
 const onAdd = () => {
   setEditando(false);
   setHorario({dia:0,horario:''});
@@ -103,7 +109,7 @@ const onEdit = (item) => {
   return (
     <SafeAreaView style={styles.container}>
     <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-    <Header3 title="Horários de Atendimento" />
+    <Header3 title="Horários de Atendimento" onBack={onBack} />
     {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
     {!isLoading&&<FlatList 
         showsVerticalScrollIndicator={false}

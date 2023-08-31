@@ -1,24 +1,27 @@
 import React from 'react'
 import { StyleSheet,View,TouchableOpacity,Text } from 'react-native';
 import { cores } from '../style/globalStyle';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 
-const Header3 = ({title, onBack}) => {
+const Header5 = ({title,onAdd}) => {
   return (
     <View style={styles.container}>
-        <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
-        <TouchableOpacity onPress={()=>onBack()}>
-                    <Ionicons name="arrow-back-outline" size={24} color="white" />
-            </TouchableOpacity>
-            <Text style={styles.title}>{title}</Text>
-        </View>
-       
+      <View style={{alignItems:'center',justifyContent: 'flex-start',flexDirection:'row'}}>
+            
+            <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
+                <Text style={styles.title}>{title}</Text>
+            </View>
+      </View>
+        
+        <TouchableOpacity onPress={onAdd}>
+                <FontAwesome name="plus" size={24} color="white" />
+        </TouchableOpacity>
     </View>
   )
 }
 
-export default Header3
+export default Header5
 
 const styles = StyleSheet.create({
     container: {

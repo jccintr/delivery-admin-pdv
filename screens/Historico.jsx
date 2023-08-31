@@ -4,7 +4,7 @@ import { cores } from '../style/globalStyle';
 import DataContext from '../context/DataContext';
 import Api from '../Api';
 import PedidoCard from '../components/cards/PedidoCard';
-import Header from '../components/Header';
+import Header3 from '../components/Header3';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -66,6 +66,10 @@ const Historico = () => {
 
 }
 
+const onBack = () => {
+  navigation.goBack()
+}
+
 const EmptyList = () => {
     return <Text style={{position:'absolute',top:'50%',color: cores.primary}}>Nenhum pedido encontrado.</Text>
   }
@@ -78,7 +82,7 @@ const EmptyList = () => {
   return (
      <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-       <Header title="Histórico de Pedidos"/>
+       <Header3 title="Histórico de Pedidos" onBack={onBack} />
        {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
        <FlatList 
             showsHorizontalScrollIndicator={false}

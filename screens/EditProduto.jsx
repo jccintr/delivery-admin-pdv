@@ -1,6 +1,6 @@
 import { StyleSheet, StatusBar, SafeAreaView,Text,View,TextInput,FlatList, TouchableOpacity,Switch,Image,Dimensions,ScrollView,ActivityIndicator } from 'react-native';
 import React,{useState,useEffect,useContext} from 'react';
-import Header from '../components/Header';
+import Header3 from '../components/Header3';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 import Api from '../Api';
@@ -78,6 +78,10 @@ const EditProduto = ({route}) => {
     
      },[]);
     
+
+     const onBack = () => {
+        navigation.goBack()
+      }
 
     const toggleSwitch = () => setAtivo(ativo => !ativo);
 
@@ -196,15 +200,7 @@ const EditProduto = ({route}) => {
          newArray.push(id);
          setObrigatorioSelected(newArray);
     }  
-   /*
-    const Obrigatorio = ({obrigatorio}) => {
-        return (
-            <TouchableOpacity onPress={()=>toggleSelecionavel(obrigatorio)} style={[{borderWidth:1,padding:5,margin:5,borderRadius:5},obrigatoriosProduto.findIndex(item=>item.obrigatorio_id===obrigatorio.id)!==-1?styles.categorySelected:'']}>
-                 <Text style={obrigatoriosProduto.findIndex(item=>item.obrigatorio_id===obrigatorio.id)!==-1?styles.categorySelectedText:''}>{obrigatorio.nome}</Text>
-            </TouchableOpacity>
-        )
-    }
-   */
+   
     const Obrigatorio = ({obrigatorio}) => {
         return (
             <TouchableOpacity onPress={()=>toggleSelecionavel(obrigatorio)} style={{width: '98%',flexDirection:'row',alignItems:'flex-start',backgroundColor: '#daeaf5',padding:10,margin:5}}>
@@ -214,15 +210,7 @@ const EditProduto = ({route}) => {
         )
     }
 
-    /*
-    const Adicional = ({adicional}) => {
-        return (
-            <TouchableOpacity onPress={()=>toggleAdicional(adicional)} style={[{borderWidth:1,padding:5,margin:5,borderRadius:5},adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)!==-1?styles.categorySelected:'']}>
-                 <Text style={adicionaisProduto.findIndex(item=>item.adicional_id===adicional.id)!==-1?styles.categorySelectedText:''}>{adicional.nome}</Text>
-            </TouchableOpacity>
-        )
-    }
-   */
+    
     const Adicional = ({adicional}) => {
         return (
             <TouchableOpacity onPress={()=>toggleAdicional(adicional)} style={{width: '98%',flexDirection:'row',alignItems:'flex-start',backgroundColor: '#daeaf5',padding:10,margin:5}}>
@@ -244,7 +232,8 @@ const EditProduto = ({route}) => {
     return (
         <SafeAreaView style={styles.container}>
            <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-           <Header title="Editando Produto"/>
+           
+           <Header3 title="Editando Produtos" onBack={onBack} />
            {isLoadingScreen&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
            <ScrollView style={{width: screenWidth}} showsVerticalScrollIndicator={false}>
            <View style={styles.body}>

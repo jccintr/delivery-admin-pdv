@@ -32,10 +32,10 @@ const ModalObrigatorio = ({modalVisible,setModalVisible,editando,onSalvar,obriga
      const [newOption,setNewOption] = useState('');
   
    const onAddOption = () => {
-
+          
        if (newOption.trim().length > 0) {
-                
-          arrOption = obrigatorio.opcoes;
+         
+          let arrOption = obrigatorio.opcoes;
           arrOption.push(newOption);
           setObrigatorio({...obrigatorio,opcoes: arrOption});
           setNewOption('');
@@ -47,7 +47,7 @@ const ModalObrigatorio = ({modalVisible,setModalVisible,editando,onSalvar,obriga
    const onRemoveOption = (index) => {
     
     
-      arrOption = obrigatorio.opcoes;
+      let arrOption = obrigatorio.opcoes;
       arrOption.splice(index, 1);
       setObrigatorio({...obrigatorio,opcoes: arrOption})
       

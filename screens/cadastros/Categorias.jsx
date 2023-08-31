@@ -28,12 +28,13 @@ const CategoryItem = ({item,onPress}) => {
 
 
 const Categorias = () => {
-  const [categorias,setCategorias] = useState([]);
-  const {apiToken} = useContext(DataContext);
+  //const [categorias,setCategorias] = useState([]);
+  const {apiToken,categorias,setCategorias} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
   const [modalVisible,setModalVisible] = useState(false);
   const [categoria,setCategoria] = useState({nome: ''});
   const [editando,setEditando] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(()=>{
     const getCategorias = async () => {
@@ -49,6 +50,11 @@ const Categorias = () => {
 
  },[]);
 
+ const onBack = () => {
+  navigation.goBack()
+}
+
+
  const onSalvar = async () => {
      setModalVisible(false);
      if (!editando){  // adiciona
@@ -61,7 +67,7 @@ const Categorias = () => {
             }
           }
      } else {
-      console.log(categoria);
+      
       let response = await Api.updateCategoria(apiToken,categoria.id,categoria.nome);
       if(response.status===200){
         let response2 = await Api.getCategorias(apiToken);
@@ -94,7 +100,7 @@ const Categorias = () => {
   return (
     <SafeAreaView style={styles.container}>
     <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-    <Header2 title="Categorias" onAdd={onAdd}/>
+    <Header2 title="Categorias" onBack={onBack} onAdd={onAdd}/>
     {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
     {!isLoading&&<FlatList 
         showsVerticalScrollIndicator={false}

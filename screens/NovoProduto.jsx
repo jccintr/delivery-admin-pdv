@@ -1,6 +1,6 @@
 import { StyleSheet, StatusBar, SafeAreaView,Text,View,TextInput,FlatList, TouchableOpacity,Image,ActivityIndicator,ScrollView ,Dimensions} from 'react-native';
 import React,{useState,useContext} from 'react';
-import Header from '../components/Header';
+import Header3 from '../components/Header3';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 import Api from '../Api';
@@ -20,6 +20,10 @@ const NovoProduto = () => {
   const [isLoading,setIsLoading] = useState(false);
   const screenWidth = Dimensions.get('window').width;
  
+
+  const onBack = () => {
+    navigation.goBack()
+  }
 
   const onSalvar = async (nome,descricao,preco,categoria_id) => {
         
@@ -81,7 +85,8 @@ const selectImage = async () =>{
   return (
     <SafeAreaView style={styles.container}>
         <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-        <Header title="Novo Produto"/>
+        
+        <Header3 title="Novo Produto" onBack={onBack} />
         <ScrollView style={{width: screenWidth}} showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
                 <Text style={styles.label}>Nome:</Text>

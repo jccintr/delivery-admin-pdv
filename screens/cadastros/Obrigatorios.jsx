@@ -34,6 +34,7 @@ const Obrigatorios = () => {
   const [modalVisible,setModalVisible] = useState(false);
   const [obrigatorio,setObrigatorio] = useState({nome: '',opcoes:[]});
   const [editando,setEditando] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(()=>{
     const getObrigatorios = async () => {
@@ -50,6 +51,7 @@ const Obrigatorios = () => {
  },[]);
 
  const onSalvar = async () => {
+  
   setModalVisible(false);
   if (!editando){  // adiciona
        let response = await Api.addObrigatorio(apiToken,obrigatorio.nome,obrigatorio.opcoes);
@@ -61,9 +63,12 @@ const Obrigatorios = () => {
          }
        }
   } else {
-  
-   let response = await Api.updateObrigatorios(apiToken,obrigatorio.nome,obrigatorio.opcoes);
-   if(response.status===200){
+    
+   let response = await Api.updateObrigatorios(apiToken,obrigatorio.id,obrigatorio.nome,obrigatorio.opcoes);
+   
+   let j = await response.json();
+   
+   if(response.status===201){
      let response2 = await Api.getObrigatorios(apiToken);
          if(response2.status===200){
            let json = await response2.json();
@@ -75,7 +80,7 @@ const Obrigatorios = () => {
 
   const onAdd = () => {
     setEditando(false);
-    setObrigatorio({nome:'',opcoes:''});
+    setObrigatorio({nome:'',opcoes:[]});
     setModalVisible(true);
 }
 
@@ -84,6 +89,11 @@ const onEdit = (item) => {
     setObrigatorio(item);
     setModalVisible(true);
 }
+
+const onBack = () => {
+  navigation.goBack()
+}
+
   
 const EmptyList = () => {
   return <Text style={{color: cores.primary}}>Você ainda não adicionou itens.</Text>
@@ -92,7 +102,7 @@ const EmptyList = () => {
   return (
     <SafeAreaView style={styles.container}>
         <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-        <Header2 title="Itens Selecionáveis" onAdd={onAdd}/>
+        <Header2 onBack={onBack} title="Itens Selecionáveis" onAdd={onAdd}/>
         {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
         {!isLoading&&<FlatList 
             showsVerticalScrollIndicator={false}

@@ -2,7 +2,7 @@ import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,View,Tou
 import React, {useState,useEffect,useContext} from 'react';
 import Header2 from '../../components/Header2';
 import { cores } from '../../style/globalStyle';
-//import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import DataContext from '../../context/DataContext';
 import Api from '../../Api';
 import {FontAwesome } from '@expo/vector-icons';
@@ -42,6 +42,7 @@ const Taxas = () => {
   const [modalVisible,setModalVisible] = useState(false);
   const [taxa,setTaxa] = useState({bairro: '',valor:0, ativo:true});
   const [editando,setEditando] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(()=>{
     const getTaxas = async () => {
@@ -57,9 +58,13 @@ const Taxas = () => {
 
  },[]);
 
+ const onBack = () => {
+  navigation.goBack()
+}
+
  const onSalvar = async () => {
      setModalVisible(false);
-     //console.log(taxa);
+     
      if (!editando){  // adiciona
           let response = await Api.addTaxa(apiToken,taxa.bairro,taxa.valor,taxa.ativo);
           if(response.status===201){
@@ -70,10 +75,10 @@ const Taxas = () => {
             }
           }
      } else {
-      //console.log('taxa ativo= '+taxa.ativo);
+      
       let response = await Api.updateTaxa(apiToken,taxa.id,taxa.bairro,taxa.valor,taxa.ativo);
       if(response.status===200){
-        //console.log(response.status);
+        
         let response2 = await Api.getTaxas(apiToken);
             if(response2.status===200){
               let json = await response2.json();
@@ -105,7 +110,7 @@ const Taxas = () => {
  return (
   <SafeAreaView style={styles.container}>
   <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-  <Header2 title="Taxas de Entrega" onAdd={onAdd}/>
+  <Header2 title="Taxas de Entrega" onBack={onBack} onAdd={onAdd}/>
   {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
   {!isLoading&&<FlatList 
       showsVerticalScrollIndicator={false}

@@ -35,6 +35,7 @@ const Pagamentos = () => {
   const [modalVisible,setModalVisible] = useState(false);
   const [pagamento,setPagamento] = useState({nome: ''});
   const [editando,setEditando] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(()=>{
     const getPagamentos = async () => {
@@ -92,12 +93,16 @@ const Pagamentos = () => {
   return <Text style={{color: cores.primary}}>Você ainda não adicionou formas de pagamento.</Text>
 }
 
+const onBack = () => {
+  navigation.goBack()
+}
+
 
 
  return (
   <SafeAreaView style={styles.container}>
   <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-  <Header2 title="Formas de Pagamento" onAdd={onAdd}/>
+  <Header2 title="Formas de Pagamento" onBack={onBack} onAdd={onAdd}/>
   {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
   {!isLoading&&<FlatList 
       showsVerticalScrollIndicator={false}

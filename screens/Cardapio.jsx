@@ -1,6 +1,6 @@
 import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Text } from 'react-native';
 import React, {useState,useContext,useEffect,useCallback} from 'react';
-import Header2 from '../components/Header2';
+import Header5 from '../components/Header5';
 import { cores } from '../style/globalStyle';
 import AccordionItem from '../components/AccordionItem';
 import Api from '../Api';
@@ -66,7 +66,7 @@ const EmptyList = () => {
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-       <Header2 title="Cardápio" onAdd={()=>navigation.navigate('NovoProduto')}/>
+       <Header5 title="Cardápio" onAdd={()=>navigation.navigate('NovoProduto')}/>
       {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
       {!isLoading&&<FlatList 
         showsVerticalScrollIndicator={false}

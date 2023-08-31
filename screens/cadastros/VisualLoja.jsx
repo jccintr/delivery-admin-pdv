@@ -1,6 +1,6 @@
 import { StyleSheet, StatusBar, SafeAreaView,ActivityIndicator,Text,TouchableOpacity,ToastAndroid } from 'react-native';
 import React, {useState,useContext,useEffect} from 'react';
-import Header from '../../components/Header';
+import Header3 from '../../components/Header3';
 import { cores } from '../../style/globalStyle';
 import HeaderLoja from '../../components/HeaderLoja';
 import DataContext from '../../context/DataContext';
@@ -16,6 +16,7 @@ const VisualLoja = () => {
     const [modalCorFundoVisible,setModalCorFundoVisible] = useState(false);
     const [corTexto,setCorTexto] = useState(loggedUser.cor_texto);
     const [modalCorTextoVisible,setModalCorTextoVisible] = useState(false);
+    
     
 /*
     useEffect(()=>{
@@ -43,12 +44,17 @@ const VisualLoja = () => {
       setIsLoading(false);
     }
 
+    const onBack = () => {
+      navigation.goBack()
+    }
+    
+
 
     return (
         <SafeAreaView style={styles.container}>
            <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
            
-           <Header title="Visual da Loja"/>
+           <Header3 title="Visual da Loja" onBack={onBack} />
            {corFundo!=null&&<HeaderLoja corFundo={corFundo} corTexto={corTexto}/>}
            
 

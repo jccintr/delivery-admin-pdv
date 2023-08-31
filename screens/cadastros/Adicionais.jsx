@@ -38,6 +38,7 @@ const Adicionais = () => {
   const [modalVisible,setModalVisible] = useState(false);
   const [adicional,setAdicional] = useState({nome: '',valor:0});
   const [editando,setEditando] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(()=>{
     const getAdicionais = async () => {
@@ -78,6 +79,11 @@ const Adicionais = () => {
      
  }
 
+ const onBack = () => {
+  navigation.goBack()
+}
+
+
  const onAdd = () => {
      setEditando(false);
      setAdicional({nome:'',valor:0});
@@ -97,7 +103,7 @@ const Adicionais = () => {
  return (
   <SafeAreaView style={styles.container}>
   <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-  <Header2 title="Adicionais" onAdd={onAdd}/>
+  <Header2 onBack={onBack} title="Adicionais" onAdd={onAdd}/>
   {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
   {!isLoading&&<FlatList 
       showsVerticalScrollIndicator={false}

@@ -1,14 +1,19 @@
-import { StyleSheet, Text, SafeAreaView,StatusBar,Image,TouchableOpacity,View,ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, SafeAreaView,StatusBar,Image,View,ActivityIndicator } from 'react-native';
 import React, {useContext,useState,useEffect} from 'react';
 import HeaderHome from '../components/headers/HeaderHome';
 import { cores } from '../style/globalStyle';
 import DataContext from '../context/DataContext';
 import Api from '../Api';
 import Status from '../components/Status';
-import Wait from '../components/Wait';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import ModalWait from '../components/modal/ModalWait';
+import PainelEntregues from '../components/paineis/PainelEntregues';
+import PainelRetirados from '../components/paineis/PainelRetirados';
+import PainelRecebidos from '../components/paineis/PainelRecebidos';
+import PainelFaturamento from '../components/paineis/PainelFaturamento';
+import PainelEspera from '../components/paineis/PainelEspera';
+import PainelStatus from '../components/paineis/PainelStatus';
 
 
 
@@ -19,6 +24,7 @@ const Home = () => {
   const [modalVisible,setModalVisible] = useState(false);
   const [espera,setEspera] = useState(loggedUser.tempo_espera);
   const [isLoadingWait,setIsLoadingWait] = useState(false);
+  const [isLoadingStatus,setIsLoadingStatus] = useState(false);
   const [isLoading,setIsLoading] = useState(false);
   const [faturamento,setFaturamento] = useState(0);
   const [recebidos,setRecebidos] = useState(0);
@@ -65,10 +71,7 @@ const Home = () => {
       setIsLoading(false);
   }
 
-  const onWaitPress = () => {
-     setModalVisible(true);
-  }
-
+  
   const onSaveWait = async (valor) => {
        if(valor.trim().length>0){
           setIsLoadingWait(true);
@@ -82,44 +85,50 @@ const Home = () => {
        }
   }
 
+  const toggleStatus = async () => {
+    setIsLoadingStatus(true);
+    let response = await Api.toggleStatus(apiToken);
+    
+    if (response.status===200){
+       let user = loggedUser;
+       user.aberto = !loggedUser.aberto;
+       setAberto(!aberto);
+       setLoggedUser(user);
+    }
+   setIsLoadingStatus(false);
+
+}
+
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-      <HeaderHome title="Delivroo" onRefresh={onRefresh} onLogout={onLogout}/>
+      <HeaderHome title="Gestor Delivroo" onRefresh={onRefresh} onLogout={onLogout}/>
       {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
+     
       <View style={styles.tenantArea}>
           <Image style={styles.logotipo} source={{uri:`${Api.base_storage}/${loggedUser.logotipo}`,}}/>
-          <Text style={styles.name}>{loggedUser.name}</Text>
-         
+          <Text style={styles.name}>{loggedUser.name.toUpperCase()}</Text>
       </View>
-      <View style={styles.statusArea}>
-         <Status />
-         {isLoadingWait?<ActivityIndicator  size="small" color={cores.orange}/>:<Wait onPress={onWaitPress} value={espera}/>}
-      </View>
-      <View style={styles.dashBoardArea}>
-          <Text style={{color:cores.primary,fontWeight:'bold',fontSize:16}}>PEDIDOS RECEBIDOS</Text>
-          <Text style={{color:cores.primary,fontWeight:'bold',fontSize:40,marginTop:10}}>{recebidos}</Text>
-      </View>
-      <View style={styles.detPedidosArea}>
-        <View style={styles.detPedidosItemArea}>
-            <Text style={{color:'#f00',fontWeight:'bold',fontSize:14}}>ENTREGUES</Text>
-            <Text style={{color:'#f00',fontWeight:'bold',fontSize:34,marginTop:10}}>{entregues}</Text>
-        </View>
-        <View style={styles.detPedidosItemArea}>
-            <Text style={{color:'#006400',fontWeight:'bold',fontSize:14}}>RETIRADOS</Text>
-            <Text style={{color:'#006400',fontWeight:'bold',fontSize:34,marginTop:10}}>{retirados}</Text>
-        </View>
-      </View> 
-      <View style={styles.dashBoardArea}>
-          <Text style={{color:cores.primary,fontWeight:'bold',fontSize:16}}>FATURAMENTO</Text>
-          <Text style={{color:cores.primary,fontWeight:'bold',fontSize:40,marginTop:10}}>R$ {faturamento.toFixed(2)}</Text>
-      </View> 
 
+      <View style={styles.dashBoardArea}>
 
-      {/*<TouchableOpacity onPress={onLogout}>
-        <Text style={{color:'#f00',fontWeight:'bold',fontSize:16}}>Desconectar</Text>
-        </TouchableOpacity>*/}
-       <ModalWait setModalVisible={setModalVisible} modalVisible={modalVisible} value={espera}  onSalvar={onSaveWait}/>
+          <View style={{flexDirection:'row'}}>
+                <PainelStatus aberto={aberto} isLoading={isLoadingStatus} onPress={toggleStatus}/>
+                <PainelEspera onPress={()=>setModalVisible(true)} espera={espera} isLoading={isLoadingWait}/>
+          </View>
+          <View style={{flexDirection:'row'}}>
+                <PainelRecebidos value={recebidos} />
+                <PainelEntregues value={entregues} />
+          </View>
+          <View style={{flexDirection:'row'}}>
+                <PainelRetirados value={retirados} />
+                <PainelFaturamento value={faturamento}/>
+          </View>
+          
+      </View>
+
+      <ModalWait setModalVisible={setModalVisible} modalVisible={modalVisible} value={espera}  onSalvar={onSaveWait}/>
     </SafeAreaView>
   )
 }
@@ -138,12 +147,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '95%',
     padding: 10,
-    borderRadius:12,
+    borderRadius:5,
     backgroundColor: cores.white,
     marginBottom: '2%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    shadowColor: '#000',
+      shadowOffset: {
+        width:0,
+        height:3,
+      },
+      shadowOpacity: 0.17,
+      shadowRadius:3.05,
+      elevation:2,
   }, 
   tenantDeailsArea: {
     flexDirection: 'column',
@@ -178,12 +195,20 @@ const styles = StyleSheet.create({
       marginTop: 5,
       width: '95%',
       padding: 10,
-      borderRadius:12,
+      borderRadius:5,
       backgroundColor: cores.white,
       marginBottom: '2%',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width:0,
+        height:3,
+      },
+      shadowOpacity: 0.17,
+      shadowRadius:3.05,
+      elevation:2,
     },
     detPedidosArea:{
       marginTop: 5,

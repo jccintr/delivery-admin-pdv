@@ -31,10 +31,18 @@ const styles = StyleSheet.create({
 container:{
   width: '100%',
   padding: '2%',
-  borderRadius:12,
+  borderRadius:5,
   backgroundColor: cores.white,
   marginBottom: '2%',
   overflow: 'hidden',
+  shadowColor: '#000',
+      shadowOffset: {
+        width:0,
+        height:3,
+      },
+      shadowOpacity: 0.17,
+      shadowRadius:3.05,
+      elevation:2,
 },
 titleContainer:{
   flexDirection: 'row',

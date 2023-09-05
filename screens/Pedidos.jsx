@@ -96,7 +96,7 @@ useFocusEffect(
   return (
     <SafeAreaView style={styles.container}>
        <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-       <HeaderPedidos title="Pedidos" onFilter={()=>setModalVisible(true)} onRefresh={onRefresh}/>
+       <HeaderPedidos title="Pedidos" onFilter={()=>setModalVisible(true)} onRefresh={onRefresh} isLoading={isLoading}/>
        
        {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
        {!isLoading&&<FlatList 

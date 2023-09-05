@@ -103,8 +103,8 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-      <HeaderHome title="Gestor Delivroo" onRefresh={onRefresh} onLogout={onLogout}/>
-      {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
+      <HeaderHome title="Gestor Delivroo" onRefresh={onRefresh} onLogout={onLogout} isLoading={isLoading}/>
+      
      
       <View style={styles.tenantArea}>
           <Image style={styles.logotipo} source={{uri:`${Api.base_storage}/${loggedUser.logotipo}`,}}/>

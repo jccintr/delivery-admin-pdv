@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet,View,TouchableOpacity,Text } from 'react-native';
+import { StyleSheet,View,TouchableOpacity,Text,ActivityIndicator } from 'react-native';
 import { cores } from '../style/globalStyle';
 import { AntDesign,Feather } from '@expo/vector-icons';
 
 
-const HeaderPedidos = ({title,onFilter,onRefresh}) => {
+const HeaderPedidos = ({title,onFilter,onRefresh, isLoading}) => {
   return (
     <View style={styles.container}>
         <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
@@ -15,7 +15,7 @@ const HeaderPedidos = ({title,onFilter,onRefresh}) => {
                 <AntDesign style={{marginRight:20}} name="filter" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity onPress={onRefresh}>
-                <Feather name="refresh-ccw" size={24} color="white" />
+              {isLoading?<ActivityIndicator  size="small" color='#fff'/>:<Feather name="refresh-ccw" size={24} color="white" />}
         </TouchableOpacity>
         </View>
       

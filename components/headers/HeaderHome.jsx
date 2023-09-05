@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet,View,TouchableOpacity,Text } from 'react-native';
+import { StyleSheet,View,TouchableOpacity,Text,ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons,Feather } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 
 
-const HeaderHome = ({title,onRefresh,onLogout}) => {
+const HeaderHome = ({title,onRefresh,onLogout,isLoading}) => {
   return (
     <View style={styles.container}>
         <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
@@ -12,7 +12,7 @@ const HeaderHome = ({title,onRefresh,onLogout}) => {
         </View>
         <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={onRefresh}>
-                   <Feather  style={{marginRight:20}} name="refresh-ccw" size={24} color="white" />
+              {isLoading?<ActivityIndicator style={{marginRight:20}} size="small" color='#fff'/>:<Feather  style={{marginRight:20}} name="refresh-ccw" size={24} color="white" />}
             </TouchableOpacity>
             <TouchableOpacity onPress={onLogout}>
                    <MaterialCommunityIcons name="logout" size={24} color="white" />

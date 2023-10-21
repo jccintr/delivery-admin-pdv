@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Text,TouchableOpacity} from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView,View,FlatList,ActivityIndicator,Text,TouchableOpacity} from 'react-native';
 import React, {useState,useEffect,useContext} from 'react';
 import { cores } from '../style/globalStyle';
 import DataContext from '../context/DataContext';
@@ -71,7 +71,7 @@ const onBack = () => {
 }
 
 const EmptyList = () => {
-    return <Text style={{position:'absolute',top:'50%',color: cores.primary}}>Nenhum pedido encontrado.</Text>
+    return <Text style={{width:'100%',textAlign:'center',position:'absolute',top:'50%',color: cores.primary}}>Nenhum pedido encontrado.</Text>
   }
 
   const onPressPedido = (pedido) => {
@@ -81,26 +81,30 @@ const EmptyList = () => {
 
   return (
      <SafeAreaView style={styles.container}>
-       <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-       <Header3 title="Histórico de Pedidos" onBack={onBack} />
-       {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
-       <FlatList 
-            showsHorizontalScrollIndicator={false}
-            style={styles.flatList}
-            data={meses}
-            keyExtractor={(item)=> item.id.toString()}
-            renderItem={({item})=><MesCard mes={item} selected={selectedMes}/>}
-            horizontal={true}
-        /> 
-        {!isLoading&&<FlatList 
-        showsVerticalScrollIndicator={false}
-        style={styles.flatList}
-        data={pedidos}
-        keyExtractor={(item)=> item.id.toString()}
-        renderItem={({item})=><PedidoCard pedido={item} onPress={onPressPedido}/>}
-        />}
-        {!isLoading&&pedidos.length===0&&<EmptyList/>}
-      
+          <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
+          <Header3 title="Histórico de Pedidos" onBack={onBack} />
+          <View style={styles.body}>
+              {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
+              <View style={{height:50}}>
+              <FlatList 
+                    showsHorizontalScrollIndicator={false}
+                    data={meses}
+                    keyExtractor={(item)=> item.id.toString()}
+                    renderItem={({item})=><MesCard mes={item} selected={selectedMes}/>}
+                    horizontal={true}
+                /> 
+               </View> 
+              
+              
+                {!isLoading&&<FlatList 
+                showsVerticalScrollIndicator={false}
+                data={pedidos}
+                style={{paddingHorizontal:10}}
+                keyExtractor={(item)=> item.id.toString()}
+                renderItem={({item})=><PedidoCard pedido={item} onPress={onPressPedido}/>}
+                />}
+                {!isLoading&&pedidos.length===0&&<EmptyList/>}
+          </View>
      </SafeAreaView>  
   )
 }
@@ -111,14 +115,16 @@ const styles = StyleSheet.create({
 
     container: {
         flex:1,
+        flexDirection:'column',
         backgroundColor: cores.whiteSmoke,
         alignItems: 'center',
         justifyContent: 'flex-start',
+        
+        
    },
-    flatList: {
-      width: '100%',
-      paddingHorizontal: 5,
-    },
+   body:{
+         flex:1,
+   },
   mesSelected: {
     borderColor: cores.primary,
 },
@@ -129,6 +135,8 @@ mesSelectedText: {
 loading:{
     position: 'absolute',
     top: '50%',
+    left: '50%',
+    
    }
 
 

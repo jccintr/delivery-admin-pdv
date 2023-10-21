@@ -31,7 +31,7 @@ const PedidoCard = ({pedido, onPress}) => {
   return (
     <TouchableOpacity style={styles.container} onPress={()=>onPress(pedido)}>
         <View style={styles.firstLine}>
-            <Text style={styles.nomeText}>{pedido.nome}</Text>
+            <Text style={styles.nomeText}>{pedido.nome.length>22 ? pedido.nome.substring(0,22)+'...':pedido.nome}</Text>
             <StatusPedido status={pedido.status_pedido} />
         </View>
         <Text style={styles.numeroText}>{`${pedido.token} | ${pedido.data}`}</Text>
@@ -48,7 +48,8 @@ export default PedidoCard
 const styles = StyleSheet.create({
 
     container: {
-        width: '100%',
+        flex:1,
+       // width: '100%',
         padding: '2%',
         borderRadius:5,
         backgroundColor: cores.white,

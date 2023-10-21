@@ -55,10 +55,10 @@ const onBack = () => {
                 </View>
                 {pedido.delivery?<Delivery/>:<Retira/>}
             </View>
-            <View style={styles.cabecalho}>
+            <View style={[styles.cabecalho,{flexDirection:'column',alignItems:'flex-start',justifyContent:'space-between'}]}>
                 <View style={styles.nameArea}>
                     <FontAwesome name="user" size={22} color="gray" />
-                    <Text style={styles.nameText}>{pedido.nome}</Text>
+                    <Text style={styles.nameText}>{pedido.nome.length>35 ? pedido.nome.substring(0,35)+'...':pedido.nome}</Text>
                 </View>
                 <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
                     <FontAwesome style={{marginRight:5}} name="whatsapp" size={22} color="green" />
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         borderBottomColor: 'lightgray',
+        marginBottom:10,
         
     },
     nameText: {

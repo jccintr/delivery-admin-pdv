@@ -7,6 +7,8 @@ import Api from '../Api';
 import DataContext from '../context/DataContext';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome,Fontisto } from '@expo/vector-icons';
+import LabelInputField from '../components/Inputs/LabelInputField';
+import LabelInputArea from '../components/Inputs/LabelInputArea';
 
 const EditProduto = ({route}) => {
     const navigation = useNavigation();
@@ -27,40 +29,21 @@ const EditProduto = ({route}) => {
     const [isLoadingClone,setIsLoadingClone] = useState(false);
     const [isLoadingScreen,setIsLoadingScreen] = useState(true);
 
-    useEffect(()=>{
-        
-        const getObrigatorios = async () => {
-          setIsLoadingScreen(true);
-          let response = await Api.getObrigatorios(apiToken);
+
+
+    const getData = async () => {
+        setIsLoadingScreen(true);
+        let response = await Api.getObrigatorios(apiToken);
           if(response.status===200) {
             let json = await response.json();
             setObrigatorios(json);
           }
-          setIsLoadingScreen(false);
+        response = await Api.getAdicionais(apiToken);
+        if(response.status===200) {
+        let json = await response.json();
+        setAdicionais(json);
         }
-        getObrigatorios();
-    
-     },[]);
-
-     useEffect(()=>{
-        
-        const getAdicionais = async () => {
-          setIsLoadingScreen(true);
-          let response = await Api.getAdicionais(apiToken);
-          if(response.status===200) {
-            let json = await response.json();
-            setAdicionais(json);
-          }
-          setIsLoadingScreen(false);
-        }
-        getAdicionais();
-    
-     },[]);
-
-     useEffect(()=>{
-        const getProduto = async (id) => {
-          setIsLoadingScreen(true);
-          let response = await Api.getProduto(apiToken,id);
+        response = await Api.getProduto(apiToken,idProduto);
           if(response.status===200) {
             let json = await response.json();
             setNome(json.nome);
@@ -73,10 +56,14 @@ const EditProduto = ({route}) => {
             setAdicionaisProduto(json.adicionais);
           }
           setIsLoadingScreen(false);
-        }
-        getProduto(idProduto);
+    }
+
+    useEffect(()=>{
+        
+      getData();
     
      },[]);
+
     
 
      const onBack = () => {
@@ -234,49 +221,22 @@ const EditProduto = ({route}) => {
            <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
            
            <Header3 title="Editando Produtos" onBack={onBack} />
-           {isLoadingScreen&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
+           {isLoadingScreen?<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>:
            <ScrollView style={{width: screenWidth}} showsVerticalScrollIndicator={false}>
            <View style={styles.body}>
-                  <Text style={styles.label}>Nome:</Text>
-                  <View style={styles.inputArea}>
-                       <TextInput style={styles.input}
-                                  placeholder="Nome do produto..."
-                                  value={nome}
-                                  onChangeText={t=>setNome(t)}
-                                  placeholderTextColor="#c1c1c1" 
-                       />
-                   </View> 
-
-                   <Text style={styles.label}>Descrição:</Text>
-                   <View style={[styles.inputArea,{height:75}]}>
-                       <TextInput style={styles.input}
-                                  placeholder="Descrição do produto..."
-                                  value={descricao}
-                                  onChangeText={t=>setDescricao(t)}
-                                  placeholderTextColor="#c1c1c1" 
-                                  multiline={true}
-                                  numberOfLines={4}
-                       />
-                   </View> 
-                   <Text style={styles.label}>Preço:</Text>
-                   <View style={styles.inputArea}>
-                              <TextInput style={styles.input}
-                                    placeholder="Preço de venda..."
-                                    value={preco}
-                                    keyboardType='decimal-pad'
-                                    onChangeText={t=>setPreco(t)}
-                                    placeholderTextColor="#c1c1c1" 
-                                />
-                    </View>
-                    <Text style={styles.label}>Categoria:</Text>
-                    <FlatList 
-                        showsHorizontalScrollIndicator={false}
-                        style={styles.flatList}
-                        data={categorias}
-                        keyExtractor={(item)=> item.id.toString()}
-                        renderItem={({item})=><Categoria categoria={item} selected={categoriaId}/>}
-                        horizontal={true}
-                    />
+              <LabelInputField numeric={false} label={'Nome:'} placeholder={"Nome do produto"} value={nome} onChangeText={t=>setNome(t)}/>
+              <LabelInputArea label={'Descrição:'} placeholder={"Descrição do produto"} value={descricao} onChangeText={t=>setDescricao(t)} lines={3}/>
+              <LabelInputField numeric label={'Preço:'} placeholder={"Preço do produto"} value={preco} onChangeText={t=>setPreco(t)}/>   
+              
+              <Text style={styles.label}>Categoria:</Text>
+              <FlatList 
+                showsHorizontalScrollIndicator={false}
+                style={styles.flatList}
+                data={categorias}
+                keyExtractor={(item)=> item.id.toString()}
+                renderItem={({item})=><Categoria categoria={item} selected={categoriaId}/>}
+                horizontal={true}
+              />
                     <View style={{width:'100%',flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-start'}}>
                         <Text style={[styles.labelAtivo]}>Exibir no cardápio:</Text>  
                         <Switch
@@ -310,7 +270,7 @@ const EditProduto = ({route}) => {
                         {!isLoading?<Text style={styles.buttonText}>SALVAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
                     </TouchableOpacity>
            </View>
-           </ScrollView>
+           </ScrollView>}
         </SafeAreaView>
       )
 }
@@ -356,7 +316,7 @@ const styles = StyleSheet.create({
             paddingHorizontal: 5,
             alignItems: 'center',
             marginBottom: 10,
-            backgroundColor: '#daeaf5'
+            backgroundColor: cores.inputBackground,
         },
       input: {
             flex: 1,

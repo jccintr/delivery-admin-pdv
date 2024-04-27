@@ -7,6 +7,8 @@ import Api from '../Api';
 import DataContext from '../context/DataContext';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
+import LabelInputField from '../components/Inputs/LabelInputField';
+import LabelInputArea from '../components/Inputs/LabelInputArea';
 
 
 const NovoProduto = () => {
@@ -89,36 +91,12 @@ const selectImage = async () =>{
         <Header3 title="Novo Produto" onBack={onBack} />
         <ScrollView style={{width: screenWidth}} showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
-                <Text style={styles.label}>Nome:</Text>
-                <View style={styles.inputArea}>
-                      <TextInput style={styles.input}
-                                placeholder="Nome do produto..."
-                                value={nome}
-                                onChangeText={t=>setNome(t)}
-                                placeholderTextColor="#c1c1c1" 
-                      />
-                </View> 
-                <Text style={styles.label}>Descrição:</Text>
-                <View style={[styles.inputArea,{height:75}]}>
-                       <TextInput style={styles.input}
-                                  placeholder="Descrição do produto..."
-                                  value={descricao}
-                                  onChangeText={t=>setDescricao(t)}
-                                  placeholderTextColor="#c1c1c1" 
-                                  multiline={true}
-                                  numberOfLines={4}
-                       />
-                </View> 
-                <Text style={styles.label}>Preço:</Text>
-                <View style={styles.inputArea}>
-                              <TextInput style={styles.input}
-                                    placeholder="Preço de venda..."
-                                    value={preco}
-                                    keyboardType='decimal-pad'
-                                    onChangeText={t=>setPreco(t)}
-                                    placeholderTextColor="#c1c1c1" 
-                                />
-                 </View> 
+        <LabelInputField numeric={false} label={'Nome:'} placeholder={"Nome do produto"} value={nome} onChangeText={t=>setNome(t)}/>
+              <LabelInputArea label={'Descrição:'} placeholder={"Descrição do produto"} value={descricao} onChangeText={t=>setDescricao(t)} lines={3}/>
+              <LabelInputField numeric label={'Preço:'} placeholder={"Preço do produto"} value={preco} onChangeText={t=>setPreco(t)}/>  
+               
+               
+               
                  <Text style={styles.label}>Categoria:</Text>
                  <FlatList 
                         showsHorizontalScrollIndicator={false}

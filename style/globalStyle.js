@@ -12,4 +12,7 @@ export const cores = {
     cinzaClaro: '#fafafa',
     branco: '#fff',
     dourado: '#FDCC0D',
+    inputBackground: '#daeaf5',
+    searchFieldBackground: '#f3f3f3',
+    searchIconColor: '#5b5b5b',
  };

@@ -1,5 +1,5 @@
 import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Text } from 'react-native';
-import React, {useState,useContext,useEffect,useCallback} from 'react';
+import React, {useState,useContext,useEffect} from 'react';
 import Header5 from '../components/Header5';
 import { cores } from '../style/globalStyle';
 import AccordionItem from '../components/AccordionItem';
@@ -37,7 +37,12 @@ const Cardapio = () => {
 const onEdit = (produto) => {
       setProduto(produto);
       //setModalVisible(true);
-      navigation.navigate('EditProduto',{idProduto: produto.id, categorias: categorias})
+      if(produto.pizza){
+        navigation.navigate('Pizzas');
+      } else {
+        navigation.navigate('EditProduto',{idProduto: produto.id, categorias: categorias});
+      }
+      
 }
 
 const onSalvar = async (id,nome,descricao,preco,categoria_id,ativo) => {

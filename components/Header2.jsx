@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
       height: 50,
       width: '100%',
       flexDirection:'row',
-      paddingHorizontal: 20,
+      paddingHorizontal: 10,
       },
     title: {
         color: cores.white,

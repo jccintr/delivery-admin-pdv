@@ -514,6 +514,30 @@ export default {
         });
         return response;
     },
+    updatePizza: async (token,id,data) => {
+        const response = await fetch(`${BASE_API}/pizzas/${id}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(data)
+        });
+        return response;
+    },
+    addPizza: async (token,data) => {
+        const response = await fetch(`${BASE_API}/pizzas`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(data)
+        });
+        return response;
+    },
     
 };
 

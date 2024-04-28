@@ -1,9 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View,TextInput } from 'react-native'
+import { StyleSheet, TouchableOpacity,Pressable, View,TextInput } from 'react-native'
 import { FontAwesome,AntDesign } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 
-const SearchInput = ({value, onChangeText}) => {
+const SearchInput = ({value,setValue,onChangeText}) => {
   return (
     <View style={{paddingHorizontal:10}}>
       
@@ -14,8 +14,8 @@ const SearchInput = ({value, onChangeText}) => {
             value={value}
             onChangeText={onChangeText}
             placeholderTextColor="#c1c1c1" 
-           
         />
+        {value.length>0&&<Pressable onPress={()=>setValue('')}><AntDesign name="closecircleo" size={16} color={cores.iconeSearchField} /></Pressable>}
       </View> 
     </View>
   )

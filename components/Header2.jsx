@@ -11,7 +11,7 @@ const Header2 = ({title,onBack,onAdd}) => {
             <TouchableOpacity onPress={()=>onBack()}>
                     <Ionicons name="arrow-back-outline" size={24} color="white" />
             </TouchableOpacity>
-            <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
+            <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center',marginLeft:10}}>
                 <Text style={styles.title}>{title}</Text>
             </View>
       </View>

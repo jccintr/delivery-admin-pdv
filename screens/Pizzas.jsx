@@ -14,9 +14,13 @@ const Pizzas = () => {
   const [pizzas,setPizzas] = useState([]);
   const {apiToken} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
+  const [isSaving,setIsSaving] = useState(false);
   const [modalVisible,setModalVisible] = useState(false);
   const [editando,setEditando] = useState(false);
   const [pizza,setPizza] = useState([]);
+  const [search,setSearch] = useState('');
+
+  const pizzasFiltered = pizzas.filter( pizza=>pizza.nome.toUpperCase().includes(search.toUpperCase()) || pizza.descricao.toUpperCase().includes(search.toUpperCase())  );
 
 
   useEffect(()=>{
@@ -35,7 +39,9 @@ const Pizzas = () => {
 
 
 const onAdd = () => {
-
+     setEditando(false);
+     setPizza({nome:'',descricao:'',ativo:true,grande:'',broto:''});
+     setModalVisible(true);
 
 }
 
@@ -45,31 +51,101 @@ const onEdit = (pizza)=> {
     setModalVisible(true);
 }
 
-const onSalvar = () => {
+const onSalvar = async () => {
+  
+  if(pizza.nome.trim().length===0){
+    alert('Informe o nome da pizza por favor.');
+  }
+  if(pizza.descricao.trim().length===0){
+     alert('Informe a descrição da pizza por favor.');
+  }
+  if(pizza.grande.trim().length===0){
+    alert('Informe o preço da pizza grande por favor.');
+  }
+  if(pizza.broto.trim().length===0){
+  alert('Informe o preço da pizza broto por favor.');
+  }
+  if(parseFloat(pizza.grande) <= 0 || parseFloat(pizza.broto) <= 0){
+   alert('Os preços das pizza devem ser maiores do que zero.');
+  }
+
+  
+ 
+  setIsSaving(true);
+  if(!editando) {
+    let response = await Api.addPizza(apiToken,pizza);
+    console.log(response.status)
+    if(response.status===201){
+      const newPizza = await response.json();
+      console.log(newPizza);
+      setModalVisible(false);
+      setIsLoading(true);
+      pizzas.push(newPizza);
+      const p = pizzas.sort((a, b) => a.nome.localeCompare(b.nome));
+      setPizzas(p);
+      // let response2 = await Api.getPizzas(apiToken);
+      //     if(response2.status===200){
+      //       let json = await response2.json();
+      //       setPizzas(json);
+      //     }
+     setIsLoading(false);   
+    }
+
+  } else {
+    let response = await Api.updatePizza(apiToken,pizza.id,pizza);
+ 
+    if(response.status===200){
+      const editedPizza = await response.json();
+      setModalVisible(false);
+      setIsLoading(true);
+       const foundPizza = pizzas.find(pizza => pizza.id === editedPizza.id);
+       if (foundPizza) {
+        foundPizza.nome = editedPizza.nome;
+        foundPizza.descricao = editedPizza.descricao;
+        foundPizza.grande = editedPizza.grande;
+        foundPizza.broto = editedPizza.broto;
+        foundPizza.ativo = editedPizza.ativo;
+      }
+      const p = pizzas.sort((a, b) => a.nome.localeCompare(b.nome));
+      setPizzas(p);
+      // let response2 = await Api.getPizzas(apiToken);
+      //     if(response2.status===200){
+      //       let json = await response2.json();
+      //       setPizzas(json);
+      //     }
+     setIsLoading(false);   
+    }
+
+  }
+
+  setIsSaving(false);
+ 
+
+  
 
 }
 
 const EmptyList = () => {
-    return <Text style={{color: cores.primary}}>Você ainda não adicionou sabores de pizzas.</Text>
+    return <Text style={{color: cores.primary}}>Pizzas não encontradas.</Text>
   }
 
 
   return (
     <SafeAreaView style={styles.container}>
         <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
-        <Header2 title="Sabores das Pizzas" onBack={()=>navigation.goBack()} onAdd={onAdd}/>
-        <SearchInput />
+        <Header2 title="Pizzas" onBack={()=>navigation.goBack()} onAdd={onAdd}/>
+        <SearchInput value={search} setValue={setSearch} onChangeText={t=>setSearch(t)} />
         {isLoading&&<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>}
         {!isLoading&&<FlatList 
             showsVerticalScrollIndicator={false}
             style={styles.flatList}
-            data={pizzas}
+            data={pizzasFiltered}
             keyExtractor={(item)=> item.id.toString()}
             renderItem={({item})=><PizzaCard pizza={item} onPress={onEdit} last={false}/>}
             ListEmptyComponent={<EmptyList/>}
-            contentContainerStyle={pizzas.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
+            contentContainerStyle={pizzasFiltered.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
       />}
-      <ModalPizza modalVisible={modalVisible} setModalVisible={setModalVisible} onSalvar={onSalvar} pizza={pizza} setPizza={setPizza} editando={editando}/>
+      <ModalPizza isSaving={isSaving} modalVisible={modalVisible} setModalVisible={setModalVisible} onSalvar={onSalvar} pizza={pizza} setPizza={setPizza} editando={editando}/>
     </SafeAreaView>
   )
 }

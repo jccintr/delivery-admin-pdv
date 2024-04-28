@@ -220,7 +220,7 @@ const EditProduto = ({route}) => {
         <SafeAreaView style={styles.container}>
            <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
            
-           <Header3 title="Editando Produtos" onBack={onBack} />
+           <Header3 title="Editando Produto" onBack={onBack} />
            {isLoadingScreen?<ActivityIndicator style={styles.loading} size="large" color={cores.primary}/>:
            <ScrollView style={{width: screenWidth}} showsVerticalScrollIndicator={false}>
            <View style={styles.body}>

@@ -13,11 +13,18 @@ const PizzaCard = ({pizza,onPress,last}) => {
            <Text style={styles.descricao}>{pizza.descricao}</Text>
            <View style={styles.precoContainer}>
               <View style={{flex:1,flexDirection: 'row',justifyContent: 'space-between'}}>
-                 <Text style={styles.preco}>Grande: R$ {pizza.grande}</Text>
-                 <Text style={styles.preco}>Broto: R$ {pizza.broto}</Text>
+                 <View style={{flex:1,flexDirection: 'row'}}>
+                    <Text style={styles.labelPreco}>Grande: </Text>
+                    <Text style={styles.preco}>R$ {pizza.grande}</Text>
+                 </View>
+                 <View style={{flex:0,flexDirection: 'row'}}>
+                    <Text style={styles.labelPreco}>Broto: </Text>
+                    <Text style={styles.preco}>R$ {pizza.broto}</Text>
+                 </View>
+                
               </View>
-              {!pizza.ativo&&<Text style={styles.foraCardapio}>Fora do Cardápio</Text>}
            </View>
+           {!pizza.ativo&&<Text style={styles.foraCardapio}>Fora do Cardápio</Text>}
         </View>
       </TouchableOpacity>
     )
@@ -64,6 +71,7 @@ const PizzaCard = ({pizza,onPress,last}) => {
       },
       descricao: {
         fontSize: 12,
+        marginVertical: 5,
         
       },
       precoContainer:{
@@ -71,6 +79,10 @@ const PizzaCard = ({pizza,onPress,last}) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+      },
+      labelPreco: {
+        fontWeight: '500',
+       
       },
       preco: {
         fontWeight: 'bold',

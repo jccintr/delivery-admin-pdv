@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput,Switch} from 'react-native';
+import { StyleSheet, Text, View,Modal,TouchableOpacity,Switch,ActivityIndicator} from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 import LabelInputField from '../Inputs/LabelInputField';
 import LabelInputArea from '../Inputs/LabelInputArea';
 
-const ModalPizza = ({modalVisible,setModalVisible,editando,onSalvar,pizza,setPizza}) => {
+const ModalPizza = ({modalVisible,setModalVisible,editando,onSalvar,pizza,setPizza,isSaving}) => {
      
  
     return (
@@ -36,7 +36,7 @@ const ModalPizza = ({modalVisible,setModalVisible,editando,onSalvar,pizza,setPiz
                     </View>
                     
                     <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar()} >
-                        <Text style={styles.addButtonText}>SALVAR</Text>
+                        {!isSaving?<Text style={styles.addButtonText}>SALVAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
                     </TouchableOpacity>
                 </View>
             </View>

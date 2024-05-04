@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,FlatList,SafeAreaView,StatusBar,ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View,FlatList,SafeAreaView,StatusBar,ActivityIndicator,KeyboardAvoidingView } from 'react-native'
 import React, {useState,useEffect,useContext} from 'react';
 import DataContext from '../context/DataContext';
 import Api from '../Api';
@@ -9,10 +9,12 @@ import ModalPizza from '../components/modal/ModalPizza';
 import { useNavigation } from '@react-navigation/native';
 import SearchInput from '../components/Inputs/SearchInput';
 
+
+
 const Pizzas = () => {
   const navigation = useNavigation();
-  const [pizzas,setPizzas] = useState([]);
-  const {apiToken} = useContext(DataContext);
+  //const [pizzas,setPizzas] = useState([]);
+  const {apiToken,pizzas,setPizzas} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
   const [isSaving,setIsSaving] = useState(false);
   const [modalVisible,setModalVisible] = useState(false);
@@ -39,16 +41,12 @@ const Pizzas = () => {
 
 
 const onAdd = () => {
-     setEditando(false);
-     setPizza({nome:'',descricao:'',ativo:true,grande:'',broto:''});
-     setModalVisible(true);
-
+    
+  navigation.navigate('NovaPizza');
 }
 
 const onEdit = (pizza)=> {
-    setEditando(true);
-    setPizza(pizza);
-    setModalVisible(true);
+     navigation.navigate('EditPizza',{p:pizza});
 }
 
 const onSalvar = async () => {
@@ -73,11 +71,12 @@ const onSalvar = async () => {
  
   setIsSaving(true);
   if(!editando) {
+    console.log(pizza);
     let response = await Api.addPizza(apiToken,pizza);
-    console.log(response.status)
+    
     if(response.status===201){
       const newPizza = await response.json();
-      console.log(newPizza);
+      
       setModalVisible(false);
       setIsLoading(true);
       pizzas.push(newPizza);
@@ -131,7 +130,7 @@ const EmptyList = () => {
 
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} >
         <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
         <Header2 title="Pizzas" onBack={()=>navigation.goBack()} onAdd={onAdd}/>
         <SearchInput value={search} setValue={setSearch} onChangeText={t=>setSearch(t)} />

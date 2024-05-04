@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput} from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
+import LabelInputField from '../Inputs/LabelInputField';
 
 
 const days = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
@@ -21,17 +22,8 @@ const ModalHorario = ({modalVisible,setModalVisible,editando,onSalvar,horario,se
                 </TouchableOpacity>
                 
                 <View style={styles.content}>
-                    <View>
-                      <Text style={styles.label}>{days[horario.dia]}:</Text>
-                      <View style={styles.inputArea}>
-                          <TextInput style={styles.input}
-                                  placeholder="Horario de funcionamento..."
-                                  value={horario.horario}
-                                  onChangeText={t=>setHorario({...horario,horario: t})}
-                                  placeholderTextColor="#c1c1c1" 
-                              />
-                      </View>
-                    </View>
+                    <LabelInputField numeric={false} label={days[horario.dia]} placeholder={"Horário de funcionamento"} value={horario.horario} onChangeText={t=>setHorario({...horario,horario: t})}/>
+                    
                     
                         <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar()} >
                             <Text style={styles.addButtonText}>SALVAR</Text>

@@ -2,9 +2,11 @@ import { StyleSheet, Text, View,Modal,TouchableOpacity,ActivityIndicator } from 
 import React, {useState,useContext} from 'react';
 import Api from '../../Api';
 import { cores } from '../../style/globalStyle';
-import { Entypo,EvilIcons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import DataContext from '../../context/DataContext';
 import InputField from '../InputField';
+import LabelInputField from '../Inputs/LabelInputField';
+import LabelPasswordField from '../Inputs/LabelPasswordField';
 
 
 
@@ -52,23 +54,9 @@ const ModalSenha = ({modalVisible,setModalVisible}) => {
                 <Text style={styles.modalTitleText}>Alteração de Senha de Acesso</Text>
                 <EvilIcons name="close" size={24} color="black" />
               </TouchableOpacity>
-              <InputField 
-                iconProvider="MaterialCommunityIcons"
-                iconName="lock-outline"
-                placeholder="Digite a nova senha"
-                value={novaSenha}
-                onChangeText={t=>setNovaSenha(t)}
-                password={true}
-             />
-             <InputField 
-                iconProvider="MaterialCommunityIcons"
-                iconName="lock-outline"
-                placeholder="Confirme a nova senha"
-                value={confirmaSenha}
-                onChangeText={t=>setConfirmaSenha(t)}
-                password={true}
-             />
-              
+              <LabelPasswordField  label={'Nova senha:'} placeholder={"Informe a nova senha"} value={novaSenha} onChangeText={t=>setNovaSenha(t)}/>
+              <LabelPasswordField  label={'Confirme a senha:'} placeholder={"Confirme a nova senha"} value={confirmaSenha} onChangeText={t=>setConfirmaSenha(t)}/>
+            
              <TouchableOpacity onPress={onAlteraSenha} style={styles.botaoSalvar}>
                {!isLoading?<Text style={styles.botaoSalvarText}>Alterar a Senha</Text>:<ActivityIndicator style={styles.loading} size="large" color={cores.branco}/>}
           </TouchableOpacity>

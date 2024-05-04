@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,TextInput } from 'react-native'
+import { StyleSheet, Text, View,TextInput,KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import { cores } from '../../style/globalStyle'
 
@@ -6,7 +6,7 @@ const LabelInputField = ({label,placeholder, value, onChangeText, numeric}) => {
   return (
     <View>
       <Text style={styles.label}>{label}</Text>
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} >
         <TextInput style={styles.input}
             placeholder={placeholder}
             value={value}

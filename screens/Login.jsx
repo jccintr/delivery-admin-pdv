@@ -3,18 +3,21 @@ import { cores } from '../style/globalStyle';
 import React, {useState,useContext} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
-import { Feather } from '@expo/vector-icons';
 import Api from '../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DataContext from '../context/DataContext';
 import logo from '../assets/logo-delivroo-azul-1024.png';
+import PasswordInputField from '../components/Inputs/PasswordInputField';
+import ModalErro from '../components/modal/ModalErro';
 
 const Login = () => {
+  const [errorMessage,setErrorMessage] = useState('');
+  const [modalVisible,setModalVisible] = useState(false);
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [isLoading,setIsLoading] = useState(false);
   const navigation = useNavigation();
-  const {setLoggedUser,loggedUser,apiToken,setApiToken,expoPushToken} = useContext(DataContext);
+  const {setLoggedUser,setApiToken,expoPushToken} = useContext(DataContext);
 
 
   const login = async () => {
@@ -33,11 +36,13 @@ const Login = () => {
         } else {
           setEmail('');
           setPassword('');  
-          alert('Email e ou usuário inválidos!');
+          setErrorMessage('Email e ou senha inválidos.')
+          setModalVisible(true);
         }
   
       } else {
-        alert('Informe o seu e-mail e a sua senha por favor!');
+        setErrorMessage('Informe o seu email e sua senha por favor.')
+        setModalVisible(true);
         
       }
     setIsLoading(false);
@@ -56,38 +61,37 @@ const Login = () => {
       />
      <View style={styles.header}>  
         <View/>
+        <View/>
         <View style={styles.logoArea}>
           <Image source={logo} style={styles.logo}/>
-          {/*<Feather name="shopping-cart" size={50} color={cores.whiteSmoke} />*/}
-          {/*<Text style={styles.headerText}>BrazPed PDV</Text>*/}
+          <Text style={styles.headerText}>Aplicativo Gestor</Text>
         </View> 
         
-        <Text style={styles.headerText}>Login</Text>
+        <Text style={styles.subHeaderText}>Informe as credenciais do estabelecimento</Text>
      </View>
      <View style={styles.inputArea}>
         <InputField 
-            iconProvider="AntDesign"
-            iconName="mail"
+            iconProvider="Entypo"
+            iconName="email"
             placeholder="Digite o seu e-mail"
             value={email}
             onChangeText={t=>setEmail(t)}
             password={false}
         />
-        <InputField 
-            iconProvider="MaterialCommunityIcons"
-            iconName="lock-outline"
+        <PasswordInputField 
             placeholder="Digite a sua senha"
             value={password}
             onChangeText={t=>setPassword(t)}
-            password={true}
+          
         />
         <TouchableOpacity onPress={login} style={styles.button}>
             {!isLoading?<Text style={styles.buttonText}>ENTRAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.reset({routes:[{name:'MainTab'}]})} style={styles.passwordButton}>
+        <TouchableOpacity onPress={() => {}} style={styles.passwordButton}>
             <Text style={styles.passwordButtonText} >Esqueci a minha senha</Text>
         </TouchableOpacity>
      </View> 
+     <ModalErro visible={modalVisible} setVisible={setModalVisible} mensagem={errorMessage}/>
    </SafeAreaView>
   )
 
@@ -114,8 +118,17 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 10,
+   // marginBottom: 10,
     marginTop: 10,
+
+  },
+  subHeaderText:{
+    color: cores.white,
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+    //marginTop: 10,
 
   },
   logoArea:{

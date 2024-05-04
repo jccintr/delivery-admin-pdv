@@ -6,15 +6,15 @@ import AccordionItem from '../components/AccordionItem';
 import Api from '../Api';
 import DataContext from '../context/DataContext';
 import { useNavigation } from '@react-navigation/native';
-import ModalProduto from '../components/modal/ModalProduto';
+//import ModalProduto from '../components/modal/ModalProduto';
 
 
 const Cardapio = () => {
   const navigation = useNavigation();
   const {apiToken,categorias,setCategorias} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
-  const [modalVisible,setModalVisible] = useState(false);
-  const [produto,setProduto] = useState(null);
+  //const [modalVisible,setModalVisible] = useState(false);
+ // const [produto,setProduto] = useState(null);
   
  
  
@@ -35,7 +35,7 @@ const Cardapio = () => {
 
 
 const onEdit = (produto) => {
-      setProduto(produto);
+     // setProduto(produto);
       //setModalVisible(true);
       if(produto.pizza){
         navigation.navigate('Pizzas');
@@ -45,24 +45,24 @@ const onEdit = (produto) => {
       
 }
 
-const onSalvar = async (id,nome,descricao,preco,categoria_id,ativo) => {
+// const onSalvar = async (id,nome,descricao,preco,categoria_id,ativo) => {
 
-  if(isNaN(preco)){
-     alert("Preço inválido."); 
-  } else {
+//   if(isNaN(preco)){
+//      alert("Preço inválido."); 
+//   } else {
 
-    let response = await Api.updateProduto(apiToken,id,nome,descricao,preco,categoria_id,ativo);
-    if (response.status===200){
-      let response2 = await Api.getCategorias(apiToken);
-      let json = await response2.json();
-      setCategorias(json);
-     }
-    setModalVisible(false);
+//     let response = await Api.updateProduto(apiToken,id,nome,descricao,preco,categoria_id,ativo);
+//     if (response.status===200){
+//       let response2 = await Api.getCategorias(apiToken);
+//       let json = await response2.json();
+//       setCategorias(json);
+//      }
+//     setModalVisible(false);
 
-  }
+//   }
   
 
-}
+// }
 
 const EmptyList = () => {
   return <Text style={{color: cores.primary}}>O seu cardápio está vazio.</Text>
@@ -82,7 +82,7 @@ const EmptyList = () => {
         ListEmptyComponent={<EmptyList/>}
         contentContainerStyle={categorias.length===0?{flexGrow:1,alignItems:'center',justifyContent:'center'}:''}
         />}
-        {produto!=null&&<ModalProduto setModalVisible={setModalVisible} modalVisible={modalVisible} onSalvar={onSalvar} produto={produto}/>}
+        {/*produto!=null&&<ModalProduto setModalVisible={setModalVisible} modalVisible={modalVisible} onSalvar={onSalvar} produto={produto}/>*/}
     </SafeAreaView>
   )
 }

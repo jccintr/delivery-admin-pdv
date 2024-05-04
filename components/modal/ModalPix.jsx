@@ -5,6 +5,7 @@ import { cores } from '../../style/globalStyle';
 import { EvilIcons } from '@expo/vector-icons';
 import DataContext from '../../context/DataContext';
 import InputField from '../InputField';
+import LabelInputField from '../Inputs/LabelInputField';
 
 
 const ModalPix = ({modalVisible,setModalVisible}) => {
@@ -40,28 +41,10 @@ const ModalPix = ({modalVisible,setModalVisible}) => {
                     <EvilIcons name="close" size={24} color="black" />
                   </TouchableOpacity>
                   <View style={styles.content}>
-                      <View>
-                            <Text style={styles.label}>Chave Pix:</Text>
-                            <View style={styles.inputArea}>
-                                <TextInput style={styles.input}
-                                        placeholder="Chave pix..."
-                                        value={chavePix}
-                                        onChangeText={t=>setChavePix(t)}
-                                        placeholderTextColor="#c1c1c1" 
-                                    />
-                            </View>
-                        </View>
-                        <View>
-                            <Text style={styles.label}>Favorecido:</Text>
-                            <View style={styles.inputArea}>
-                                <TextInput style={styles.input}
-                                        placeholder="Favorecido..."
-                                        value={favorecido}
-                                        onChangeText={t=>setFavorecido(t)}
-                                        placeholderTextColor="#c1c1c1" 
-                                    />
-                            </View>
-                        </View>
+                  <LabelInputField numeric={false} label={'Chave Pix:'} placeholder={"Chave pix"} value={chavePix} onChangeText={t=>setChavePix(t)}/>
+                  <LabelInputField numeric={false} label={'Favorecido:'} placeholder={"Nome do favorecido"} value={favorecido} onChangeText={t=>setFavorecido(t)}/>
+                      
+                        
                   </View>
                  <TouchableOpacity onPress={onSalvar} style={styles.botaoSalvar}>
                    {!isLoading?<Text style={styles.botaoSalvarText}>Salvar</Text>:<ActivityIndicator style={styles.loading} size="large" color={cores.branco}/>}

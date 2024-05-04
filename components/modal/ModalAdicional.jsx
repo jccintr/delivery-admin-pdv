@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput} from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
+import LabelInputField from '../Inputs/LabelInputField';
 
 const ModalAdicional = ({modalVisible,setModalVisible,editando,onSalvar,adicional,setAdicional}) => {
      
@@ -15,30 +16,11 @@ const ModalAdicional = ({modalVisible,setModalVisible,editando,onSalvar,adiciona
                     <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.content}>
-                    <View>
-                        <Text style={styles.label}>Nome:</Text>
-                        <View style={styles.inputArea}>
-                            <TextInput style={styles.input}
-                                    placeholder="Nome..."
-                                    value={adicional.nome}
-                                    onChangeText={t=>setAdicional({...adicional,nome: t})}
-                                    placeholderTextColor="#c1c1c1" 
-                                />
-                        </View>
-                    </View>
+                <LabelInputField numeric={false} label={'Nome:'} placeholder={"Nome"} value={adicional.nome} onChangeText={t=>setAdicional({...adicional,nome: t})}/>
+                <LabelInputField numeric={true} label={'Valor:'} placeholder={"Valor do adicional"} value={adicional.valor.toString()} onChangeText={t=>setAdicional({...adicional,valor: t})}/>
                     
-                    <View>
-                        <Text style={styles.label}>Valor:</Text>
-                        <View style={styles.inputArea}>
-                              <TextInput style={styles.input}
-                                    placeholder="Valor..."
-                                    value={adicional.valor.toString()}
-                                    keyboardType='decimal-pad'
-                                    onChangeText={t=>setAdicional({...adicional,valor: t})}
-                                    placeholderTextColor="#c1c1c1" 
-                                />
-                        </View>
-                    </View>
+                    
+                    
                     
                     <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar()} >
                         <Text style={styles.addButtonText}>SALVAR</Text>

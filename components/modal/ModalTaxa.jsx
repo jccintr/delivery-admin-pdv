@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput,Switch} from 'react-native';
-import { Entypo,EvilIcons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
+import LabelInputField from '../Inputs/LabelInputField';
 
 const ModalTaxa = ({modalVisible,setModalVisible,editando,onSalvar,taxa,setTaxa}) => {
-  //   console.log(taxa.ativo);
+ 
   const toggleSwitch = () => setTaxa({...taxa,ativo: !taxa.ativo});
   
  
@@ -17,32 +18,11 @@ const ModalTaxa = ({modalVisible,setModalVisible,editando,onSalvar,taxa,setTaxa}
                     <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.content}>
-                    <View>
-                        <Text style={styles.label}>Bairro:</Text>
-                        <View style={styles.inputArea}>
-                            <TextInput style={styles.input}
-                                    placeholder="Nome..."
-                                    value={taxa.bairro}
-                                    onChangeText={t=>setTaxa({...taxa,bairro: t})}
-                                    placeholderTextColor="#c1c1c1" 
-                                />
-                        </View>
-                    </View>
+                <LabelInputField numeric={false} label={'Bairro:'} placeholder={"Bairro"} value={taxa.bairro} onChangeText={t=>setTaxa({...taxa,bairro: t})}/>
+                <LabelInputField numeric={true} label={'Valor:'} placeholder={"Taxa de entrega"} value={taxa.valor.toString()} onChangeText={t=>setTaxa({...taxa,valor: t})}/>
                     
-                    <View>
-                        <Text style={styles.label}>Valor:</Text>
-                        <View style={styles.inputArea}>
-                              <TextInput style={styles.input}
-                                    placeholder="Valor da taxa..."
-                                    value={taxa.valor.toString()}
-                                    keyboardType='decimal-pad'
-                                    
-                                    onChangeText={t=>setTaxa({...taxa,valor: t})}
-                                    placeholderTextColor="#c1c1c1" 
-                                />
-                        </View>
-                    </View>
-
+                    
+                   
                     <View style={{width:'100%',flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-start'}}>
                         <Text style={[styles.labelAtivo]}>Ativo:</Text>  
                         <Switch
@@ -159,6 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft:5,
     marginBottom:5,
+    color: cores.primary,
     
 },
 

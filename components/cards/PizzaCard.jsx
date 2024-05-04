@@ -21,7 +21,6 @@ const PizzaCard = ({pizza,onPress,last}) => {
                     <Text style={styles.labelPreco}>Broto: </Text>
                     <Text style={styles.preco}>R$ {pizza.broto}</Text>
                  </View>
-                
               </View>
            </View>
            {!pizza.ativo&&<Text style={styles.foraCardapio}>Fora do Cardápio</Text>}
@@ -35,7 +34,7 @@ const PizzaCard = ({pizza,onPress,last}) => {
   const styles = StyleSheet.create({
 
     container: {
-        flex:1,
+      flex:1,
        padding: '2%',
        borderRadius:5,
        backgroundColor: cores.white,
@@ -47,10 +46,7 @@ const PizzaCard = ({pizza,onPress,last}) => {
        shadowRadius:3.05,
        elevation:2,
       },
-      borda:{
-        borderBottomColor: '#d1d1d1',
-        borderBottomWidth: 0.5,
-      },
+     
       imagem:{
         width: 60,
         height:60, 
@@ -61,8 +57,8 @@ const PizzaCard = ({pizza,onPress,last}) => {
          flexDirection: 'column',
          alignItems: 'flex-start',
          justifyContent: 'space-evenly',
-        
          height: 80,
+        
          
       },
       nome:{
@@ -75,10 +71,12 @@ const PizzaCard = ({pizza,onPress,last}) => {
         
       },
       precoContainer:{
-        width: '100%',
+        
+       // width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+      //  justifyContent: 'space-between',
+        
       },
       labelPreco: {
         fontWeight: '500',

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput} from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
+import LabelInputField from '../Inputs/LabelInputField';
 
 const ModalPagamentos = ({modalVisible,setModalVisible,editando,onSalvar,pagamento,setPagamento}) => {
      
@@ -15,17 +16,8 @@ const ModalPagamentos = ({modalVisible,setModalVisible,editando,onSalvar,pagamen
                     <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.content}>
-                    <View>
-                        <Text style={styles.label}>Nome:</Text>
-                        <View style={styles.inputArea}>
-                            <TextInput style={styles.input}
-                                    placeholder="Nome..."
-                                    value={pagamento.nome}
-                                    onChangeText={t=>setPagamento({id: pagamento.id,nome: t})}
-                                    placeholderTextColor="#c1c1c1" 
-                                />
-                        </View>
-                    </View>
+                <LabelInputField numeric={false} label={'Nome:'} placeholder={"Nome"} value={pagamento.nome} onChangeText={t=>setPagamento({...pagamento,nome: t})}/>
+                    
                     
                     <TouchableOpacity style={styles.botaoSalvar} onPress={()=>onSalvar()} >
                         <Text style={styles.addButtonText}>SALVAR</Text>

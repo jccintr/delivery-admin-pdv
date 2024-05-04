@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,Modal,TouchableOpacity,Switch,ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View,Modal,TouchableOpacity,Switch,ActivityIndicator,KeyboardAvoidingView} from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 import LabelInputField from '../Inputs/LabelInputField';
@@ -9,9 +9,9 @@ const ModalPizza = ({modalVisible,setModalVisible,editando,onSalvar,pizza,setPiz
      
  
     return (
-        <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
-          <View style={styles.modalArea}>
-            <View style={styles.modalBody}>
+        <Modal  visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
+          <View  style={styles.modalArea}>
+            <View  style={styles.modalBody}>
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
                     <Text style={styles.modalTitleText}>{!editando?'Nova':'Editando'} Pizza</Text>
                     <EvilIcons name="close" size={24} color="black" />
@@ -19,8 +19,11 @@ const ModalPizza = ({modalVisible,setModalVisible,editando,onSalvar,pizza,setPiz
                 <View style={styles.content}>
                 <LabelInputField numeric={false} label={'Nome:'} placeholder={"Nome da pizza"} value={pizza.nome} onChangeText={t=>setPizza({...pizza,nome: t})}/>
                 <LabelInputArea label={'Descrição:'} placeholder={"Descrição da pizza"} value={pizza.descricao} onChangeText={t=>setPizza({...pizza,descricao: t})} lines={3}/>    
-                <LabelInputField numeric label={'Preço da Pizza Grande:'} placeholder={"Preço da pizza grande"} value={pizza.grande} onChangeText={t=>setPizza({...pizza,grande: t})}/>    
-                <LabelInputField numeric label={'Preço da Pizza Broto:'} placeholder={"Preço da pizza broto"} value={pizza.broto} onChangeText={t=>setPizza({...pizza,broto: t})}/>    
+                <View style={{flex:1, width:'100%', flexDirection:'row', justifyContent:'space-between'}}>
+                  <LabelInputField numeric label={'Preço da Pizza Grande:'} placeholder={"Preço da pizza grande"} value={pizza.grande} onChangeText={t=>setPizza({...pizza,grande: t})}/>    
+                  <LabelInputField numeric label={'Preço da Pizza Broto:'} placeholder={"Preço da pizza broto"} value={pizza.broto} onChangeText={t=>setPizza({...pizza,broto: t})}/>    
+                
+                </View>
                       
                    
                     <View style={{width:'100%',flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-start'}}>
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
         },
     modalBody:{
         width: '100%',
-        height: 520,
+        height: 440,
         backgroundColor: '#fff',
         borderTopLeftRadius:15,
         borderTopRightRadius: 15,

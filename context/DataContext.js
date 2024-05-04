@@ -10,6 +10,7 @@ export const DataProvider = ({children}) => {
    const [pedidos,setPedidos] = useState([]);
    const [pedidosFiltrados,setPedidosFiltrados] = useState([]);
    const [categorias,setCategorias] = useState([]);
+   const [pizzas,setPizzas] = useState([]);
    
    
    
@@ -18,7 +19,7 @@ export const DataProvider = ({children}) => {
 
 
    return (
-    <DataContext.Provider value={{loggedUser,setLoggedUser,setExpoPushToken,expoPushToken,apiToken,setApiToken,pedidos,setPedidos,pedidosFiltrados,setPedidosFiltrados,categorias,setCategorias}}>
+    <DataContext.Provider value={{loggedUser,setLoggedUser,setExpoPushToken,expoPushToken,apiToken,setApiToken,pedidos,setPedidos,pedidosFiltrados,setPedidosFiltrados,categorias,setCategorias,pizzas,setPizzas}}>
       {children}
     </DataContext.Provider>
 )

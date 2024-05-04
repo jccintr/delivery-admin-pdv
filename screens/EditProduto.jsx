@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, SafeAreaView,Text,View,TextInput,FlatList, TouchableOpacity,Switch,Image,Dimensions,ScrollView,ActivityIndicator } from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView,Text,View,FlatList, TouchableOpacity,Switch,Image,Dimensions,ScrollView,ActivityIndicator } from 'react-native';
 import React,{useState,useEffect,useContext} from 'react';
 import Header3 from '../components/Header3';
 import { cores } from '../style/globalStyle';
@@ -280,8 +280,8 @@ export default EditProduto
 const styles = StyleSheet.create({
 
     container: {
-            flex: 1,
-            backgroundColor: cores.whiteSmoke,
+           flex: 1,
+           backgroundColor: cores.whiteSmoke,
         },
         body: {
             flexDirection: 'column',

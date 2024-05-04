@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,Modal,TouchableOpacity,TextInput,FlatList} from 
 import { EvilIcons } from '@expo/vector-icons';
 import { cores } from '../../style/globalStyle';
 import { FontAwesome } from '@expo/vector-icons'; 
-
+import LabelInputField from '../Inputs/LabelInputField';
 
 
 
@@ -62,17 +62,8 @@ const ModalObrigatorio = ({modalVisible,setModalVisible,editando,onSalvar,obriga
                     <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.content}>
-                    <View>
-                      <Text style={styles.label}>Nome:</Text>
-                      <View style={styles.inputArea}>
-                          <TextInput style={styles.input}
-                                  placeholder="Nome..."
-                                  value={obrigatorio.nome}
-                                  onChangeText={t=>setObrigatorio({...obrigatorio,nome: t})}
-                                  placeholderTextColor="#c1c1c1" 
-                              />
-                      </View>
-                    </View>
+                <LabelInputField numeric={false} label={'Nome:'} placeholder={"Nome"} value={obrigatorio.nome} onChangeText={t=>setObrigatorio({...obrigatorio,nome: t})}/>
+                    
                     <View>
                       <Text style={styles.label}>Nova Opção:</Text>
                       <View style={styles.inputArea}>
@@ -162,17 +153,19 @@ const styles = StyleSheet.create({
       fontSize: 16,
       marginLeft:5,
       marginBottom:5,
+      color: cores.primary
     },
     inputArea: {
       width: '98%',
       height: 50,
       flexDirection: 'row',
-      borderColor: cores.azul,
-      borderWidth: 1,
+     //borderColor: cores.azul,
+      //borderWidth: 1,
       borderRadius: 5,
       paddingHorizontal: 5,
       alignItems: 'center',
       marginBottom: 10,
+      backgroundColor: cores.inputBackground,
      
     },
   

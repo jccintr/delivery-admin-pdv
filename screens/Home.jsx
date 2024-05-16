@@ -18,7 +18,7 @@ import PainelStatus from '../components/paineis/PainelStatus';
 
 
 const Home = () => {
-  const {loggedUser,setLoggedUser,apiToken} = useContext(DataContext);
+  const {loggedUser,setLoggedUser,apiToken,setExpoPushToken} = useContext(DataContext);
   const [aberto,setAberto] = useState(loggedUser.aberto);
   const navigation = useNavigation();
   const [modalVisible,setModalVisible] = useState(false);
@@ -56,6 +56,8 @@ const Home = () => {
     let response = await Api.logout(apiToken);
     if(response.status===200){
       await AsyncStorage.removeItem('token');
+      setExpoPushToken(null);
+     
       navigation.reset({routes:[{name:'Login'}]});
       setLoggedUser(null);
     }

@@ -2,7 +2,6 @@ import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Preload from "../screens/Preload";
 import Login from "../screens/Login";
-import Login2 from "../screens/Login2";
 import MainTab from '../stacks/MainTab';
 import Categorias from "../screens/cadastros/Categorias";
 import Pagamentos from "../screens/cadastros/Pagamentos";
@@ -28,7 +27,6 @@ const MainStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false}} initialRouteName="Preload">
         <Stack.Screen  name="Preload" component={Preload}/>
         <Stack.Screen  name="Login" component={Login}/>
-        <Stack.Screen  name="Login2" component={Login2}/>
         <Stack.Screen name="MainTab" component={MainTab} />
         <Stack.Screen name="Categorias" component={Categorias} />
         <Stack.Screen name="Pagamentos" component={Pagamentos} />

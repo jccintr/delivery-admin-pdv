@@ -76,7 +76,7 @@ const Preload = () => {
                        navigation.reset({routes:[{name:'MainTab'}]});
                      
                     } else {
-                      navigation.reset({routes:[{name:'Login2'}] 
+                      navigation.reset({routes:[{name:'Login'}] 
                       });
                     }
 

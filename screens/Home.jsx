@@ -52,9 +52,14 @@ const Home = () => {
 
   
   onLogout = async () => {
-    await AsyncStorage.removeItem('token');
-    navigation.reset({routes:[{name:'Login'}]});
-    setLoggedUser(null);
+    setIsLoading(true);
+    let response = await Api.logout(apiToken);
+    if(response.status===200){
+      await AsyncStorage.removeItem('token');
+      navigation.reset({routes:[{name:'Login'}]});
+      setLoggedUser(null);
+    }
+    setIsLoading(false);
     
   }
 

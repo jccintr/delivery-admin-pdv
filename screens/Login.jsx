@@ -87,9 +87,9 @@ const Login = () => {
         <TouchableOpacity onPress={login} style={styles.button}>
             {!isLoading?<Text style={styles.buttonText}>ENTRAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={styles.passwordButton}>
+        {/*<TouchableOpacity onPress={() => {}} style={styles.passwordButton}>
             <Text style={styles.passwordButtonText} >Esqueci a minha senha</Text>
-        </TouchableOpacity>
+  </TouchableOpacity>*/}
      </View> 
      <ModalErro visible={modalVisible} setVisible={setModalVisible} mensagem={errorMessage}/>
    </SafeAreaView>

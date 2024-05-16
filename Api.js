@@ -24,6 +24,18 @@ export default {
        // const json = await req.json();
         return response;
     },
+    logout: async (token) => {
+        const response = await fetch(`${BASE_API}/logout`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            
+        });
+        return response;
+    },
     getUser: async (token) => {
         const response = await fetch(`${BASE_API}/user`, {
             method: 'GET',

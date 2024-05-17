@@ -5,7 +5,7 @@ const DataContext = createContext({});
 
 export const DataProvider = ({children}) => {
    const [loggedUser,setLoggedUser] = useState(null);
-   const [expoPushToken, setExpoPushToken] = useState(null);
+   const [expoPushToken, setExpoPushToken] = useState('');
    const [apiToken, setApiToken] = useState(null);
    const [pedidos,setPedidos] = useState([]);
    const [pedidosFiltrados,setPedidosFiltrados] = useState([]);

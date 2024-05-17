@@ -45,6 +45,7 @@ Notifications.setNotificationHandler({
       }
       //android 13 call -> setNotificationChannelAsync
       token = (await Notifications.getExpoPushTokenAsync()).data;
+      alert('era pra exibir o push token');
       alert('push token '+ token);
       console.log(token);
     } else {

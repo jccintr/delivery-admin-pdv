@@ -29,6 +29,7 @@ const Login = () => {
         if(response.status===200){
           const jsonUser = await response.json();
           if (jsonUser.token) await AsyncStorage.setItem('token', jsonUser.token);
+          alert('Este é o push token: '+ expoPushToken);
           let ret = await Api.storePushToken(jsonUser.token,expoPushToken);
           setApiToken(jsonUser.token);
           setLoggedUser(jsonUser);

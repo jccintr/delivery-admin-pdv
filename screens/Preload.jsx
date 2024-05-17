@@ -1,13 +1,16 @@
 import React, { useEffect,useState,useContext } from 'react';
 import { StyleSheet, SafeAreaView,ActivityIndicator,StatusBar,Platform,Image } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+//import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../Api';
 import { cores } from '../style/globalStyle';
 import DataContext from '../context/DataContext';
+
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+
 import logo from '../assets/logo-delivroo-azul-1024.png';
 
 Notifications.setNotificationHandler({
@@ -19,12 +22,51 @@ Notifications.setNotificationHandler({
   });
 
   // pede permisao para enviar notificacoes
-
-  async function registerForPushNotificationsAsync() {
-    let token;
+  // async function registerForPushNotificationsAsync() {
+  //   let token;
   
+  //   if (Platform.OS === 'android') {
+  //     await Notifications.setNotificationChannelAsync('default', {
+  //       name: 'default',
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //       lightColor: '#FF231F7C',
+  //     });
+  //   }
+  
+  //   if (Device.isDevice) {
+  //     const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  //     let finalStatus = existingStatus;
+  //     if (existingStatus !== 'granted') {
+  //       const { status } = await Notifications.requestPermissionsAsync();
+  //       finalStatus = status;
+  //     }
+  //     if (finalStatus !== 'granted') {
+  //       alert('Falha ao obter token de notificação!');
+  //       return;
+  //     }
+  //     //android 13 call -> setNotificationChannelAsync
+  //     token = (await Notifications.getExpoPushTokenAsync()).data;
+  //     alert('era pra exibir o push token');
+  //     alert('push token '+ token);
+  //     console.log(token);
+  //   } else {
+  //     alert('Must use physical device for Push Notifications');
+  //   }
+  
+  //   return token;
+  // }
+
+  function handleRegistrationError(errorMessage) {
+    alert(errorMessage);
+    throw new Error(errorMessage);
+  }
+
+  
+  
+  async function registerForPushNotificationsAsync() {
     if (Platform.OS === 'android') {
-      await Notifications.setNotificationChannelAsync('default', {
+      Notifications.setNotificationChannelAsync('default', {
         name: 'default',
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
@@ -33,29 +75,38 @@ Notifications.setNotificationHandler({
     }
   
     if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
       if (existingStatus !== 'granted') {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
       if (finalStatus !== 'granted') {
-        alert('Falha ao obter token de notificação!');
+        handleRegistrationError('Permission not granted to get push token for push notification!');
         return;
       }
-      //android 13 call -> setNotificationChannelAsync
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      alert('era pra exibir o push token');
-      alert('push token '+ token);
-      console.log(token);
+      const projectId =
+        Constants?.expoConfig?.extra?.eas?.projectId ??
+        Constants?.easConfig?.projectId;
+      if (!projectId) {
+        handleRegistrationError('Project ID not found');
+      }
+      try {
+      const pushTokenString = (
+          await Notifications.getExpoPushTokenAsync({
+            projectId,
+          })
+        ).data;
+        console.log(pushTokenString);
+        return pushTokenString;
+      } catch (e) {
+        alert(`${e}`);
+      }
     } else {
-      alert('Must use physical device for Push Notifications');
+      alert('Must use physical device for push notifications');
     }
-  
-    return token;
   }
-
-
 
 
 const Preload = () => {

@@ -20,7 +20,7 @@ const PasswordInputField = ( {iconProvider,iconName,placeholder, value, onChange
          placeholderTextColor="#c1c1c1" 
        />
        <TouchableOpacity onPress={()=>setShowPassword(!showPassword)}>
-          <FontAwesome5 name={!showPassword?'eye':'eye-slash'} size={20} color={cores.searchIconColor} />
+          <FontAwesome5 name={!showPassword?'eye-slash':'eye'} size={20} color={cores.searchIconColor} />
         </TouchableOpacity>
     </View>
   )

@@ -7,9 +7,9 @@ import { Ionicons } from '@expo/vector-icons';
 const Header3 = ({title, onBack}) => {
   return (
     <View style={styles.container}>
-        <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
-        <TouchableOpacity onPress={()=>onBack()}>
-                    <Ionicons name="arrow-back-outline" size={24} color="white" />
+        <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center',gap:10}}>
+            <TouchableOpacity onPress={()=>onBack()}>
+                <Ionicons name="arrow-back-outline" size={24} color="white" />
             </TouchableOpacity>
             <Text style={styles.title}>{title}</Text>
         </View>
@@ -22,7 +22,6 @@ export default Header3
 
 const styles = StyleSheet.create({
     container: {
-      
       backgroundColor: cores.primary,
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -30,11 +29,13 @@ const styles = StyleSheet.create({
       width: '100%',
       flexDirection:'row',
       paddingHorizontal: 10,
+      
       },
     title: {
         color: cores.white,
         fontSize:20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        
     },
     addIcon: {
 

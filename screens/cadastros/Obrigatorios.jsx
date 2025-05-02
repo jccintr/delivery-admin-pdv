@@ -131,14 +131,15 @@ const styles = StyleSheet.create({
    flatList: {
     width: '100%',
     paddingTop: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
    },
    containerItem:{
     width: '100%',
     padding: '2%',
+    paddingVertical: '3%',
     borderRadius:12,
     backgroundColor: cores.white,
-    marginBottom: '2%',
+    marginBottom: '3%',
     overflow: 'hidden',
    },
    titleItemContainer:{
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
    },
    titleItem:{
     fontSize:18,
-    fontWeight: 'bold',
+   // fontWeight: 'bold',
     color: '#2d2d2d',
    },
    loading:{

@@ -13,8 +13,7 @@ const Cardapio = () => {
   const navigation = useNavigation();
   const {apiToken,categorias,setCategorias} = useContext(DataContext);
   const [isLoading,setIsLoading] = useState(false);
-  //const [modalVisible,setModalVisible] = useState(false);
- // const [produto,setProduto] = useState(null);
+ 
   
  
  
@@ -102,7 +101,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingTop: 10,
     
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
    },
    loading:{
     position: 'absolute',

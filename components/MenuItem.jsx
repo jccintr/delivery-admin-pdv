@@ -11,7 +11,7 @@ const MenuItem = ({item,onPress}) => {
           <TouchableOpacity onPress={()=>onPress(item.id)}>
             <View style={styles.titleContainer}>
               <Text style={styles.title}>{item.title}</Text>
-              <Entypo name="chevron-right" size={24} color="black" />
+              <Entypo name="chevron-right" size={24} color="#2d2d2d" />
             </View>
           </TouchableOpacity>
         </View>
@@ -28,9 +28,10 @@ const styles = StyleSheet.create({
     container:{
         width: '100%',
         padding: '2%',
+        paddingVertical: '3%',
         borderRadius:5,
         backgroundColor: cores.white,
-        marginBottom: '2%',
+        marginBottom: '3%',
         overflow: 'hidden',
         shadowColor: '#000',
       shadowOffset: {
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
       },
       title: {
          fontSize:18,
-         fontWeight: 'bold',
+        
          color: '#2d2d2d',
       },
       

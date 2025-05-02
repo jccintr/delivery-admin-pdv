@@ -55,11 +55,7 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-                animated={true}
-                backgroundColor={cores.primary}
-                barStyle="dark-content"
-      />
+      <StatusBar animated={true} backgroundColor={cores.primary} barStyle="dark-content"/>
      <View style={styles.header}>  
         <View/>
         <View/>
@@ -72,8 +68,8 @@ const Login = () => {
      </View>
      <View style={styles.inputArea}>
         <InputField 
-            iconProvider="Entypo"
-            iconName="email"
+            iconProvider="FontAwesome"
+            iconName="user-o"
             placeholder="Digite o seu e-mail"
             value={email}
             onChangeText={t=>setEmail(t)}

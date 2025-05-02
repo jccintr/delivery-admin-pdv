@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, SafeAreaView,FlatList,ActivityIndicator,Dimensions } from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView,FlatList,Alert } from 'react-native';
 import React, {useState} from 'react';
 import Header from '../components/Header';
 import { cores } from '../style/globalStyle';
@@ -24,6 +24,7 @@ const menuData = [
   {id:8,title: "Histórico de Pedidos"},
   {id:9,title: "Chave Pix"},
   {id:10,title: "Visual da Loja"},
+  {id:11,title: "Versão do Aplicativo"}
 
 ];
 
@@ -59,6 +60,8 @@ const onMenuPress = (id) => {
     break;
     case 10:
       navigation.navigate('Visual');
+    case 11:
+      Alert.alert("Versão do Aplicativo","Apk compilado em 02-05-2025 1h10");
     break;
     default:
       // code block
@@ -94,11 +97,12 @@ const styles = StyleSheet.create({
     backgroundColor: cores.whiteSmoke,
     alignItems: 'center',
     justifyContent: 'flex-start',
+   
     },
    flatList: {
     width: '100%',
     paddingTop: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
    },
  
 

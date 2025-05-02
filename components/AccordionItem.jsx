@@ -31,9 +31,10 @@ const styles = StyleSheet.create({
 container:{
   width: '100%',
   padding: '2%',
+  paddingVertical: '3%',
   borderRadius:5,
   backgroundColor: cores.white,
-  marginBottom: '2%',
+  marginBottom: '3%',
   overflow: 'hidden',
   shadowColor: '#000',
       shadowOffset: {
@@ -51,7 +52,7 @@ titleContainer:{
 },
 title: {
    fontSize:18,
-   fontWeight: 'bold',
+  // fontWeight: 'bold',
    color: '#2d2d2d',
 },
 body:{
